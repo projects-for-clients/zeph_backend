@@ -20,7 +20,7 @@ export class UniversityController {
   }
 
   @Get('/:id')
-  getOne(@Param('id') id: string) {
+  getOne(@Param('id') id: number) {
     return this.universityService.getOne(id);
   }
 
@@ -30,12 +30,12 @@ export class UniversityController {
   }
 
   @Put('/update/:id')
-  update(@Param('id') id: string, @Body() dto: CreateUniversity) {
+  update(@Param('id') id: number, @Body() dto: CreateUniversity) {
     return this.universityService.update(id, dto);
   }
 
   @Delete('/delete/:id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: number) {
     return this.universityService.delete(id);
   }
 }

@@ -10,7 +10,7 @@ export class UniversityService {
     return this.prisma.university.findMany();
   }
 
-  async getOne(id: string) {
+  async getOne(id: number) {
     const university = await this.prisma.university.findFirst({
       where: { id },
     });
@@ -30,7 +30,7 @@ export class UniversityService {
 
     return uni;
   }
-  async update(id: string, dto: CreateUniversity) {
+  async update(id: number, dto: CreateUniversity) {
     const uni = await this.prisma.university.update({
       where: { id },
       data: {
@@ -45,7 +45,7 @@ export class UniversityService {
     return uni;
   }
 
-  async delete(id: string) {
+  async delete(id: number) {
     const uni = await this.prisma.university.delete({
       where: { id },
     });
