@@ -51,6 +51,8 @@ export class AuthService {
 
     // return this.signToken(user.id, user.email);
 
+    delete user.hashedPassword;
+
     return user;
   }
 
