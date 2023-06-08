@@ -14,7 +14,6 @@ import { AppService } from './app/app.service';
 
     UserModule,
     AuthModule,
-    UniversityModule,
     PrismaModule,
   ],
   controllers: [AppController],
