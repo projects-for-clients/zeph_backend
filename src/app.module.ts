@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './app/app.module';
 import { AuthModule } from './auth/auth.module';
-import { UniversityModule } from './university/university.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app/app.controller';
@@ -15,7 +14,6 @@ import { AppService } from './app/app.service';
 
     UserModule,
     AuthModule,
-    UniversityModule,
     PrismaModule,
   ],
   controllers: [AppController],
