@@ -38,6 +38,8 @@ export class AuthService {
   async login(dto: AuthLogin) {
     const { email, password } = dto;
 
+    console.log({ email, password });
+
     const user = {
       id: 1,
       hashedPassword: 'hellosdfds',
@@ -45,9 +47,9 @@ export class AuthService {
 
     if (!user) throw new ForbiddenException('Invalid credentials');
 
-    const isPasswordValid = await argon.verify(user.hashedPassword, password);
+    // const isPasswordValid = await argon.verify(user.hashedPassword, password);
 
-    if (!isPasswordValid) throw new ForbiddenException('Invalid credentials');
+    // if (!isPasswordValid) throw new ForbiddenException('Invalid credentials');
 
     // return this.signToken(user.id, user.email);
 
