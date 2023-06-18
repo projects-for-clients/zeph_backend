@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { TenantDto } from './dto';
 import { PG_CONNECTION } from '../drizzle/constants';
 import { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
+import { tenancy } from 'src/drizzle/schema';
 
 @Injectable()
 export class TenantsService {
@@ -10,6 +11,11 @@ export class TenantsService {
     private conn: PostgresJsDatabase<Record<string, never>>,
   ) {}
   create(createTenantDto: TenantDto) {
+    const tenant = this.conn.insert(tenancy).values({
+      ...createTenantDto,
+      agreement_id: 23,
+    });
+
     return 'This action adds a new tenant';
   }
 
