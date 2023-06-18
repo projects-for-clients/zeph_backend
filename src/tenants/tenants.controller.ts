@@ -8,7 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { TenantsService } from './tenants.service';
-import { CreateTenantDto } from './dto/create-tenant.dto';
+import { CreateTenantDto } from './dto/tenant.dto';
 import { UpdateTenantDto } from './dto/update-tenant.dto';
 
 @Controller('tenants')
