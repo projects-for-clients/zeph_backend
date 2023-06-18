@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PG_CONNECTION } from 'src/drizzle/constants';
-import { users } from 'src/drizzle/schema';
+import { PG_CONNECTION } from '../drizzle/constants';
+import { users } from '../drizzle/schema';
 import { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 
 @Injectable()
