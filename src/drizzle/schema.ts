@@ -4,8 +4,6 @@ import {
   varchar,
   timestamp,
   text,
-  PgInet,
-  smallint,
   integer,
 } from 'drizzle-orm/pg-core';
 
@@ -30,7 +28,9 @@ export const tenancy = pgTable('tenancy', {
   tenant_address: varchar('tenant_address', { length: 100 }).notNull(),
   property_description: text('property_description'),
   relevant_documents: text('relevant_documents'),
-  agreement_id: integer('agreement_id').references(() => agreements.id),
+  agreement_id: integer('agreement_id').references(() => agreements.id, {
+    onDelete: 'cascade',
+  }),
 });
 
 export const deed_of_assignment = pgTable('deed_of_assignment', {
@@ -41,7 +41,9 @@ export const deed_of_assignment = pgTable('deed_of_assignment', {
   donee_address: varchar('donee_address', { length: 100 }).notNull(),
   property_description: text('property_description'),
   relevant_documents: text('relevant_documents'),
-  agreement_id: integer('agreement_id').references(() => agreements.id),
+  agreement_id: integer('agreement_id').references(() => agreements.id, {
+    onDelete: 'cascade',
+  }),
 });
 
 export const power_of_attorney = pgTable('power_of_attorney', {
@@ -52,7 +54,9 @@ export const power_of_attorney = pgTable('power_of_attorney', {
   assignee_address: varchar('assignee_address', { length: 100 }).notNull(),
   property_description: text('property_description'),
   relevant_documents: text('relevant_documents'),
-  agreement_id: integer('agreement_id').references(() => agreements.id),
+  agreement_id: integer('agreement_id').references(() => agreements.id, {
+    onDelete: 'cascade',
+  }),
 });
 
 export const sales_agreement = pgTable('sales_agreement', {
@@ -62,19 +66,25 @@ export const sales_agreement = pgTable('sales_agreement', {
   property_description: text('property_description'),
   amount: integer('amount'),
   relevant_documents: text('relevant_documents'),
-  agreement_id: integer('agreement_id').references(() => agreements.id),
+  agreement_id: integer('agreement_id').references(() => agreements.id, {
+    onDelete: 'cascade',
+  }),
 });
 
 export const loan_agreement = pgTable('loan_agreement', {
   id: serial('id').primaryKey().notNull(),
   borrower_name: varchar('borrower_name', { length: 100 }).notNull(),
   lender_name: varchar('lender_name', { length: 100 }).notNull(),
-  agreement_id: integer('agreement_id').references(() => agreements.id),
+  agreement_id: integer('agreement_id').references(() => agreements.id, {
+    onDelete: 'cascade',
+  }),
 });
 
 export const lease_agreement = pgTable('lease_agreement', {
   id: serial('id').primaryKey().notNull(),
   leasor_name: varchar('leasor_name', { length: 100 }).notNull(),
   leasee_name: varchar('leasee_name', { length: 100 }).notNull(),
-  agreement_id: integer('agreement_id').references(() => agreements.id),
+  agreement_id: integer('agreement_id').references(() => agreements.id, {
+    onDelete: 'cascade',
+  }),
 });

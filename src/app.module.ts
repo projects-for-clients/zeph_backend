@@ -6,6 +6,8 @@ import { AppController } from './app/app.controller';
 import { AppService } from './app/app.service';
 import { DrizzleModule } from './drizzle/drizzle.module';
 import { UsersModule } from './users/users.module';
+import { AgreementsModule } from './agreements/agreements.module';
+import { TenantsModule } from './tenants/tenants.module';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { UsersModule } from './users/users.module';
     AuthModule,
     DrizzleModule,
     UsersModule,
+    AgreementsModule,
+    TenantsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
