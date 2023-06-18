@@ -16,7 +16,10 @@ export class TenantsService {
       agreement_id: 23,
     });
 
-    return 'This action adds a new tenant';
+    console.log({tenancy})
+
+
+    return tenant;
   }
 
   findAll() {
