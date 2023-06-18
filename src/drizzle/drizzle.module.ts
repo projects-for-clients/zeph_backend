@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { drizzle } from 'drizzle-orm/node-postgres';
-import postgres from 'postgres';
+import { Pool } from 'pg';
+import { PG_CONNECTION } from './constants';
+import * as schema from './schema';
 import { ConfigService } from '@nestjs/config';
 
 @Module({
@@ -9,8 +11,13 @@ import { ConfigService } from '@nestjs/config';
       provide: PG_CONNECTION,
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        const client = postgres({ ssl: true });
-        const db = drizzle(client);
+        const connectionString = configService.get<string>('DATABASE_URL');
+        const pool = new Pool({
+          connectionString,
+          ssl: true,
+        });
+
+        return drizzle(pool, { schema });
       },
     },
   ],
