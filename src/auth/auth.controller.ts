@@ -1,4 +1,4 @@
-import { AuthLogin, AuthRegister } from 'src/auth/dto';
+import { AuthLogin, AuthRegister } from './dto';
 import { AuthService } from './auth.service';
 import { Body, Controller, Post } from '@nestjs/common';
 

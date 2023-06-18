@@ -1,3 +1,4 @@
+import { tenancy } from './../drizzle/schema';
 import {
   Controller,
   Get,
@@ -8,16 +9,15 @@ import {
   Delete,
 } from '@nestjs/common';
 import { TenantsService } from './tenants.service';
-import { CreateTenantDto } from './dto/tenant.dto';
-import { UpdateTenantDto } from './dto/update-tenant.dto';
+import { TenantDto } from './dto';
 
 @Controller('tenants')
 export class TenantsController {
   constructor(private readonly tenantsService: TenantsService) {}
 
   @Post()
-  create(@Body() createTenantDto: CreateTenantDto) {
-    return this.tenantsService.create(createTenantDto);
+  create(@Body() tenantDto: TenantDto) {
+    return this.tenantsService.create(tenantDto);
   }
 
   @Get()
@@ -31,7 +31,7 @@ export class TenantsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTenantDto: UpdateTenantDto) {
+  update(@Param('id') id: string, @Body() updateTenantDto: TenantDto) {
     return this.tenantsService.update(+id, updateTenantDto);
   }
 
