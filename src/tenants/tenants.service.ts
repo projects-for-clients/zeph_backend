@@ -10,16 +10,38 @@ export class TenantsService {
     @Inject(PG_CONNECTION)
     private conn: PostgresJsDatabase<Record<string, never>>,
   ) {}
-  create(createTenantDto: TenantDto) {
-    const tenant = this.conn.insert(tenancy).values({
-      ...createTenantDto,
-      agreement_id: 23,
-    });
 
-    console.log({ tenant });
+  async create(createTenantDto: TenantDto) {
+    const tenant = await this.conn
+      .insert(tenancy)
+      .values({
+        ...createTenantDto,
+        agreement_id: 1,
+      })
+      .returning();
 
     return tenant;
   }
+
+  // async create(createTenantDto: TenantDto) {
+  //   // const agreement = await this.conn.insert(agreements).values({
+  //   //   user_id: 1,
+  //   // });
+
+  //   // console.log({ agreement });
+
+  //   const tenant = await this.conn
+  //     .insert(tenancy)
+  //     .values({
+  //       ...createTenantDto,
+  //       agreement_id: 28,
+  //     })
+  //     .execute();
+
+  //   console.log({ tenant });
+
+  //   return tenant;
+  // }
 
   findAll() {
     return `This action returns all tenants`;

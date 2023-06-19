@@ -17,6 +17,9 @@ export const users = pgTable('users', {
 
 export const agreements = pgTable('agreements', {
   id: serial('id').primaryKey().notNull(),
+  user_id: integer('user_id').references(() => users.id, {
+    onDelete: 'cascade',
+  }),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow(),
 });
 

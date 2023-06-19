@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 
 export class TenantDto {
   @IsString()
@@ -25,7 +25,7 @@ export class TenantDto {
   @IsNotEmpty()
   relevant_documents: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsNumber()
+  @IsOptional()
   agreement_id: string;
 }
