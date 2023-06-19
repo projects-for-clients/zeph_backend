@@ -16,8 +16,7 @@ export class TenantsService {
       agreement_id: 23,
     });
 
-    console.log({tenancy})
-
+    console.log({ tenant });
 
     return tenant;
   }
