@@ -17,7 +17,6 @@ export class UsersService {
   }
 
   async findAll() {
-    //const users = await this.conn.query.users.findMany();
 
     const allUsers = await this.conn.select().from(users);
 
