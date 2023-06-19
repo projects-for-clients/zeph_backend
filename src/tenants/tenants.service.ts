@@ -20,6 +20,8 @@ export class TenantsService {
       })
       .returning();
 
+    console.log('tenancy');
+
     return tenant;
   }
 
