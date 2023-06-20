@@ -6,8 +6,7 @@ import { tenancy } from 'src/drizzle/schema';
 
 @Injectable()
 export class TenantsService {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {} // private conn: PostgresJsDatabase<Record<string, never>>, // @Inject(PG_CONNECTION)
+  //constructor() {} // private conn: PostgresJsDatabase<Record<string, never>>, // @Inject(PG_CONNECTION)
 
   async create(createTenantDto: TenantDto) {
     // const tenant = await this.conn

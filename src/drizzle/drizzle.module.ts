@@ -19,9 +19,11 @@ import { ConfigService } from '@nestjs/config';
 
         console.log({ connectionString });
 
-        const connection = drizzle(pool, { schema });
+        const conn = drizzle(pool, { schema });
 
-        return connection;
+        console.log({ conn });
+
+        return conn;
       },
     },
   ],
