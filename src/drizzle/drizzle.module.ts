@@ -29,10 +29,4 @@ import { ConfigService } from '@nestjs/config';
   ],
   exports: [PG_CONNECTION],
 })
-export class DrizzleModule {
-  private readonly logger = new Logger(DrizzleModule.name);
-
-  log() {
-    this.logger.log('==========afsdfdsfsdfdsf==========');
-  }
-}
+export class DrizzleModule {}
