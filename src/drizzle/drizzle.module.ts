@@ -29,6 +29,6 @@ export class DrizzleModule {
   private readonly logger = new Logger(DrizzleModule.name);
 
   log() {
-    this.logger.log(DrizzleModule.name, 'sfsdfdsfdsfdsfdsfs');
+    this.logger.log('==========afsdfdsfsdfdsf==========');
   }
 }
