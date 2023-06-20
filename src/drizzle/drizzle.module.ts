@@ -27,6 +27,7 @@ import { ConfigService } from '@nestjs/config';
       },
     },
   ],
+  imports: [],
   exports: [PG_CONNECTION],
 })
 export class DrizzleModule {}
