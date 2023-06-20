@@ -31,6 +31,4 @@ export class DrizzleModule {
   log() {
     this.logger.log(DrizzleModule.name, 'sfsdfdsfdsfdsfdsfs');
   }
-
-  
 }
