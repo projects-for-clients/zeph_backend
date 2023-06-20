@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
 import { PG_CONNECTION } from './constants';
@@ -17,10 +17,20 @@ import { ConfigService } from '@nestjs/config';
           ssl: true,
         });
 
+        console.log({ connectionString });
+
         return drizzle(pool, { schema });
       },
     },
   ],
   exports: [PG_CONNECTION],
 })
-export class DrizzleModule {}
+export class DrizzleModule {
+  private readonly logger = new Logger(DrizzleModule.name);
+
+  log() {
+    this.logger.log(DrizzleModule.name, 'sfsdfdsfdsfdsfdsfs');
+  }
+
+  
+}

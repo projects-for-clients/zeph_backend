@@ -6,21 +6,21 @@ import { tenancy } from 'src/drizzle/schema';
 
 @Injectable()
 export class TenantsService {
-  constructor(
-    @Inject(PG_CONNECTION)
-    private conn: PostgresJsDatabase<Record<string, never>>,
-  ) {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() {} // private conn: PostgresJsDatabase<Record<string, never>>, // @Inject(PG_CONNECTION)
 
   async create(createTenantDto: TenantDto) {
-    const tenant = await this.conn
-      .insert(tenancy)
-      .values({
-        ...createTenantDto,
-        agreement_id: 1,
-      })
-      .returning();
+    // const tenant = await this.conn
+    //   .insert(tenancy)
+    //   .values({
+    //     ...createTenantDto,
+    //     agreement_id: 1,
+    //   })
+    //   .returning();
 
-    return tenant;
+    // return tenant;
+
+    return 'hello';
   }
 
   // async create(createTenantDto: TenantDto) {
