@@ -2,11 +2,10 @@ import { PrismaService } from './../prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { users } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
   }
@@ -14,7 +13,7 @@ export class UsersService {
   async findAll() {
     // const allUsers = await this.conn.select().from(users);
 
-    const allUsers = await this.prismaService.users.findMany();
+    const allUsers = await this.prisma.users.findMany();
 
     console.log(allUsers);
     return allUsers;

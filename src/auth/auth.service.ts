@@ -3,10 +3,15 @@ import * as argon from 'argon2';
 import { AuthLogin, AuthRegister } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private jwt: JwtService, private config: ConfigService) {}
+  constructor(
+    private jwt: JwtService,
+    private config: ConfigService,
+    private prisma: PrismaService,
+  ) {}
   async register(dto: AuthRegister) {
     try {
       const { email, password, firstName, lastName } = dto;
@@ -38,22 +43,24 @@ export class AuthService {
   async login(dto: AuthLogin) {
     const { email, password } = dto;
 
-    console.log({ email, password });
+    const user = await this.prisma.users.findMany();
 
-    const user = {
-      id: 1,
-      hashedPassword: 'hellosdfds',
-    };
+    // const user = await this.prisma.users.findUnique({
+    //   where: {
+    //     email,
+    //   },
+    // });
 
-    if (!user) throw new ForbiddenException('Invalid credentials');
+    // console.log(user);
+
+    // if (!user) throw new ForbiddenException('Invalid credentials');
 
     // const isPasswordValid = await argon.verify(user.hashedPassword, password);
 
-    // if (!isPasswordValid) throw new ForbiddenException('Invalid credentials');
+    // if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
 
+    // delete user.hashedPassword;
     // return this.signToken(user.id, user.email);
-
-    delete user.hashedPassword;
 
     return user;
   }

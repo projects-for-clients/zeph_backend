@@ -16,8 +16,8 @@ import { PrismaModule } from './prisma/prisma.module';
     }),
 
     UserModule,
-    PrismaModule,
     AuthModule,
+    PrismaModule,
     UsersModule,
     AgreementsModule,
     TenantsModule,
