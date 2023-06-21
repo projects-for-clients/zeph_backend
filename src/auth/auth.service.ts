@@ -17,19 +17,12 @@ export class AuthService {
       const { email, password, firstName, lastName } = dto;
       const hashedPassword = await argon.hash(password);
 
-      // const user = await this.prisma.user.create({
-      //   data: {
-      //     email,
-      //     hashedPassword,
-      //     firstName,
-      //     lastName,
-      //   },
-      // });
-
-      const user = {
-        id: 1,
-        email,
-      };
+      const user = await this.prisma.users.create({
+        data: {
+          email,
+          password: hashedPassword,
+        },
+      });
 
       return this.signToken(user.id, user.email);
     } catch (err) {
