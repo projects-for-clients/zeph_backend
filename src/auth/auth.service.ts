@@ -4,7 +4,7 @@ import { AuthLogin, AuthRegister } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
-import postgres from 'postgres';
+import * as postgres from 'postgres';
 
 @Injectable()
 export class AuthService {
@@ -27,8 +27,17 @@ export class AuthService {
 
       //return this.signToken(user.id, user.email);
 
-      const sql = postgres(process.env.DATABASE_URL);
+      const sql = postgres(process.env.DATABASE_URL, {
+        ssl: true,
+      });
 
+      const createUser = await sql`
+        INSERT INTO users (email, password)
+        VALUES (${email}, ${hashedPassword})
+        RETURNING id, email
+      `;
+
+      console.log(createUser);
 
       return 'hello';
     } catch (err) {
