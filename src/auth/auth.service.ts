@@ -18,26 +18,16 @@ export class AuthService {
       const { email, password } = dto;
       const hashedPassword = await argon.hash(password);
 
-      // const user = await this.prisma.users.create({
-      //   data: {
-      //     email,
-      //     password: hashedPassword,
-      //   },
-      // });
-
-      //return this.signToken(user.id, user.email);
-
-      const sql = postgres(process.env.DATABASE_URL, {
-        ssl: true,
+      const user = await this.prisma.users.create({
+        data: {
+          email,
+          password: hashedPassword,
+        },
       });
 
-      const createUser = await sql`
-        INSERT INTO users (email, password)
-        VALUES (${email}, ${hashedPassword})
-        RETURNING id, email
-      `;
+      return this.signToken(user.id, user.email);
 
-      console.log(createUser);
+     
 
       return createUser;
     } catch (err) {
