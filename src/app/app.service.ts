@@ -9,13 +9,12 @@ export class AppService {
     return 'Hello World!';
   }
 
-  async setCache(): Promise<string> {
-    await this.cacheManager.set('key', 'value');
-    return 'Cache set';
+  async setCache(): Promise<void> {
+    await this.cacheManager.set('key', { name: 'John' }, 1000);
   }
 
-  async getCache(): Promise<string> {
-    await this.cacheManager.set('key', 'value');
-    return await this.cacheManager.get('key');
+  async getCache(): Promise<unknown> {
+    const cached = await this.cacheManager.get('key');
+    return cached;
   }
 }
