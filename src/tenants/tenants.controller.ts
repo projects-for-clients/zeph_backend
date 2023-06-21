@@ -1,4 +1,3 @@
-import { tenancy } from './../drizzle/schema';
 import {
   Controller,
   Get,

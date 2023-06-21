@@ -1,8 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { TenantDto } from './dto';
-import { PG_CONNECTION } from '../drizzle/constants';
-import { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
-import { tenancy } from 'src/drizzle/schema';
 
 @Injectable()
 export class TenantsService {
