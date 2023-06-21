@@ -3,13 +3,13 @@ import { Cache } from 'cache-manager';
 
 @Injectable()
 export class AppService {
-  // constructor(@Inject(CACHE_MANAGER) private readonly cacheManager: Cache) {}
+  constructor(@Inject(CACHE_MANAGER) private readonly cacheManager: Cache) {}
 
   async getHello(): Promise<unknown> {
-    // await this.cacheManager.set('key', { name: 'John' }, 1000);
-    // const cached = await this.cacheManager.get('key');
+    await this.cacheManager.set('key', { name: 'John' }, 1000);
+    const cached = await this.cacheManager.get('key');
 
-    // return cached;
+    return cached;
     return { name: 'John' };
   }
 
