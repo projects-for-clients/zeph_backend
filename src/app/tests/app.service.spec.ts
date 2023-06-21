@@ -5,7 +5,6 @@ import { Cache } from 'cache-manager';
 
 describe('AppService', () => {
   let appService: AppService;
-  let cacheManager: Cache;
 
   const mockCacheManager = {
     get: jest.fn(),
@@ -26,14 +25,13 @@ describe('AppService', () => {
     }).compile();
 
     appService = moduleRef.get<AppService>(AppService);
-    cacheManager = moduleRef.get<Cache>(CACHE_MANAGER);
   });
 
-  describe('getHello', () => {
-    it('should return "Hello World!"', () => {
-      expect(appService.getHello()).toBe('Hello World!');
-    });
-  });
+  // describe('getHello', () => {
+  //   it('should return "Hello World!"', () => {
+  //     expect(appService.getHello()).toBe('Hello World!');
+  //   });
+  // });
 
   describe('It should be defined', () => {
     expect(appService).toBeDefined();

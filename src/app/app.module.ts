@@ -16,9 +16,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
       isGlobal: true,
     }),
 
-    CacheModule.register({
-      isGlobal: true,
-    }),
+    CacheModule.register(),
 
     UsersModule,
     AuthModule,
