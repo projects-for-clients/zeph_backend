@@ -24,7 +24,9 @@ export class AuthService {
         },
       });
 
-      return this.signToken(user.id, user.email);
+      return {
+        email: user.email,
+      };
     } catch (err) {
       if (err.code === 'P2002') {
         throw new ForbiddenException(`${err.meta.target} already exists`);
