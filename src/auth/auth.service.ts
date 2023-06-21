@@ -4,7 +4,6 @@ import { AuthLogin, AuthRegister } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
-import * as postgres from 'postgres';
 
 @Injectable()
 export class AuthService {
