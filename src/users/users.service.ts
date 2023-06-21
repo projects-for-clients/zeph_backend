@@ -16,11 +16,6 @@ export class UsersService {
 
     console.log(allUsers);
     return allUsers;
-
-    // console.log(allUsers);
-    // return allUsers;
-
-    return 'us';
   }
 
   findOne(id: number) {

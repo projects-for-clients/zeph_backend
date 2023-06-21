@@ -4,6 +4,7 @@ import { AuthLogin, AuthRegister } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
+import postgres from 'postgres';
 
 @Injectable()
 export class AuthService {
@@ -17,14 +18,19 @@ export class AuthService {
       const { email, password } = dto;
       const hashedPassword = await argon.hash(password);
 
-      const user = await this.prisma.users.create({
-        data: {
-          email,
-          password: hashedPassword,
-        },
-      });
+      // const user = await this.prisma.users.create({
+      //   data: {
+      //     email,
+      //     password: hashedPassword,
+      //   },
+      // });
 
-      return this.signToken(user.id, user.email);
+      //return this.signToken(user.id, user.email);
+
+      const sql = postgres(process.env.DATABASE_URL);
+
+
+      return 'hello';
     } catch (err) {
       if (err.code === 'P2002') {
         throw new ForbiddenException(`${err.meta.target} already exists`);
