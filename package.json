@@ -11,7 +11,7 @@
     "db:rm": "docker compose rm dev-db -s -f -v",
     "db:up": "docker compose up dev-db -d",
     "db:dev:restart": "yarn db:dev:rm && yarn db:dev:up && sleep 1",
-    "build": "nest build",
+    "build": "pnpm generate && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "dev": "nest start --watch",
