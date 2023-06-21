@@ -8,8 +8,8 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 @Injectable()
 export class UsersService {
   constructor(
-    private prisma: PrismaService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    private prisma: PrismaService,
   ) {}
 
   create(createUserDto: CreateUserDto) {
@@ -19,12 +19,11 @@ export class UsersService {
   async findAll() {
     const allUsers = await this.prisma.users.findMany();
 
-    await this.cacheManager.set('key', { name: 'Hello' }, 10);
+    await this.cacheManager.set('key', { name: 'Hello' }, 1000);
     const cached = await this.cacheManager.get('key');
 
     console.log(cached);
 
-    return cached;
     return allUsers;
   }
 

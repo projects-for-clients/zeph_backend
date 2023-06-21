@@ -17,7 +17,9 @@ import { CacheModule } from '@nestjs/cache-manager';
       isGlobal: true,
     }),
 
-    CacheModule.register(),
+    CacheModule.register({
+      isGlobal: true,
+    }),
 
     UsersModule,
     AuthModule,
