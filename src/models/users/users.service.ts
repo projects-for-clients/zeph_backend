@@ -1,11 +1,16 @@
 import { PrismaService } from '../../prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Cache } from 'cache-manager';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+  ) {}
 
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
@@ -13,6 +18,13 @@ export class UsersService {
 
   async findAll() {
     const allUsers = await this.prisma.users.findMany();
+
+    await this.cacheManager.set('key', { name: 'Hello' }, 10);
+    const cached = await this.cacheManager.get('key');
+
+    console.log(cached);
+
+    return cached;
     return allUsers;
   }
 

@@ -4,6 +4,9 @@ dependencies:
   '@neondatabase/serverless':
     specifier: ^0.4.15
     version: 0.4.15
+  '@nestjs/cache-manager':
+    specifier: ^2.0.0
+    version: 2.0.0(@nestjs/common@9.0.0)(cache-manager@5.2.3)(reflect-metadata@0.1.13)(rxjs@7.2.0)
   '@nestjs/common':
     specifier: ^9.0.0
     version: 9.0.0(cache-manager@5.2.3)(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.2.0)
@@ -888,6 +891,20 @@ packages:
     resolution: {integrity: sha512-fTTcnfj6z4gpOREF3fbzPYltt5vJKB3G9OdfV4diiO45mBAi//0n/ViOirYm4bGxi0luzszf9jGe3BP6hsQ7Ig==}
     dependencies:
       '@types/pg': 8.6.6
+    dev: false
+
+  /@nestjs/cache-manager@2.0.0(@nestjs/common@9.0.0)(cache-manager@5.2.3)(reflect-metadata@0.1.13)(rxjs@7.2.0):
+    resolution: {integrity: sha512-DSBAPQhgG7mRZZSqzqFXoZKtrT/ehlcEvXBpYVd6i42XdM0fLdmp8+6usev12POOkZTLMxRiW87J8U9cGjaExg==}
+    peerDependencies:
+      '@nestjs/common': ^9.0.0 || ^10.0.0
+      cache-manager: <=5
+      reflect-metadata: ^0.1.12
+      rxjs: ^7.0.0
+    dependencies:
+      '@nestjs/common': 9.0.0(cache-manager@5.2.3)(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.2.0)
+      cache-manager: 5.2.3
+      reflect-metadata: 0.1.13
+      rxjs: 7.2.0
     dev: false
 
   /@nestjs/cli@9.0.0(esbuild@0.15.18):
