@@ -10,6 +10,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { CacheModule } from '@nestjs/cache-manager';
+import * as redisStore from 'cache-manager-redis-store';
+import type { RedisClientOptions } from 'redis';
+import { UsersService } from 'src/models/users/users.service';
 
 @Module({
   imports: [
@@ -17,8 +20,24 @@ import { CacheModule } from '@nestjs/cache-manager';
       isGlobal: true,
     }),
 
-    CacheModule.register({
+    // CacheModule.register<any>({
+    //   isGlobal: true,
+    //   // store: redisStore,
+    //   // host: process.env.REDIS_HOST,
+    //   // port: process.env.REDIS_PORT,
+    //   // ttl: 100,
+    // }),
+
+    CacheModule.registerAsync({
       isGlobal: true,
+      useFactory: () => {
+        return {
+          store: redisStore,
+          host: process.env.REDIS_HOST,
+          port: process.env.REDIS_PORT,
+          ttl: 100,
+        } as RedisClientOptions;
+      },
     }),
 
     UsersModule,
@@ -32,6 +51,7 @@ import { CacheModule } from '@nestjs/cache-manager';
   controllers: [AppController],
   providers: [
     AppService,
+    UsersService,
     { provide: APP_INTERCEPTOR, useClass: CacheInterceptor },
   ],
 })

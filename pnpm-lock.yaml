@@ -34,6 +34,9 @@ dependencies:
   argon2:
     specifier: ^0.30.3
     version: 0.30.3
+  cache-manager-redis-store:
+    specifier: ^3.0.1
+    version: 3.0.1
   cache-manager-redis-yet:
     specifier: ^4.1.2
     version: 4.1.2
@@ -2171,6 +2174,13 @@ packages:
   /bytes@3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
+
+  /cache-manager-redis-store@3.0.1:
+    resolution: {integrity: sha512-o560kw+dFqusC9lQJhcm6L2F2fMKobJ5af+FoR2PdnMVdpQ3f3Bz6qzvObTGyvoazQJxjQNWgMQeChP4vRTuXQ==}
+    engines: {node: '>= 16.18.0'}
+    dependencies:
+      redis: 4.6.7
+    dev: false
 
   /cache-manager-redis-yet@4.1.2:
     resolution: {integrity: sha512-pM2K1ZlOv8gQpE1Z5mcDrfLj5CsNKVRiYua/SZ12j7LEDgfDeFVntI6JSgIw0siFSR/9P/FpG30scI3frHwibA==}
