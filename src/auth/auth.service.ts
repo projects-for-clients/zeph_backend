@@ -39,7 +39,7 @@ export class AuthService {
 
       console.log(createUser);
 
-      return 'hello';
+      return createUser;
     } catch (err) {
       if (err.code === 'P2002') {
         throw new ForbiddenException(`${err.meta.target} already exists`);
