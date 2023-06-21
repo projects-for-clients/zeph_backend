@@ -7,6 +7,7 @@ import { AppService } from './app/app.service';
 import { UsersModule } from './users/users.module';
 import { AgreementsModule } from './agreements/agreements.module';
 import { TenantsModule } from './tenants/tenants.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { TenantsModule } from './tenants/tenants.module';
     }),
 
     UserModule,
+    PrismaModule,
     AuthModule,
     UsersModule,
     AgreementsModule,
