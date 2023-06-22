@@ -17,7 +17,7 @@ export class UsersService {
   }
 
   async findAll() {
-   // const allUsers = await this.prisma.users.findMany();
+    // const allUsers = await this.prisma.users.findMany();
 
     await this.cacheManager.set('key', { name: 'Hello' });
     const cached = await this.cacheManager.get('key');
@@ -25,7 +25,7 @@ export class UsersService {
     console.log(cached);
 
     return cached;
-   // return allUsers;
+    // return allUsers;
   }
 
   findOne(id: number) {
