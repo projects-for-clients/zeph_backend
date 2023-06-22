@@ -8,7 +8,10 @@ import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService, private redis: RedisService) {}
+  constructor(
+    private prisma: PrismaService,
+    @Inject() private redis: RedisService,
+  ) {}
 
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
