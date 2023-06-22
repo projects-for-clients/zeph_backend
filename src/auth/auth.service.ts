@@ -38,26 +38,21 @@ export class AuthService {
   async login(dto: AuthLogin) {
     const { email, password } = dto;
 
-    // const user = await this.prisma.users.findFirst({
-    //   where: {
-    //     email,
-    //   },
-    // });
+    const user = await this.prisma.users.findFirst({
+      where: {
+        email,
+      },
+    });
 
-    const user = await this.prisma.users;
+    if (!user) throw new ForbiddenException('Invalid credentials');
 
-    console.log(user);
+    const isPasswordValid = await argon.verify(user.password, password);
 
-    // if (!user) throw new ForbiddenException('Invalid credentials');
+    if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
 
-    // const isPasswordValid = await argon.verify(user.hashedPassword, password);
+    delete user.password;
+    return this.signToken(user.id, user.email);
 
-    // if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
-
-    // delete user.hashedPassword;
-    // return this.signToken(user.id, user.email);
-
-    return user;
   }
 
   async signToken(
