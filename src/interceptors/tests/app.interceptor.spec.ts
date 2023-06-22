@@ -1,7 +1,7 @@
-import { AppInterceptor } from '../app.interceptor';
+import { LogInterceptor } from '../app.interceptor';
 
-describe('AppInterceptor', () => {
+describe('LogInterceptor', () => {
   it('should be defined', () => {
-    expect(new AppInterceptor()).toBeDefined();
+    expect(new LogInterceptor()).toBeDefined();
   });
 });
