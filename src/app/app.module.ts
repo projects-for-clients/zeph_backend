@@ -38,7 +38,7 @@ import { LogInterceptor } from 'src/interceptors/app.interceptor';
     },
     {
       provide: 'APP_INTERCEPTOR',
-      scope: Scope.,
+      scope: Scope.REQUEST,
       useClass: LogInterceptor,
     },
   ],
