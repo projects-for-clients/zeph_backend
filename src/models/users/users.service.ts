@@ -8,7 +8,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private prisma: PrismaService,
   ) {}
 
