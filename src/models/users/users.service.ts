@@ -1,13 +1,14 @@
 import { RequestService } from './../../services/request.service';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Logger, Injectable } from '@nestjs/common';
+import { Logger, Injectable, CacheKey } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Cache } from 'cache-manager';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { RedisService } from 'src/redis/redis.service';
+import { CacheTTL } from '@nestjs/cache-manager';
 
 @Injectable()
+@CacheTTL(6000)
+@CacheKey('users')
 export class UsersService {
   private readonly logger = new Logger(UsersService.name);
 
@@ -22,11 +23,10 @@ export class UsersService {
   }
 
   async findAll() {
-    this.logger.log(UsersService.name, this.requestService.getUserId();
+    this.logger.log(UsersService.name, this.requestService.getUserId());
     const userCache = await this.redis.getCache('users');
     console.log({ userCache });
     const allUsers = await this.prisma.users.findMany();
-
 
     return allUsers;
   }
