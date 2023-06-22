@@ -32,7 +32,6 @@ import { RedisService } from 'src/redis/redis.service';
     AgreementsModule,
     TenantsModule,
     OtpModule,
-    RedisService,
   ],
   controllers: [AppController],
   providers: [

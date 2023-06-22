@@ -7,5 +7,4 @@ import { redisStore } from 'cache-manager-redis-yet';
   providers: [RedisService],
   imports: [CacheModule.register({})],
 })
-@Global()
 export class RedisModule {}
