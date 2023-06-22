@@ -11,12 +11,14 @@ import { AppService } from './app.service';
 import { RedisCacheModule } from 'src/redis/redis.module';
 import { RedisService } from 'src/redis/redis.service';
 import { RequestService } from 'src/services/request.service';
+import { RequestModule } from 'src/services/request.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    RequestModule,
     RedisCacheModule,
     UsersModule,
     AuthModule,
@@ -27,6 +29,6 @@ import { RequestService } from 'src/services/request.service';
     OtpModule,
   ],
   controllers: [AppController],
-  providers: [AppService, RedisService, RequestService],
+  providers: [AppService, RedisService],
 })
 export class AppModule {}

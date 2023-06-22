@@ -8,7 +8,7 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(private request: RequestService) {}
 
   use(req: any, res: any, next: () => void) {
-    this.logger.log(AuthMiddleware.name);
+    this.logger.log('MiddleWare-------', AuthMiddleware.name);
     console.log({ req });
     next();
   }
