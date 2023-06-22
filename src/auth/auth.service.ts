@@ -1,3 +1,4 @@
+import { RequestService } from './../services/request.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import * as argon from 'argon2';
 import { AuthLogin, AuthRegister } from 'src/auth/dto';
@@ -11,6 +12,7 @@ export class AuthService {
     private jwt: JwtService,
     private config: ConfigService,
     private prisma: PrismaService,
+    private readonly requestService: RequestService,
   ) {}
   async register(dto: AuthRegister) {
     try {

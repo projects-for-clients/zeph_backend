@@ -10,6 +10,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RedisCacheModule } from 'src/redis/redis.module';
 import { RedisService } from 'src/redis/redis.service';
+import { RequestService } from 'src/services/request.service';
 
 @Module({
   imports: [
@@ -26,6 +27,6 @@ import { RedisService } from 'src/redis/redis.service';
     OtpModule,
   ],
   controllers: [AppController],
-  providers: [AppService, RedisService, ],
+  providers: [AppService, RedisService, RequestService],
 })
 export class AppModule {}
