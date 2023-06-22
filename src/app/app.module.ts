@@ -27,17 +27,6 @@ import { RedisService } from 'src/redis/redis.service';
     //   // ttl: 100,
     // }),
 
-    CacheModule.registerAsync({
-      useFactory: async (configService: ConfigService) => ({
-        store: await redisStore({
-          url: configService.get<string>('REDIS_URL'),
-          ttl: 5000,
-        }),
-      }),
-      inject: [ConfigService],
-      isGlobal: true,
-    }),
-
     UsersModule,
     AuthModule,
     PrismaModule,
