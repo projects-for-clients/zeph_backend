@@ -51,17 +51,12 @@ export class AuthService {
     if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
 
     delete user.password;
-    return this.signToken(user.id, user.email);
-
+    return this.signToken(user.id);
   }
 
-  async signToken(
-    userId: number,
-    email: string,
-  ): Promise<{ access_token: string }> {
+  async signToken(userId: number): Promise<{ access_token: string }> {
     const payload = {
-      sub: userId,
-      email,
+      id: userId,
     };
 
     const secret = this.config.get('JWT_SECRET');
