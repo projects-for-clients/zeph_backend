@@ -11,13 +11,14 @@ import { AppService } from './app.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { RedisService } from 'src/redis/redis.service';
 import { redisStore } from 'cache-manager-redis-yet';
+import { RedisCacheModule } from 'src/redis/redis.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
+    RedisCacheModule,
     UsersModule,
     AuthModule,
     PrismaModule,
