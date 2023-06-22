@@ -17,6 +17,8 @@ export class LogInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.switchToHttp().getRequest();
 
+    console.log({ req });
+
     const { method, url, body, query, params } = req;
 
     this.logger.log(`
@@ -45,7 +47,7 @@ export class LogInterceptor implements NestInterceptor {
           }ms`,
         );
 
-        this.logger.debug('Response', res);
+        this.logger.debug('Response', JSON.stringify(res));
       }),
     );
   }
