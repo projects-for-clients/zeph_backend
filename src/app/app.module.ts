@@ -31,7 +31,7 @@ import { RedisCacheModule } from 'src/redis/redis.module';
   providers: [
     AppService,
     // RedisService,
-    { provide: APP_INTERCEPTOR, useClass: CacheInterceptor },
+    // { provide: APP_INTERCEPTOR, useClass: CacheInterceptor },
   ],
 })
 export class AppModule {}
