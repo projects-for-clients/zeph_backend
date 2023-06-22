@@ -26,6 +26,6 @@ import { RedisService } from 'src/redis/redis.service';
     OtpModule,
   ],
   controllers: [AppController],
-  providers: [AppService, RedisService],
+  providers: [AppService, RedisService, ],
 })
 export class AppModule {}
