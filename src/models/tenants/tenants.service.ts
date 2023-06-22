@@ -1,43 +1,24 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { TenantDto } from './dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class TenantsService {
-  //constructor() {} // private conn: PostgresJsDatabase<Record<string, never>>, // @Inject(PG_CONNECTION)
+  constructor(
+    @Inject(CACHE_MANAGER) private readonly cache: Cache,
+    private prisma: PrismaService,
+  ) {}
 
   async create(createTenantDto: TenantDto) {
-    // const tenant = await this.conn
-    //   .insert(tenancy)
-    //   .values({
-    //     ...createTenantDto,
-    //     agreement_id: 1,
-    //   })
-    //   .returning();
+    const tenant = await this.prisma.tenants.create({
+      data: {
+        ...createTenantDto,
+      },
+    });
 
-    // return tenant;
-
-    return 'hello';
+    return tenant;
   }
-
-  // async create(createTenantDto: TenantDto) {
-  //   // const agreement = await this.conn.insert(agreements).values({
-  //   //   user_id: 1,
-  //   // });
-
-  //   // console.log({ agreement });
-
-  //   const tenant = await this.conn
-  //     .insert(tenancy)
-  //     .values({
-  //       ...createTenantDto,
-  //       agreement_id: 28,
-  //     })
-  //     .execute();
-
-  //   console.log({ tenant });
-
-  //   return tenant;
-  // }
 
   findAll() {
     return `This action returns all tenants`;

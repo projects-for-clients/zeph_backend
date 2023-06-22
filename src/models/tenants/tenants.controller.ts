@@ -10,7 +10,7 @@ import {
 import { TenantsService } from './tenants.service';
 import { TenantDto } from './dto';
 
-@Controller('tenancy')
+@Controller('tenants')
 export class TenantsController {
   constructor(private readonly tenantsService: TenantsService) {}
 
