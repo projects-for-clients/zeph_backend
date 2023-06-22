@@ -1,9 +1,10 @@
 import { RequestService } from './../../services/request.service';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Logger, Injectable } from '@nestjs/common';
+import { Logger, Injectable, Body } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RedisService } from 'src/redis/redis.service';
+import { AuthPipe } from 'src/pipes/auth.pipe';
 
 @Injectable()
 export class UsersService {

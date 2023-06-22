@@ -3,13 +3,18 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Cac
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthPipe } from 'src/pipes/auth.pipe';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body(new AuthPipe()) createUserDto: CreateUserDto) {
+    let { password } = createUserDto;
+    console.log({ password });
+    password = '123456';
+
     return this.usersService.create(createUserDto);
   }
 
