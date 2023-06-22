@@ -12,7 +12,7 @@ import { Observable, tap } from 'rxjs';
 export class LogInterceptor implements NestInterceptor {
   private readonly logger = new Logger(LogInterceptor.name);
 
-  constructor(private readonly requestService: RequestService) {}
+  // constructor(private readonly requestService: RequestService) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.switchToHttp().getRequest();
@@ -29,7 +29,7 @@ export class LogInterceptor implements NestInterceptor {
     
     `);
 
-    this.logger.debug(this.requestService.getUserId());
+    // this.logger.debug(this.requestService.getUserId());
 
     const now = Date.now();
     return next.handle().pipe(
