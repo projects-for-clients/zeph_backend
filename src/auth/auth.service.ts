@@ -4,6 +4,7 @@ import { AuthLogin, AuthRegister } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
+import * as postgres from 'postgres';
 
 @Injectable()
 export class AuthService {
@@ -38,15 +39,18 @@ export class AuthService {
   async login(dto: AuthLogin) {
     const { email, password } = dto;
 
-    const user = await this.prisma.users.findMany();
-
-    // const user = await this.prisma.users.findUnique({
+    // const user = await this.prisma.users.findFirst({
     //   where: {
     //     email,
     //   },
     // });
 
-    // console.log(user);
+    // const user = await this.prisma.users
+
+    const sql = postgres(process.env.DATABASE_URL);
+    const user = await sql`DROP TABLE IF EXISTS users`;
+
+    console.log(user);
 
     // if (!user) throw new ForbiddenException('Invalid credentials');
 
