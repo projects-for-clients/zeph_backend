@@ -1,3 +1,4 @@
+import { RequestService } from './../../services/request.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -8,7 +9,11 @@ import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private redis: RedisService, private prisma: PrismaService) {}
+  constructor(
+    private redis: RedisService,
+    private prisma: PrismaService,
+    private readonly requestService: RequestService,
+  ) {}
 
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
