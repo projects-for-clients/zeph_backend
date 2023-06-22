@@ -9,6 +9,7 @@ export class RequestService {
   }
 
   setUserId(userId: number) {
+    console.log('setUserId', userId);
     this.userId = userId;
   }
 

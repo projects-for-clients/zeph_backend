@@ -15,6 +15,7 @@ export class AuthMiddleware implements NestMiddleware {
       : null;
 
     if (bearerToken) {
+      console.log('bearerToken', AuthMiddleware.name, bearerToken);
       this.request.setUserId(bearerToken);
     }
 
