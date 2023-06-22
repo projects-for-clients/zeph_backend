@@ -17,15 +17,15 @@ export class UsersService {
   }
 
   async findAll() {
-    const allUsers = await this.prisma.users.findMany();
+   // const allUsers = await this.prisma.users.findMany();
 
-    // await this.cacheManager.set('key', { name: 'Hello' });
-    // const cached = await this.cacheManager.get('key');
+    await this.cacheManager.set('key', { name: 'Hello' });
+    const cached = await this.cacheManager.get('key');
 
-    // console.log(cached);
+    console.log(cached);
 
-    // return cached;
-    return allUsers;
+    return cached;
+   // return allUsers;
   }
 
   findOne(id: number) {
