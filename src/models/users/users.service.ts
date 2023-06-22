@@ -1,6 +1,6 @@
 import { RequestService } from './../../services/request.service';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Inject, Injectable } from '@nestjs/common';
+import { Logger, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Cache } from 'cache-manager';
@@ -9,6 +9,8 @@ import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class UsersService {
+  private readonly logger = new Logger(UsersService.name);
+
   constructor(
     private redis: RedisService,
     private prisma: PrismaService,
@@ -23,6 +25,8 @@ export class UsersService {
     const userCache = await this.redis.getCache('users');
     console.log({ userCache });
     const allUsers = await this.prisma.users.findMany();
+
+    console.log(this.requestService.getUserId());
 
     return allUsers;
   }
