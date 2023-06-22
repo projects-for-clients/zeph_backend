@@ -7,7 +7,7 @@ export class RedisService {
   constructor(@Inject(CACHE_MANAGER) private readonly cache: Cache) {}
 
   async setCache(key: string, value: any): Promise<void> {
-    await this.cache.set(key, value, { ttl: 1000 });
+    await this.cache.set(key, value, 1000);
   }
 
   async getCache(key: string): Promise<unknown> {
