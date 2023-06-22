@@ -4,7 +4,6 @@ import { AuthLogin, AuthRegister } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
-import * as postgres from 'postgres';
 
 @Injectable()
 export class AuthService {
@@ -45,10 +44,7 @@ export class AuthService {
     //   },
     // });
 
-    // const user = await this.prisma.users
-
-    const sql = postgres(process.env.DATABASE_URL);
-    const user = await sql`DROP TABLE IF EXISTS users`;
+    const user = await this.prisma.users;
 
     console.log(user);
 
