@@ -1,12 +1,12 @@
+import { RequestService } from './../services/request.service';
 import {
   CacheInterceptor,
   CacheModule,
   MiddlewareConsumer,
   Module,
-  NestMiddleware,
   NestModule,
 } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from 'src/auth/auth.module';
 import { AgreementsModule } from 'src/models/agreements/agreements.module';
 import { TenantsModule } from 'src/models/tenants/tenants.module';
@@ -33,7 +33,7 @@ import { AuthMiddleware } from 'src/middlewares/auth.middleware';
     OtpModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, RequestService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
