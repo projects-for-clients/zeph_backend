@@ -12,6 +12,7 @@ import { AppService } from './app.service';
 import { RedisCacheModule } from 'src/redis/redis.module';
 import { AuthMiddleware } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { LogInterceptor } from 'src/interceptors/app.interceptor';
 
 @Module({
   imports: [
@@ -34,6 +35,11 @@ import { AuthGuard } from 'src/guards/auth.guard';
     {
       provide: 'APP_GUARD',
       useClass: AuthGuard,
+    },
+    {
+      provide: 'APP_INTERCEPTOR',
+      scope: 'REQUEST',
+      useClass: LogInterceptor,
     },
   ],
 })
