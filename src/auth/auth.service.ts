@@ -26,9 +26,7 @@ export class AuthService {
         },
       });
 
-      return {
-        email: user.email,
-      };
+      return this.signToken(user.id);
     } catch (err) {
       if (err.code === 'P2002') {
         throw new ForbiddenException(`${err.meta.target} already exists`);
@@ -52,7 +50,8 @@ export class AuthService {
 
     if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
 
-    delete user.password;
+    this.requestService.setUserId(user.id);
+
     return this.signToken(user.id);
   }
 
