@@ -1,5 +1,5 @@
 import { CacheInterceptor, Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from 'src/auth/auth.module';
 import { AgreementsModule } from 'src/models/agreements/agreements.module';
 import { TenantsModule } from 'src/models/tenants/tenants.module';
@@ -10,9 +10,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { CacheModule } from '@nestjs/cache-manager';
-import * as redisStore from 'cache-manager-redis-store';
-import type { RedisClientOptions } from 'redis';
-import { UsersService } from 'src/models/users/users.service';
+import { redisStore } from 'cache-manager-redis-yet';
+import { RedisService } from 'src/services/redis.service';
 
 @Module({
   imports: [
@@ -29,15 +28,14 @@ import { UsersService } from 'src/models/users/users.service';
     // }),
 
     CacheModule.registerAsync({
+      useFactory: async (configService: ConfigService) => ({
+        store: await redisStore({
+          url: configService.get<string>('REDIS_URI'),
+          ttl: 5000,
+        }),
+      }),
+      inject: [ConfigService],
       isGlobal: true,
-      useFactory: () => {
-        return {
-          store: redisStore,
-          host: process.env.REDIS_HOST,
-          port: process.env.REDIS_PORT,
-          ttl: 100,
-        } as RedisClientOptions;
-      },
     }),
 
     UsersModule,
@@ -47,11 +45,12 @@ import { UsersService } from 'src/models/users/users.service';
     AgreementsModule,
     TenantsModule,
     OtpModule,
+    RedisService,
   ],
   controllers: [AppController],
   providers: [
+    RedisService,
     AppService,
-    UsersService,
     { provide: APP_INTERCEPTOR, useClass: CacheInterceptor },
   ],
 })

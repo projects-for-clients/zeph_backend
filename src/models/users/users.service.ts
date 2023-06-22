@@ -3,9 +3,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Cache } from 'cache-manager';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { CACHE_MANAGER, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 
 @Injectable()
+@CacheKey('UsersService')
+@CacheTTL(100)
 export class UsersService {
   constructor(
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
@@ -19,11 +21,12 @@ export class UsersService {
   async findAll() {
     const allUsers = await this.prisma.users.findMany();
 
-    // await this.cacheManager.set('key', { name: 'Hello' });
-    // const cached = await this.cacheManager.get('key');
+    await this.cacheManager.set('key', { name: 'Hello' });
+    const cached = await this.cacheManager.get('key');
 
-    // console.log(cached);
+    console.log(cached);
 
+    return cached;
     return allUsers;
   }
 
