@@ -8,9 +8,6 @@ import { OtpModule } from 'src/otp/otp.module';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { RedisService } from 'src/redis/redis.service';
-import { redisStore } from 'cache-manager-redis-yet';
 import { RedisCacheModule } from 'src/redis/redis.module';
 
 @Module({
@@ -28,10 +25,6 @@ import { RedisCacheModule } from 'src/redis/redis.module';
     OtpModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    // RedisService,
-    // { provide: APP_INTERCEPTOR, useClass: CacheInterceptor },
-  ],
+  providers: [AppService],
 })
 export class AppModule {}
