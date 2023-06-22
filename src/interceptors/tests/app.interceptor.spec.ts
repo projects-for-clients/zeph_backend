@@ -1,4 +1,4 @@
-import { AppInterceptor } from './app.interceptor';
+import { AppInterceptor } from '../app.interceptor';
 
 describe('AppInterceptor', () => {
   it('should be defined', () => {
