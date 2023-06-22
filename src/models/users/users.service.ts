@@ -8,10 +8,7 @@ import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @Inject(CACHE_MANAGER) private redis: RedisService,
-    private prisma: PrismaService,
-  ) {}
+  constructor(private redis: RedisService, private prisma: PrismaService) {}
 
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
@@ -19,7 +16,7 @@ export class UsersService {
 
   async findAll() {
     const userCache = await this.redis.getCache('users');
-    console.log(')
+    console.log({ userCache });
     const allUsers = await this.prisma.users.findMany();
 
     return allUsers;

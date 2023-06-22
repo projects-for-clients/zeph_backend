@@ -10,9 +10,10 @@ export class RedisService {
     await this.cache.set(key, value, 1000);
   }
 
-  async getCache(key: string): Promise<unknown> {
-    const cached = await this.cache.get(key);
-    return cached;
+  async getCache(key: string) {
+    console.log({ key });
+    // const cached = await this.cache.get(key);
+    // return cached;
   }
 
   async delCache(key: string): Promise<void> {
