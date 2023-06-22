@@ -11,6 +11,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RedisCacheModule } from 'src/redis/redis.module';
 import { AuthMiddleware } from 'src/middlewares/auth.middleware';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Module({
   imports: [
@@ -27,7 +28,14 @@ import { AuthMiddleware } from 'src/middlewares/auth.middleware';
     OtpModule,
   ],
   controllers: [AppController],
-  providers: [AppService, RequestService],
+  providers: [
+    AppService,
+    RequestService,
+    {
+      provide: 'APP_GUARD',
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

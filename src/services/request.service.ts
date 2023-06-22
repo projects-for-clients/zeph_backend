@@ -14,6 +14,7 @@ export class RequestService {
   }
 
   getUserId() {
+    console.log('getUserId', this.userId);
     return this.userId;
   }
 }
