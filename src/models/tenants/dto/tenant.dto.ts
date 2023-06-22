@@ -4,14 +4,32 @@ export class TenantDto {
   @IsString()
   @IsNotEmpty()
   landlord_name: string;
-  landlord_address: string;
-  tenant_name: string;
-  tenant_address: string;
-  duration: string;
-  property_description: string;
-  relevant_documents: string;
 
   @IsString()
+  @IsNotEmpty()
+  landlord_address: string;
+
+  @IsString()
+  @IsNotEmpty()
+  tenant_name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  tenant_address: string;
+
+  @IsString()
+  @IsNotEmpty()
+  duration: string;
+
+  @IsString()
+  @IsNotEmpty()
+  property_description: string;
+
+  @IsString()
+  @IsNotEmpty()
+  relevant_documents: string;
+
+  @IsNumber()
   @IsNotEmpty()
   amount: string;
 }
