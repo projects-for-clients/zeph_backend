@@ -18,7 +18,7 @@ import { RedisCacheModule } from 'src/redis/redis.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    RedisCacheModule,
+    // RedisCacheModule,
     UsersModule,
     AuthModule,
     PrismaModule,
