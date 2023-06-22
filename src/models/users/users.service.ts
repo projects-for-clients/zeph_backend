@@ -22,12 +22,11 @@ export class UsersService {
   }
 
   async findAll() {
-    this.logger.log(UsersService.name);
+    this.logger.log(UsersService.name, this.requestService.getUserId();
     const userCache = await this.redis.getCache('users');
     console.log({ userCache });
     const allUsers = await this.prisma.users.findMany();
 
-    console.log(this.requestService.getUserId());
 
     return allUsers;
   }
