@@ -21,8 +21,6 @@ export class UsersController {
 
   @Post()
   create(@Body(new AuthPipe()) createUserDto: CreateUserDto) {
-    console.log({ createUserDto });
-
     return this.usersService.create(createUserDto);
   }
 
