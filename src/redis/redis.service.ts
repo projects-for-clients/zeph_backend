@@ -3,19 +3,20 @@ import Redis from 'ioredis';
 
 @Injectable()
 export class RedisService {
+  private readonly redis = new Redis(process.env.REDIS_URL);
+
   constructor() {
-    console.log('RedisCacheModule');
-    const redis = new Redis(process.env.REDIS_URL);
-    redis.on('connect', () => {
+    this.redis.on('connect', () => {
       console.log('Redis connected');
     });
-    redis.on('error', (err) => {
+    this.redis.on('error', (err) => {
       console.log('Redis error', err);
     });
   }
 
   async setCache(key: string, value: any): Promise<void> {
     console.log('setCache', key);
+
     // return await this.cache.set(key, value, 7000);
   }
 
