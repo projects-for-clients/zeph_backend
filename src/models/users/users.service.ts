@@ -24,10 +24,10 @@ export class UsersService {
 
     const cached = await this.redis.getCache(UsersService.name);
 
-    if (cached) {
-      console.log('returning redis catch....', cached);
-      return JSON.parse(cached);
-    }
+    // if (cached) {
+    //   console.log('returning redis catch....', cached);
+    //   return JSON.parse(cached);
+    // }
 
     console.log('call the database');
 
