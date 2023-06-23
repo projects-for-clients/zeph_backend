@@ -8,7 +8,7 @@ export class RedisService {
   private readonly redis = new Redis(process.env.REDIS_URL);
   private readonly logger = new Logger(RedisService.name);
 
-  constructor(@Inject(CACHE_MANAGER) private readonly cache: Cache) {
+  constructor() {
     this.redis.on('connect', () => {
       this.logger.log('Redis connected', RedisService.name);
     });
