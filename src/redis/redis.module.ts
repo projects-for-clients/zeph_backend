@@ -10,7 +10,7 @@ import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
       store: redisStore({
         name: 'redis',
         url: process.env.REDIS_URL,
-      }),
+      }) as any,
       isGlobal: true,
       ttl: 99999,
     }),
