@@ -23,6 +23,7 @@ export class UsersService {
     this.logger.log(UsersService.name, this.requestService.getUserId());
 
     const allUsers = await this.prisma.users.findMany();
+    const cached = await this.redis.setCache('users', allUsers);
 
     return allUsers;
   }
