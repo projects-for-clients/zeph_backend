@@ -14,27 +14,25 @@ import { ConfigService } from '@nestjs/config';
     //       ttl: 60 * 1000 * 3600,
     //     }),
     //   }),
-
     //   isGlobal: true,
     // }),
-
-    CacheModule.register({
-      useFactory: async () => {
-        return {
-          store: redisStore as any,
-          host: process.env.REDIS_HOST,
-          port: process.env.REDIS_PORT,
-        };
-      },
-      isGlobal: true,
-    }),
+    // CacheModule.register({
+    //   useFactory: async () => {
+    //     return {
+    //       store: redisStore as any,
+    //       host: process.env.REDIS_HOST,
+    //       port: process.env.REDIS_PORT,
+    //     };
+    //   },
+    //   isGlobal: true,
+    // }),
   ],
   providers: [
     RedisService,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: CacheInterceptor,
-    },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: CacheInterceptor,
+    // },
   ],
   exports: [RedisService],
 })
