@@ -23,7 +23,9 @@ export class UsersController {
   create(@Body() createUserDto: CreateUserDto) {
     console.log({ createUserDto });
 
-    return 'hello';
+    createUserDto = new AuthPipe().transform(createUserDto, null);
+    createUserDto.password = '123456';
+
     return this.usersService.create(createUserDto);
   }
 
