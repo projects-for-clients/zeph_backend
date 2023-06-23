@@ -1,4 +1,3 @@
-import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
 import { RequestService } from './../services/request.service';
 import { MiddlewareConsumer, Module, NestModule, Scope } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -13,6 +12,7 @@ import { AppService } from './app.service';
 import { AuthMiddleware } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { LogInterceptor } from 'src/interceptors/app.interceptor';
+import { RedisCacheModule } from 'src/redis/redis.module';
 
 @Module({
   imports: [
@@ -20,11 +20,7 @@ import { LogInterceptor } from 'src/interceptors/app.interceptor';
       isGlobal: true,
     }),
 
-    CacheModule.register({
-      isGlobal: true,
-      ttl: 3600 * 24 * 7,
-    }),
-
+    RedisCacheModule,
     UsersModule,
     AuthModule,
     PrismaModule,
@@ -45,11 +41,6 @@ import { LogInterceptor } from 'src/interceptors/app.interceptor';
       provide: 'APP_INTERCEPTOR',
       scope: Scope.REQUEST,
       useClass: LogInterceptor,
-    },
-
-    {
-      provide: 'APP_INTERCEPTOR',
-      useClass: CacheInterceptor,
     },
   ],
 })
