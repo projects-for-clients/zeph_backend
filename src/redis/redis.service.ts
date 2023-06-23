@@ -20,25 +20,19 @@ export class RedisService {
   async setCache(key: string, value: any): Promise<string> {
     console.log('setCache', key);
 
-    const set = await this.redis.set(
+    const res = await this.redis.set(
       key,
       JSON.stringify(value),
       'EX',
       3600 * 24 * 7,
     );
 
-    const local = await this.cache.set(key, value, { ttl: 3600 * 24 * 7 });
-
-    return set;
+    return res;
   }
 
   async getCache(key: string) {
-    // const cached = await this.redis.get(key);
-    // const keys = await this.cache.get(key);
-    const reset = await this.cache.reset();
-    console.log({ reset });
-    // console.log('getCache', key, keys);
-    //return cached;
+    const cached = await this.redis.get(key);
+    return cached;
   }
 
   async delCache(key: string): Promise<void> {

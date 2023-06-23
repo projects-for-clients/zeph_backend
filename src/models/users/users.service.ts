@@ -4,10 +4,8 @@ import { Logger, Injectable, Scope } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RedisService } from 'src/redis/redis.service';
-import { CacheKey } from '@nestjs/cache-manager';
 
 @Injectable({ scope: Scope.REQUEST })
-@CacheKey(UsersService.name)
 export class UsersService {
   private readonly logger = new Logger(UsersService.name);
 
@@ -26,10 +24,10 @@ export class UsersService {
 
     const cached = await this.redis.getCache(UsersService.name);
 
-    // if (cached) {
-    //   console.log('returning redis catch....', cached);
-    //   return JSON.parse(cached);
-    // }
+    if (cached) {
+      console.log('returning redis catch....', cached);
+      return JSON.parse(cached);
+    }
 
     console.log('call the database');
 
