@@ -6,6 +6,6 @@ import { RequestService } from 'src/services/request.service';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService, RedisService, RequestService],
+  providers: [UsersService, RequestService],
 })
 export class UsersModule {}

@@ -15,6 +15,6 @@ import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
     RedisService,
     { provide: APP_INTERCEPTOR, useClass: CacheInterceptor },
   ],
-  // exports: [RedisService],
+  exports: [RedisService],
 })
 export class RedisCacheModule {}
