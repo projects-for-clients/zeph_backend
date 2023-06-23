@@ -6,7 +6,8 @@ import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
   imports: [
     CacheModule.register({
       isGlobal: true,
-      ttl: 3600 * 24 * 7,
+      // ttl: 3600 * 24 * 7,
+      ttl: 10,
     }),
   ],
   providers: [
