@@ -4,6 +4,6 @@ import { RedisService } from 'src/redis/redis.service';
 @Module({
   imports: [],
   providers: [RedisService],
-  exports: [],
+  exports: [RedisService],
 })
 export class SharedModule {}
