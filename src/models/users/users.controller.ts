@@ -20,11 +20,8 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body(new AuthPipe()) createUserDto: CreateUserDto) {
     console.log({ createUserDto });
-
-    createUserDto = new AuthPipe().transform(createUserDto, null);
-    createUserDto.password = '123456';
 
     return this.usersService.create(createUserDto);
   }
