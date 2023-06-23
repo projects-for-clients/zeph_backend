@@ -7,12 +7,19 @@ import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 @Module({
   imports: [
     CacheModule.register({
-      store: redisStore({
-        name: 'redis',
-        url: process.env.REDIS_URL,
-      }) as any,
+      // store: redisStore({
+      //   name: 'redis',
+      //   url: process.env.REDIS_URL,
+      // }) as any,
+      // isGlobal: true,
+      // ttl: 99999,
+
+      useFactory: async () => ({
+        store: redisStore as any,
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT,
+      }),
       isGlobal: true,
-      ttl: 99999,
     }),
   ],
   providers: [
