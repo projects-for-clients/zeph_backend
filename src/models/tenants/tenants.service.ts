@@ -6,7 +6,7 @@ import { Cache } from 'cache-manager';
 @Injectable()
 export class TenantsService {
   constructor(
-    @Inject(CACHE_MANAGER) private readonly cache: Cache,
+    // @Inject(CACHE_MANAGER) private readonly cache: Cache,
     private prisma: PrismaService,
   ) {}
 

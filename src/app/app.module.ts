@@ -19,7 +19,6 @@ import { LogInterceptor } from 'src/interceptors/app.interceptor';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    RedisCacheModule,
     UsersModule,
     AuthModule,
     PrismaModule,
