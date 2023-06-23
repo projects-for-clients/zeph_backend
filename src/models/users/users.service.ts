@@ -21,13 +21,20 @@ export class UsersService {
 
   async findAll() {
     this.logger.log(UsersService.name, this.requestService.getUserId());
-    const userCache = await this.redis.setCache('user', {
-      name: 'test',
-    });
-    console.log({ userCache });
+
+    const userCache = await this.redis.getCache('users');
+
+    if (userCache) {
+      console.log({ userCache });
+      return userCache;
+    }
     const allUsers = await this.prisma.users.findMany();
 
-    return allUsers;
+    const setUsersCache = await this.redis.setCache('users', allUsers);
+
+    console.log({ setUsersCache });
+
+    return setUsersCache;
   }
 
   findOne(id: number) {
