@@ -32,7 +32,7 @@ export class UsersService {
     console.log('call the database');
 
     const allUsers = await this.prisma.users.findMany();
-    await this.redis.setCache(UsersService.name, allUsers);
+    // await this.redis.setCache(UsersService.name, allUsers);
 
     return allUsers;
   }

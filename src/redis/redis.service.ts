@@ -35,7 +35,8 @@ export class RedisService {
   async getCache(key: string) {
     // const cached = await this.redis.get(key);
     // const keys = await this.cache.get(key);
-    return await this.cache.reset();
+    const reset = await this.cache.reset();
+    console.log({ reset });
     // console.log('getCache', key, keys);
     //return cached;
   }
