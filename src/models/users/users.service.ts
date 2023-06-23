@@ -5,7 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RedisService } from 'src/redis/redis.service';
 
-@Injectable({scope: Scope.REQUEST)
+@Injectable({ scope: Scope.REQUEST })
 export class UsersService {
   private readonly logger = new Logger(UsersService.name);
 
@@ -23,9 +23,9 @@ export class UsersService {
     this.logger.log(UsersService.name, this.requestService.getUserId());
 
     const userCache = await this.redis.getCache('users');
-    if (userCache) {
-      return userCache;
-    }
+    // if (userCache) {
+    //   return userCache;
+    // }
     const allUsers = await this.prisma.users.findMany();
 
     const setUsersCache = await this.redis.setCache('users', allUsers);
@@ -33,7 +33,7 @@ export class UsersService {
     console.log({ userCache });
     console.log({ setUsersCache });
 
-    return setUsersCache;
+    return allUsers;
   }
 
   findOne(id: number) {

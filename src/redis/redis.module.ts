@@ -17,17 +17,13 @@ import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
       useFactory: async () => {
         return {
           store: redisStore as any,
-          host: process.env.REDIS_HOST,
-          port: process.env.REDIS_PORT,
+          url: process.env.REDIS_URL,
         };
       },
       isGlobal: true,
     }),
   ],
-  providers: [
-    RedisService,
-    { provide: APP_INTERCEPTOR, useClass: CacheInterceptor },
-  ],
+  providers: [RedisService],
   exports: [RedisService],
 })
 export class RedisCacheModule {}
