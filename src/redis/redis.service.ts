@@ -18,7 +18,7 @@ export class RedisService {
   async setCache(key: string, value: any): Promise<string> {
     console.log('setCache', key);
 
-    const set = await this.redis.set(key, value, 'EX', 60 * 60 * 24 * 30, 'NX');
+    const set = await this.redis.set(key, value, 'EX', 3600 * 24 * 7, 'NX');
     return set;
   }
 
