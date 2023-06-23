@@ -13,6 +13,7 @@ import { RedisCacheModule } from 'src/redis/redis.module';
 import { AuthMiddleware } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { LogInterceptor } from 'src/interceptors/app.interceptor';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -40,6 +41,10 @@ import { LogInterceptor } from 'src/interceptors/app.interceptor';
       provide: 'APP_INTERCEPTOR',
       scope: Scope.REQUEST,
       useClass: LogInterceptor,
+    },
+    {
+      provide: 'APP_INTERCEPTOR',
+      useClass: CacheInterceptor,
     },
   ],
 })
