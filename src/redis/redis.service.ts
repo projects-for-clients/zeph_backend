@@ -19,6 +19,8 @@ export class RedisService {
     console.log('setCache', key);
 
     const set = await this.redis.set(key, value, 'EX', 3600 * 24 * 7, 'NX');
+
+    this.redis.sadd()
     return set;
   }
 
