@@ -24,7 +24,7 @@ export class RedisService {
   async getCache(key: string) {
     const cached = await this.redis.get(key);
     console.log('getCache', key);
-    //return cached;
+    return cached;
   }
 
   async delCache(key: string): Promise<void> {

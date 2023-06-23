@@ -24,6 +24,7 @@ export class UsersService {
 
     const userCache = await this.redis.getCache('users');
     if (userCache) {
+      console.log({ userCache });
       return userCache;
     }
     const allUsers = await this.prisma.users.findMany();
