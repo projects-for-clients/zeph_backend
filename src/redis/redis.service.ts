@@ -14,23 +14,24 @@ export class RedisService {
     });
   }
 
-  async setCache(key: string, value: any): Promise<void> {
+  async setCache(key: string, value: any): Promise<string> {
     console.log('setCache', key);
 
-    // return await this.cache.set(key, value, 7000);
+    const set = await this.redis.set(key, value);
+    return set;
   }
 
   async getCache(key: string) {
-    // const cached = await this.cache.get(key);
+    const cached = await this.redis.get(key);
     console.log('getCache', key);
     //return cached;
   }
 
   async delCache(key: string): Promise<void> {
-    // await this.cache.del(key);
+    await this.redis.del(key);
   }
 
   async resetCache(): Promise<void> {
-    // await this.cache.reset();
+    await this.redis.reset();
   }
 }
