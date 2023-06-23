@@ -17,6 +17,7 @@ export class RedisService {
     });
   }
 
+  //TODOput the local for update
   async setCache(key: string, value: any): Promise<string> {
     console.log('setCache', key);
 
