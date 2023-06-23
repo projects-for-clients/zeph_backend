@@ -1,7 +1,6 @@
-import {  Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { TenantDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Cache } from 'cache-manager';
 
 @Injectable()
 export class TenantsService {

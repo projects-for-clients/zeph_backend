@@ -18,7 +18,6 @@ export class RedisService {
   async setCache(key: string, value: any): Promise<string> {
     console.log('setCache', key);
 
-    
     const set = await this.redis.set(
       key,
       JSON.stringify(value),
@@ -39,7 +38,7 @@ export class RedisService {
     await this.redis.del(key);
   }
 
-  async resetCache(): Promise<void> {
-    await this.redis.reset();
+  async flushAll(): Promise<void> {
+    await this.redis.flushall();
   }
 }
