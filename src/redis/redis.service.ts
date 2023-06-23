@@ -1,16 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import Redis from 'ioredis';
 
 @Injectable()
 export class RedisService {
   private readonly redis = new Redis(process.env.REDIS_URL);
+  private readonly logger = new Logger(RedisService.name);
 
   constructor() {
     this.redis.on('connect', () => {
-      console.log('Redis connected');
+      this.logger.log('Redis connected', RedisService.name);
     });
     this.redis.on('error', (err) => {
-      console.log('Redis error', err);
+      this.logger.log('Redis error', err, RedisService.name);
     });
   }
 
