@@ -1,4 +1,3 @@
-import { RequestService } from 'src/services/request.service';
 import {
   CallHandler,
   ExecutionContext,
@@ -16,8 +15,6 @@ export class LogInterceptor implements NestInterceptor {
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.switchToHttp().getRequest();
-
-    console.log({ req });
 
     const { method, url, body, query, params } = req;
 
