@@ -1,7 +1,7 @@
 import { RequestService } from './../services/request.service';
 import { Injectable, NestMiddleware, Logger } from '@nestjs/common';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class AuthMiddleware implements NestMiddleware {
   private logger = new Logger(AuthMiddleware.name);
 
