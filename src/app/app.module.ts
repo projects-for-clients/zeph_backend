@@ -4,7 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from 'src/auth/auth.module';
 import { AgreementsModule } from 'src/models/agreements/agreements.module';
 import { TenantsModule } from 'src/models/tenants/tenants.module';
-import { UsersModule } from 'src/models/users/users.module';
 import { OtpModule } from 'src/otp/otp.module';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { AppController } from './app.controller';
@@ -13,25 +12,30 @@ import { AuthMiddleware } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { LogInterceptor } from 'src/interceptors/app.interceptor';
 import { RedisCacheModule } from 'src/redis/redis.module';
+import { RedisService } from 'src/redis/redis.service';
+import { UsersService } from 'src/models/users/users.service';
+import { UsersController } from 'src/models/users/users.controller';
+import { TenantsService } from 'src/models/tenants/tenants.service';
+import { TenantsController } from 'src/models/tenants/tenants.controller';
+import { SharedModule } from 'src/shared/shared.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
+    SharedModule,
     RedisCacheModule,
-    UsersModule,
     AuthModule,
     PrismaModule,
-    UsersModule,
     AgreementsModule,
-    TenantsModule,
     OtpModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, UsersController, TenantsController],
   providers: [
     AppService,
+    UsersService,
+    TenantsService,
     RequestService,
     {
       provide: 'APP_GUARD',
@@ -43,6 +47,8 @@ import { RedisCacheModule } from 'src/redis/redis.module';
       useClass: LogInterceptor,
     },
   ],
+
+  exports: [RequestService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { TenantDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class TenantsService {
   constructor(
     // @Inject(CACHE_MANAGER) private readonly cache: Cache,
     private prisma: PrismaService,
+    private redis: RedisService,
   ) {}
 
   async create(createTenantDto: TenantDto) {
@@ -20,7 +22,8 @@ export class TenantsService {
     return tenant;
   }
 
-  findAll() {
+  async findAll() {
+    await this.redis.flushAll();
     return `This action returns all tenants`;
   }
 
