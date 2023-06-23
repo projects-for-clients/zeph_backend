@@ -17,6 +17,6 @@ export class AuthMiddleware implements NestMiddleware {
       this.request.setUserId(bearerToken);
     }
 
-    next();
+    //next();
   }
 }
