@@ -4,8 +4,10 @@ import { Logger, Injectable, Scope } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RedisService } from 'src/redis/redis.service';
+import { CacheKey } from '@nestjs/cache-manager';
 
 @Injectable({ scope: Scope.REQUEST })
+@CacheKey(UsersService.name)
 export class UsersService {
   private readonly logger = new Logger(UsersService.name);
 
