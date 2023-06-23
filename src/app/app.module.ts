@@ -20,7 +20,10 @@ import { LogInterceptor } from 'src/interceptors/app.interceptor';
       isGlobal: true,
     }),
 
-    CacheModule.register({}),
+    CacheModule.register({
+      isGlobal: true,
+      ttl: 3600 * 24 * 7,
+    }),
 
     UsersModule,
     AuthModule,
