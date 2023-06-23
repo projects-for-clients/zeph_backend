@@ -8,7 +8,7 @@ import { CacheKey } from '@nestjs/cache-manager';
 
 @Injectable({ scope: Scope.REQUEST })
 @CacheKey('users')
-@CacheTTL(60 * 60 * 24)
+@CacheTTL(60 * 1000 * 3600)
 export class UsersService {
   private readonly logger = new Logger(UsersService.name);
 
