@@ -25,8 +25,11 @@ export class UsersService {
     const cached = await this.redis.getCache(UsersService.name);
 
     if (cached) {
+      console.log('returning redis catch....', cached);
       return JSON.parse(cached);
     }
+
+    console.log('call the database');
 
     const allUsers = await this.prisma.users.findMany();
     await this.redis.setCache(UsersService.name, allUsers);
