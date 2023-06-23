@@ -1,5 +1,5 @@
 import { RequestService } from './../services/request.service';
-import { Injectable, NestMiddleware, Logger } from '@nestjs/common';
+import { Injectable, NestMiddleware, Logger, Scope } from '@nestjs/common';
 
 @Injectable({ scope: Scope.REQUEST })
 export class AuthMiddleware implements NestMiddleware {
