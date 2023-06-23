@@ -1,5 +1,15 @@
 // eslint-disable-next-line prettier/prettier
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, CacheInterceptor } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  CacheInterceptor,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -10,11 +20,10 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body(new AuthPipe()) createUserDto: CreateUserDto) {
-    let { password } = createUserDto;
-    console.log({ password });
-    password = '123456';
+  create(@Body() createUserDto: CreateUserDto) {
+    console.log({ createUserDto });
 
+    return 'hello';
     return this.usersService.create(createUserDto);
   }
 
