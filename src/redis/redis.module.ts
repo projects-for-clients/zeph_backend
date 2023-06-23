@@ -1,25 +1,20 @@
 import { Module } from '@nestjs/common';
-import * as redisStore from 'cache-manager-ioredis';
+import { redisStore } from 'cache-manager-redis-yet';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { RedisService } from './redis.service';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    CacheModule.register({
-      // store: redisStore({
-      //   name: 'redis',
-      //   url: process.env.REDIS_URL,
-      // }) as any,
-      // isGlobal: true,
-      // ttl: 99999,
+    CacheModule.registerAsync({
+      useFactory: async (configService: ConfigService) => ({
+        store: await redisStore({
+          url: configService.get<string>('REDIS_URL'),
+          ttl: 60 * 1000 * 3600,
+        }),
+      }),
 
-      useFactory: async () => {
-        return {
-          store: redisStore as any,
-          url: process.env.REDIS_URL,
-        };
-      },
       isGlobal: true,
     }),
   ],
