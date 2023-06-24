@@ -25,19 +25,17 @@ import { UsersModule } from 'src/models/users/users.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    RedisCacheModule,
+    // RedisCacheModule,
+    UsersModule,
     AuthModule,
     PrismaModule,
     AgreementsModule,
     OtpModule,
+    SharedModule,
   ],
-  controllers: [AppController, UsersController],
+  controllers: [AppController],
   providers: [
-    RedisService,
-    TenantsService,
     AppService,
-    UsersService,
-    TenantsService,
     {
       provide: 'APP_GUARD',
       useClass: AuthGuard,
