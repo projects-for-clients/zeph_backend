@@ -1,25 +1,35 @@
 import {
   CallHandler,
   ExecutionContext,
+  Inject,
   Injectable,
   Logger,
   NestInterceptor,
 } from '@nestjs/common';
 import { Observable, tap } from 'rxjs';
 import { RequestService } from 'src/services/request.service';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class LogInterceptor implements NestInterceptor {
   private readonly logger = new Logger(LogInterceptor.name);
 
-  constructor(private readonly requestService: RequestService) {}
+  constructor(
+    private readonly requestService: RequestService,
+    @Inject() private readonly cache: Cache,
+  ) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.switchToHttp().getRequest();
 
     const { method, url, body, query, params, headers } = req;
 
-    this.logger.verbose('Request', JSON.stringify(req.headers));
+    if (method === 'POST') {
+      await this.cache.reset();
+    }
+
+    this.logger.verbose('Request', JSON.stringify(headers));
 
     this.logger.log(`
       ${method} ${url} ${JSON.stringify(body)} ${JSON.stringify(

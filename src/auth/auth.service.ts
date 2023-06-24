@@ -6,8 +6,6 @@ import { AuthLogin, AuthRegister } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Cache } from 'cache-manager';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +16,6 @@ export class AuthService {
     private config: ConfigService,
     private prisma: PrismaService,
     private readonly requestService: RequestService,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {
     this.secret = this.config.get('JWT_SECRET');
   }
@@ -26,8 +23,6 @@ export class AuthService {
     try {
       const { email, password } = dto;
       const hashedPassword = await argon.hash(password);
-
-      await this.cacheManager.reset()
 
       const user = await this.prisma.users.create({
         data: {
