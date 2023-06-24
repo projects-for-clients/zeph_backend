@@ -78,6 +78,7 @@ export class AuthService {
 
   setCookie(res: Response, token: string) {
     const isProduction = this.config.get('NODE_ENV') === 'production';
+
     console.log('isProduction', isProduction);
     const expiryTime = isProduction ? 3600 * 24 * 1000 : 0;
 
