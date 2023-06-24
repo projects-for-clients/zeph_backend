@@ -58,8 +58,6 @@ export class AuthService {
     this.requestService.setUserId(user.id);
 
     await this.signToken(user.id, user.email, res);
-
-    res.send('Ok');
   }
 
   async signToken(
@@ -78,7 +76,7 @@ export class AuthService {
     });
 
     this.setCookie(res, token);
-    return token;
+    return res.json('Ok');
   }
 
   setCookie(res: Response, token: string) {
