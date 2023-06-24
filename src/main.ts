@@ -11,7 +11,7 @@ async function bootstrap() {
     },
   });
   app.setGlobalPrefix(process.env.API_PREFIX || 'v1');
-  app.use(cookieParser(process.env.COOKIE_SECRET));
+  app.use(cookieParser());
 
   app.useGlobalPipes(
     new ValidationPipe({
