@@ -32,6 +32,8 @@ export class RedisService {
   async get(key: string) {
     const all = await this.redis.keys('*');
 
+    console.log(all)
+
     const cached = await this.redis.get(key);
     return all;
   }
