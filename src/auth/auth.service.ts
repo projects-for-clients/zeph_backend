@@ -70,7 +70,10 @@ export class AuthService {
     });
 
     this.setCookie(res, token);
-    res.json(token);
+    res.json({
+      message: 'success',
+      email,
+    });
   }
 
   setCookie(res: Response, token: string) {
