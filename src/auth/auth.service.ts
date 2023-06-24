@@ -26,7 +26,7 @@ export class AuthService {
         },
       });
 
-      return this.signToken(user.id);
+      return this.signToken(user.id, user.email);
     } catch (err) {
       if (err.code === 'P2002') {
         throw new ForbiddenException(`${err.meta.target} already exists`);
@@ -52,12 +52,16 @@ export class AuthService {
 
     this.requestService.setUserId(user.id);
 
-    return this.signToken(user.id);
+    return this.signToken(user.id, user.email);
   }
 
-  async signToken(userId: number): Promise<{ access_token: string }> {
+  async signToken(
+    userId: number,
+    email: string,
+  ): Promise<{ access_token: string }> {
     const payload = {
       id: userId,
+      email,
     };
 
     const secret = this.config.get('JWT_SECRET');

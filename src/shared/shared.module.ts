@@ -7,7 +7,6 @@ import { RequestService } from 'src/services/request.service';
 
 @Global()
 @Module({
-  imports: [],
   providers: [
     RequestService,
     AuthService,
