@@ -5,11 +5,11 @@ import { RedisService } from './redis.service';
 @Global()
 @Module({
   imports: [
-    // CacheModule.register({
-    //   isGlobal: true,
-    //   // ttl: 3600 * 24 * 7,
-    //   ttl: 10,
-    // }),
+    CacheModule.register({
+      isGlobal: true,
+      // ttl: 3600 * 24 * 7,
+      ttl: 10,
+    }),
   ],
   providers: [
     RedisService,

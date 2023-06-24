@@ -26,7 +26,7 @@ export class UsersService {
 
     if (cached) {
       console.log('returning redis catch....', cached);
-      return JSON.stringify(cached);
+      return cached;
     }
 
     console.log('call the database');
