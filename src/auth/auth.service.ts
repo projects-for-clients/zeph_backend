@@ -74,10 +74,10 @@ export class AuthService {
     const expiryTime = isProduction ? 3600 * 24 * 1000 : 0;
 
     const cookie = res.cookie('api-auth', token, {
-      // expires: new Date(Date.now() + expiryTime),
-      // httpOnly: true,
-      // secure: isProduction,
-      // sameSite: 'strict',
+      expires: new Date(Date.now() + expiryTime),
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'strict',
     });
 
     res.json({
