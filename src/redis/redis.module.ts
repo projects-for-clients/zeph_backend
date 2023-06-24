@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
 import { RedisService } from './redis.service';
 
+@Global()
 @Module({
   imports: [
     // CacheModule.register({
@@ -18,5 +19,7 @@ import { RedisService } from './redis.service';
     //   useClass: CacheInterceptor,
     // },
   ],
+
+  exports: [RedisService],
 })
 export class RedisCacheModule {}

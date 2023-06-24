@@ -1,5 +1,5 @@
 import { UsersService } from './../models/users/users.service';
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthController } from 'src/auth/auth.controller';
 import { AuthService } from 'src/auth/auth.service';
@@ -12,11 +12,9 @@ import { RequestService } from 'src/services/request.service';
 
 @Module({
   imports: [],
-  controllers: [TenantsController, UsersController, AuthController],
+  controllers: [UsersController, AuthController],
   providers: [
     PrismaService,
-    RedisService,
-    TenantsService,
     RequestService,
     UsersService,
     AuthService,
