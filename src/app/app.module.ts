@@ -22,12 +22,12 @@ import { LeaseAgreementsModule } from 'src/lease_agreements/lease_agreements.mod
     }),
     SharedModule,
     TenantsModule,
-    PrismaModule,
     LeaseAgreementsModule,
   ],
   controllers: [AppController, AuthController],
   providers: [
     AppService,
+
     {
       provide: 'APP_GUARD',
       useClass: AuthGuard,
