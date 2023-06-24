@@ -25,8 +25,7 @@ import { UsersModule } from 'src/models/users/users.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    // RedisCacheModule,
-    UsersModule,
+
     AuthModule,
     PrismaModule,
     AgreementsModule,
