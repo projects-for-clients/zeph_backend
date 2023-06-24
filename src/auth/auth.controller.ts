@@ -1,19 +1,19 @@
 import { AuthLogin, AuthRegister } from './dto';
 import { AuthService } from './auth.service';
-import { Body, Controller, Headers, Post, Req } from '@nestjs/common';
+import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('register')
-  register(@Body() dto: AuthRegister) {
-    return this.authService.register(dto);
+  register(@Body() dto: AuthRegister, @Res() res: Response) {
+    return this.authService.register(dto, res);
   }
 
   @Post('login')
-  login(@Headers() headers, @Req() res, @Body() dto: AuthLogin) {
-    console.log(headers);
+  login(@Body() dto: AuthLogin, @Res() res: Response) {
     return this.authService.login(dto, res);
   }
 }

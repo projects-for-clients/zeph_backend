@@ -1,5 +1,5 @@
 import { RequestService } from './../services/request.service';
-import { ForbiddenException, Injectable, Res } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import * as argon from 'argon2';
 import { AuthLogin, AuthRegister } from 'src/auth/dto';
@@ -19,7 +19,7 @@ export class AuthService {
   ) {
     this.secret = this.config.get('JWT_SECRET');
   }
-  async register(dto: AuthRegister) {
+  async register(dto: AuthRegister, res: Response) {
     try {
       const { email, password } = dto;
       const hashedPassword = await argon.hash(password);
@@ -31,7 +31,7 @@ export class AuthService {
         },
       });
 
-      return this.signToken(user.id, user.email);
+      return this.signToken(user.id, user.email, res);
     } catch (err) {
       if (err.code === 'P2002') {
         throw new ForbiddenException(`${err.meta.target} already exists`);
@@ -40,7 +40,7 @@ export class AuthService {
     }
   }
 
-  async login(dto: AuthLogin, @Res() res: Response) {
+  async login(dto: AuthLogin, res: Response) {
     const { email, password } = dto;
 
     const user = await this.prisma.users.findFirst({
@@ -57,24 +57,16 @@ export class AuthService {
 
     this.requestService.setUserId(user.id);
 
-    const cookie = await this.signToken(user.id, user.email);
-
-    res.cookie('cookieName', cookie, {
-      // Options for the cookie
-      // For example, you can set the expiration date
-      expires: new Date(Date.now() + 86400000), // Cookie will expire in 1 day
-      httpOnly: true, // Cookie is only accessible through HTTP(S)
-      secure: false, // Cookie is only sent over HTTPS
-      encode(val) {
-        return val;
-      },
-      sameSite: 'strict', // Cookie is not sent for cross-site requests
-    });
+    const cookie = await this.signToken(user.id, user.email, res);
 
     res.send('ok');
   }
 
-  async signToken(userId: number, email: string): Promise<string> {
+  async signToken(
+    userId: number,
+    email: string,
+    res: Response,
+  ): Promise<string> {
     const payload = {
       id: userId,
       email,
@@ -85,6 +77,19 @@ export class AuthService {
       secret: this.secret,
     });
 
-    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=604800`;
+    this.setCookie(res, token);
+    return token;
+  }
+
+  setCookie(res: Response, token: string) {
+    res.cookie('cookieName', token, {
+      expires: new Date(Date.now() + 86400000),
+      httpOnly: true,
+      secure: false,
+      encode(val) {
+        return val;
+      },
+      sameSite: 'strict', // Cookie is not sent for cross-site requests
+    });
   }
 }
