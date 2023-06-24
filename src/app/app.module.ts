@@ -7,24 +7,20 @@ import { AuthGuard } from 'src/guards/auth.guard';
 import { LogInterceptor } from 'src/interceptors/app.interceptor';
 import { SharedModule } from 'src/shared/shared.module';
 import { TenantsModule } from 'src/models/tenants/tenants.module';
-import { PrismaModule } from 'src/prisma/prisma.module';
-import { RedisService } from 'src/redis/redis.service';
-import { RequestService } from 'src/services/request.service';
-import { AuthController } from 'src/auth/auth.controller';
-import { TenantsController } from 'src/models/tenants/tenants.controller';
-import { LeaseAgreementsController } from 'src/lease_agreements/lease_agreements.controller';
 import { LeaseAgreementsModule } from 'src/lease_agreements/lease_agreements.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    AuthModule,
     SharedModule,
     TenantsModule,
     LeaseAgreementsModule,
   ],
-  controllers: [AppController, AuthController],
+  controllers: [AppController],
   providers: [
     AppService,
 

@@ -1,5 +1,6 @@
 import { RequestService } from './../services/request.service';
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, Res } from '@nestjs/common';
+import { Response } from 'express';
 import * as argon from 'argon2';
 import { AuthLogin, AuthRegister } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
@@ -39,7 +40,7 @@ export class AuthService {
     }
   }
 
-  async login(dto: AuthLogin) {
+  async login(dto: AuthLogin, @Res() res: Response) {
     const { email, password } = dto;
 
     const user = await this.prisma.users.findFirst({
@@ -56,12 +57,21 @@ export class AuthService {
 
     this.requestService.setUserId(user.id);
 
-    const cookie = this.signToken(user.id, user.email);
+    const cookie = await this.signToken(user.id, user.email);
 
-    return {
-      cookie,
-      user,
-    };
+    res.cookie('cookieName', cookie, {
+      // Options for the cookie
+      // For example, you can set the expiration date
+      expires: new Date(Date.now() + 86400000), // Cookie will expire in 1 day
+      httpOnly: true, // Cookie is only accessible through HTTP(S)
+      secure: false, // Cookie is only sent over HTTPS
+      encode(val) {
+        return val;
+      },
+      sameSite: 'strict', // Cookie is not sent for cross-site requests
+    });
+
+    res.send('ok');
   }
 
   async signToken(userId: number, email: string): Promise<string> {
