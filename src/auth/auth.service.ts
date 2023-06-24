@@ -57,9 +57,9 @@ export class AuthService {
 
     this.requestService.setUserId(user.id);
 
-    const cookie = await this.signToken(user.id, user.email, res);
+    await this.signToken(user.id, user.email, res);
 
-    res.send('ok');
+    return 'ok';
   }
 
   async signToken(
@@ -89,7 +89,7 @@ export class AuthService {
       encode(val) {
         return val;
       },
-      sameSite: 'strict', // Cookie is not sent for cross-site requests
+      sameSite: 'strict',
     });
   }
 }
