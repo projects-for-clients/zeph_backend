@@ -10,16 +10,22 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { RedisService } from 'src/redis/redis.service';
 import { RequestService } from 'src/services/request.service';
 
+@Global()
 @Module({
   imports: [],
-  controllers: [UsersController, AuthController],
   providers: [
-    PrismaService,
     RequestService,
-    UsersService,
     AuthService,
     JwtService,
+    RedisService,
+    PrismaService,
   ],
-  exports: [RequestService],
+  exports: [
+    RequestService,
+    RedisService,
+    PrismaService,
+    JwtService,
+    AuthService,
+  ],
 })
 export class SharedModule {}

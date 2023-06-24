@@ -6,6 +6,12 @@ import { AuthMiddleware } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { LogInterceptor } from 'src/interceptors/app.interceptor';
 import { SharedModule } from 'src/shared/shared.module';
+import { TenantsModule } from 'src/models/tenants/tenants.module';
+import { PrismaModule } from 'src/prisma/prisma.module';
+import { RedisService } from 'src/redis/redis.service';
+import { RequestService } from 'src/services/request.service';
+import { AuthController } from 'src/auth/auth.controller';
+import { TenantsController } from 'src/models/tenants/tenants.controller';
 
 @Module({
   imports: [
@@ -13,8 +19,10 @@ import { SharedModule } from 'src/shared/shared.module';
       isGlobal: true,
     }),
     SharedModule,
+    TenantsModule,
+    PrismaModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, AuthController, TenantsController],
   providers: [
     AppService,
     {
