@@ -7,17 +7,17 @@ import { RedisService } from './redis.service';
   imports: [
     CacheModule.register({
       isGlobal: true,
-      // ttl: 3600 * 24 * 7,
-      ttl: 10,
+      ttl: 3600 * 24 * 7,
+      // ttl: 10,
     }),
   ],
   providers: [
     RedisService,
 
-    // {
-    //   provide: 'APP_INTERCEPTOR',
-    //   useClass: CacheInterceptor,
-    // },
+    {
+      provide: 'APP_INTERCEPTOR',
+      useClass: CacheInterceptor,
+    },
   ],
 
   exports: [RedisService],

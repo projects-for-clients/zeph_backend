@@ -10,12 +10,14 @@ import { SharedModule } from 'src/shared/shared.module';
 import { TenantsModule } from 'src/models/tenants/tenants.module';
 import { LeaseAgreementsModule } from 'src/lease_agreements/lease_agreements.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { RedisCacheModule } from 'src/redis/redis.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    RedisCacheModule,
     UsersModule,
     AuthModule,
     SharedModule,
