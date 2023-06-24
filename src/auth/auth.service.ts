@@ -82,7 +82,7 @@ export class AuthService {
     return res.cookie('cookieName', token, {
       expires: new Date(Date.now() + expiryTime),
       httpOnly: true,
-      secure: true,
+      secure: false,
       sameSite: 'strict',
     });
   }
