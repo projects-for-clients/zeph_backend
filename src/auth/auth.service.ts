@@ -56,7 +56,7 @@ export class AuthService {
 
     this.requestService.setUserId(user.id);
 
-    return this.signToken(user.id, user.email, res);
+    return await this.signToken(user.id, user.email, res);
   }
 
   async signToken(userId: number, email: string, res: Response): Promise<void> {
@@ -73,7 +73,7 @@ export class AuthService {
 
     const expiryTime = isProduction ? 3600 * 24 * 1000 : 0;
 
-    res.cookie('api-auth', token, {
+    const cookie = res.cookie('api-auth', token, {
       expires: new Date(Date.now() + expiryTime),
       httpOnly: true,
       secure: isProduction,
@@ -82,7 +82,7 @@ export class AuthService {
 
     res.json({
       message: 'success',
-      email,
+      email: cookie,
     });
   }
 }
