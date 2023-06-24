@@ -1,6 +1,4 @@
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Cache } from 'cache-manager';
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import Redis from 'ioredis';
 
 @Injectable()
@@ -18,8 +16,8 @@ export class RedisService {
   }
 
   //TODOput the local for update
-  async setCache(key: string, value: any): Promise<string> {
-    console.log('setCache', key);
+  async set(key: string, value: any): Promise<string> {
+    console.log('set', key);
 
     const res = await this.redis.set(
       key,
@@ -31,12 +29,14 @@ export class RedisService {
     return res;
   }
 
-  async getCache(key: string) {
+  async get(key: string) {
+    const all = await this.redis.keys('*');
+
     const cached = await this.redis.get(key);
-    return cached;
+    return all;
   }
 
-  async delCache(key: string): Promise<void> {
+  async del(key: string): Promise<void> {
     await this.redis.del(key);
   }
 

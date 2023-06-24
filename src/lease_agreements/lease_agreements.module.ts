@@ -4,6 +4,6 @@ import { LeaseAgreementsController } from './lease_agreements.controller';
 
 @Module({
   controllers: [LeaseAgreementsController],
-  providers: [LeaseAgreementsService]
+  providers: [LeaseAgreementsService],
 })
 export class LeaseAgreementsModule {}

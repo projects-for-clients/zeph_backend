@@ -22,7 +22,7 @@ export class UsersService {
   async findAll() {
     this.logger.log(UsersService.name, this.requestService.getUserId());
 
-    const cached = await this.redis.getCache(UsersService.name);
+    const cached = await this.redis.get(UsersService.name);
 
     if (cached) {
       console.log('returning redis catch....', cached);
@@ -32,7 +32,7 @@ export class UsersService {
     console.log('call the database');
 
     const allUsers = await this.prisma.users.findMany();
-    await this.redis.setCache(UsersService.name, allUsers);
+    await this.redis.set(UsersService.name, allUsers);
 
     return allUsers;
   }

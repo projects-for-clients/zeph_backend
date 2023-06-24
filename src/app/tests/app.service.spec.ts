@@ -36,17 +36,17 @@ describe('AppService', () => {
     expect(appService).toBeDefined();
   });
 
-  //   describe('setCache', () => {
+  //   describe('set', () => {
   //     it('should return "Cache set"', async () => {
   //       jest.spyOn(cacheManager, 'set').mockImplementation(async () => {});
-  //       expect(await appService.setCache()).toBe('Cache set');
+  //       expect(await appService.set()).toBe('Cache set');
   //     });
   //   });
 
-  //   describe('getCache', () => {
+  //   describe('get', () => {
   //     it('should return "value"', async () => {
   //       jest.spyOn(cacheManager, 'get').mockImplementation(async () => 'value');
-  //       expect(await appService.getCache()).toBe('value');
+  //       expect(await appService.get()).toBe('value');
   //     });
   //   });
 });
