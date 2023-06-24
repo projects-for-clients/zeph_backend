@@ -7,7 +7,6 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Observable, tap } from 'rxjs';
-import { RequestService } from 'src/services/request.service';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 
@@ -15,10 +14,7 @@ import { Cache } from 'cache-manager';
 export class LogInterceptor implements NestInterceptor {
   private readonly logger = new Logger(LogInterceptor.name);
 
-  constructor(
-    private readonly requestService: RequestService,
-    @Inject(CACHE_MANAGER) private readonly cache: Cache,
-  ) {}
+  constructor(@Inject(CACHE_MANAGER) private readonly cache: Cache) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.switchToHttp().getRequest();
@@ -27,11 +23,6 @@ export class LogInterceptor implements NestInterceptor {
 
     const handleCache = async () => {
       if (method === 'POST') {
-        this.logger.log(
-          'ssdsdfsdfdsfdsf---------',
-          context.getClass().name,
-          context.getHandler().name,
-        );
         await this.cache.reset();
       }
     };
@@ -45,7 +36,7 @@ export class LogInterceptor implements NestInterceptor {
     //   query,
     // )} ${JSON.stringify(params)}: ${LogInterceptor.name}
     //   ${(context.getClass().name, context.getHandler().name)}
-    
+
     // `);
 
     // this.logger.debug(this.requestService.getUserId());
@@ -60,13 +51,13 @@ export class LogInterceptor implements NestInterceptor {
         const contentLength = response.get('content-length');
         const userAgent = req.get('user-agent') || '';
 
-        this.logger.log(
-          `${method} ${url} ${statusCode} ${contentLength} - ${userAgent} ${
-            Date.now() - now
-          }ms`,
-        );
+        // this.logger.log(
+        //   `${method} ${url} ${statusCode} ${contentLength} - ${userAgent} ${
+        //     Date.now() - now
+        //   }ms`,
+        // );
 
-        this.logger.debug('Response', JSON.stringify(res));
+        // this.logger.debug('Response', JSON.stringify(res));
       }),
     );
   }
