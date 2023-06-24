@@ -76,13 +76,13 @@ export class AuthService {
   }
 
   setCookie(res: Response, token: string) {
+    const isProduction = this.config.get('NODE_ENV') === 'production';
+    const expiryTime = isProduction ? 3600 * 24 * 1000 : 0;
+
     res.cookie('cookieName', token, {
-      expires: new Date(Date.now() + 86400000),
+      expires: new Date(Date.now() + expiryTime),
       httpOnly: true,
-      secure: false,
-      encode(val) {
-        return val;
-      },
+      secure: isProduction,
       sameSite: 'strict',
     });
   }
