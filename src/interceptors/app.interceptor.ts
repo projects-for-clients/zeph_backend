@@ -25,9 +25,14 @@ export class LogInterceptor implements NestInterceptor {
 
     const { method, url, body, query, params, headers } = req;
 
-    if (method === 'POST') {
-      await this.cache.reset();
-    }
+    const handleCache = async () => {
+      if (method === 'POST') {
+        this.logger.log('reset cache', method);
+        await this.cache.reset();
+      }
+    };
+
+    handleCache();
 
     this.logger.verbose('Request', JSON.stringify(headers));
 
