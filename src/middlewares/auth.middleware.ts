@@ -10,14 +10,14 @@ export class AuthMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: () => void) {
     this.logger.log('MiddleWare-------', AuthMiddleware.name);
-    this.logger.debug(req.cookies);
+    this.logger.debug(req.cookies, req.headers);
     const bearerToken = req['headers']['authorization']
       ? req['headers']['authorization'].split(' ')[1]
       : null;
 
-    if (bearerToken) {
-      this.request.setUserId(bearerToken);
-    }
+    // if (bearerToken) {
+    //   this.request.setUserId(bearerToken);
+    // }
 
     next();
   }
