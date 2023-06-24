@@ -56,19 +56,8 @@ export class AuthService {
 
     this.requestService.setUserId(user.id);
 
-    return await this.signToken(user.id, user.email, res);
-  }
-
-  async signToken(userId: number, email: string, res: Response): Promise<void> {
-    const payload = {
-      id: userId,
-      email,
-    };
-
-    const token = await this.jwt.sign(payload, {
-      secret: this.secret,
-    });
-
+    const token = await this.signToken(user.id, user.email, res);
+    console.log({ token });
     const isProduction = this.config.get('NODE_ENV') === 'production';
 
     const expiryTime = isProduction ? 3600 * 24 * 1000 : 0;
@@ -80,9 +69,24 @@ export class AuthService {
       sameSite: 'strict',
     });
 
+    console.log({ cookie });
+
     res.json({
       message: 'success',
       email: cookie,
     });
+  }
+
+  signToken(userId: number, email: string, res: Response): string {
+    const payload = {
+      id: userId,
+      email,
+    };
+
+    const token = this.jwt.sign(payload, {
+      secret: this.secret,
+    });
+
+    return token;
   }
 }
