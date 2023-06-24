@@ -10,8 +10,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class AuthService {
   private readonly secret: string;
-  private readonly expiryTime = 3600 * 24 * 1000;
-
   constructor(
     private jwt: JwtService,
     private config: ConfigService,
@@ -68,7 +66,6 @@ export class AuthService {
     };
 
     const token = this.jwt.sign(payload, {
-      expiresIn: this.expiryTime / 1000,
       secret: this.secret,
     });
 
@@ -78,9 +75,10 @@ export class AuthService {
 
   setCookie(res: Response, token: string) {
     // const isProduction = this.config.get('NODE_ENV') === 'production';
+    const expiryTime = 3600 * 24 * 1000;
 
     return res.cookie('cookieName', token, {
-      expires: new Date(Date.now() + this.expiryTime),
+      expires: new Date(Date.now() + expiryTime),
       httpOnly: true,
       secure: false,
       sameSite: 'strict',
