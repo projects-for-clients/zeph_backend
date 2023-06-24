@@ -17,7 +17,7 @@ export class LogInterceptor implements NestInterceptor {
 
   constructor(
     private readonly requestService: RequestService,
-    @Inject() private readonly cache: Cache,
+    @Inject(CachE) private readonly cache: Cache,
   ) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
