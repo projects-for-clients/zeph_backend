@@ -42,49 +42,47 @@ export class AuthService {
   async login(dto: AuthLogin, res: Response) {
     const { email, password } = dto;
 
-    // const user = await this.prisma.users.findFirst({
-    //   where: {
-    //     email,
-    //   },
-    // });
-
-    // if (!user) throw new ForbiddenException('Invalid credentials');
-
-    // const isPasswordValid = await argon.verify(user.password, password);
-
-    // if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
-
-    // this.requestService.setUserId(user.id);
-
-    // const token = await this.signToken(user.id, user.email, res);
-    // console.log({ token });
-    const isProduction = (await this.config.get('NODE_ENV')) === 'production';
-
-    const expiryTime = isProduction ? 3600 * 24 * 1000 : 0;
-
-    res.cookie('api-auth', 'token', {
-      // expires: new Date(Date.now() + expiryTime),
-      httpOnly: true,
-      // secure: isProduction,
+    const user = await this.prisma.users.findFirst({
+      where: {
+        email,
+      },
     });
 
-    res.send({ status: 'ok' });
+    if (!user) throw new ForbiddenException('Invalid credentials');
+
+    const isPasswordValid = await argon.verify(user.password, password);
+
+    if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
+
+    this.requestService.setUserId(user.id);
+
+    return this.signToken(user.id, user.email, res);
   }
 
-  async signToken(
-    userId: number,
-    email: string,
-    res: Response,
-  ): Promise<string> {
+  async signToken(userId: number, email: string, res: Response): Promise<void> {
     const payload = {
       id: userId,
       email,
     };
 
-    const token = await this.jwt.signAsync(payload, {
+    const token = await this.jwt.sign(payload, {
       secret: this.secret,
     });
 
-    return token;
+    const isProduction = this.config.get('NODE_ENV') === 'production';
+
+    const expiryTime = isProduction ? 3600 * 24 * 1000 : 0;
+
+    const cookie = res.cookie('api-auth', token, {
+      // expires: new Date(Date.now() + expiryTime),
+      // httpOnly: true,
+      // secure: isProduction,
+      // sameSite: 'strict',
+    });
+
+    res.json({
+      message: 'success',
+      email,
+    });
   }
 }
