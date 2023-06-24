@@ -57,14 +57,10 @@ export class AuthService {
 
     this.requestService.setUserId(user.id);
 
-    return await this.signToken(user.id, user.email, res);
+    return this.signToken(user.id, user.email, res);
   }
 
-  async signToken(
-    userId: number,
-    email: string,
-    res: Response,
-  ): Promise<string> {
+  signToken(userId: number, email: string, res: Response): void {
     const payload = {
       id: userId,
       email,
@@ -76,7 +72,7 @@ export class AuthService {
     });
 
     this.setCookie(res, token);
-    return res.json('Ok');
+    res.json('Ok');
   }
 
   setCookie(res: Response, token: string) {

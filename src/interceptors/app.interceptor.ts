@@ -17,12 +17,14 @@ export class LogInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.switchToHttp().getRequest();
 
-    const { method, url, body, query, params } = req;
+    const { method, url, body, query, params, headers } = req;
 
     this.logger.log(`
       ${method} ${url} ${JSON.stringify(body)} ${JSON.stringify(
       query,
-    )} ${JSON.stringify(params)}: ${LogInterceptor.name}
+    )} ${JSON.stringify(headers)} ${JSON.stringify(params)}: ${
+      LogInterceptor.name
+    }
       ${(context.getClass().name, context.getHandler().name)}
     
     `);
