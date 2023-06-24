@@ -42,47 +42,46 @@ export class AuthService {
   async login(dto: AuthLogin, res: Response) {
     const { email, password } = dto;
 
-    //   const user = await this.prisma.users.findFirst({
-    //     where: {
-    //       email,
-    //     },
-    //   });
+    // const user = await this.prisma.users.findFirst({
+    //   where: {
+    //     email,
+    //   },
+    // });
 
-    //   if (!user) throw new ForbiddenException('Invalid credentials');
+    // if (!user) throw new ForbiddenException('Invalid credentials');
 
-    //   const isPasswordValid = await argon.verify(user.password, password);
+    // const isPasswordValid = await argon.verify(user.password, password);
 
-    //   if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
+    // if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
 
-    //   this.requestService.setUserId(user.id);
+    // this.requestService.setUserId(user.id);
 
-    //   const token = await this.signToken(user.id, user.email, res);
-    //   console.log({ token });
-    //   const isProduction = this.config.get('NODE_ENV') === 'production';
+    // const token = await this.signToken(user.id, user.email, res);
+    // console.log({ token });
+    const isProduction = (await this.config.get('NODE_ENV')) === 'production';
 
-    //   const expiryTime = isProduction ? 3600 * 24 * 1000 : 0;
+    const expiryTime = isProduction ? 3600 * 24 * 1000 : 0;
 
-    //   const cookie = res
-    //     .cookie('api-auth', token, {
-    //       expires: new Date(Date.now() + expiryTime),
-    //       httpOnly: true,
-    //       secure: false,
-    //     })
-    //     .send({ status: 'ok' });
+    res.cookie('api-auth', 'token', {
+      // expires: new Date(Date.now() + expiryTime),
+      httpOnly: true,
+      // secure: isProduction,
+    });
 
-    //   console.log({ cookie });
-    res.cookie('token', 'gotten', {});
-
-    return res.send({ status: 'ok' })
+    res.send({ status: 'ok' });
   }
 
-  signToken(userId: number, email: string, res: Response): string {
+  async signToken(
+    userId: number,
+    email: string,
+    res: Response,
+  ): Promise<string> {
     const payload = {
       id: userId,
       email,
     };
 
-    const token = this.jwt.sign(payload, {
+    const token = await this.jwt.signAsync(payload, {
       secret: this.secret,
     });
 
