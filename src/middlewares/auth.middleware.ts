@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import { RequestService } from './../services/request.service';
 import { Injectable, NestMiddleware, Logger, Scope } from '@nestjs/common';
 
@@ -7,8 +8,9 @@ export class AuthMiddleware implements NestMiddleware {
 
   constructor(private request: RequestService) {}
 
-  use(req: any, res: any, next: () => void) {
+  use(req: Request, res: Response, next: () => void) {
     this.logger.log('MiddleWare-------', AuthMiddleware.name);
+    this.logger.debug(req.cookies);
     const bearerToken = req['headers']['authorization']
       ? req['headers']['authorization'].split(' ')[1]
       : null;
