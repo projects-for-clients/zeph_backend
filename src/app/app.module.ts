@@ -1,3 +1,4 @@
+import { UsersModule } from 'src/models/users/users.module';
 import { MiddlewareConsumer, Module, NestModule, Scope } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
@@ -15,6 +16,7 @@ import { AuthModule } from 'src/auth/auth.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    UsersModule,
     AuthModule,
     SharedModule,
     TenantsModule,
