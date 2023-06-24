@@ -56,7 +56,12 @@ export class AuthService {
 
     this.requestService.setUserId(user.id);
 
-    const auth_token = this.signToken(user.id, user.email);
+    const cookie = this.signToken(user.id, user.email);
+
+    return {
+      cookie,
+      user,
+    };
   }
 
   async signToken(userId: number, email: string): Promise<string> {
@@ -70,6 +75,6 @@ export class AuthService {
       secret: this.secret,
     });
 
-    return token;
+    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=604800`;
   }
 }
