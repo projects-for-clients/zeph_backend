@@ -12,6 +12,8 @@ import { RedisService } from 'src/redis/redis.service';
 import { RequestService } from 'src/services/request.service';
 import { AuthController } from 'src/auth/auth.controller';
 import { TenantsController } from 'src/models/tenants/tenants.controller';
+import { LeaseAgreementsController } from 'src/lease_agreements/lease_agreements.controller';
+import { LeaseAgreementsModule } from 'src/lease_agreements/lease_agreements.module';
 
 @Module({
   imports: [
@@ -21,8 +23,9 @@ import { TenantsController } from 'src/models/tenants/tenants.controller';
     SharedModule,
     TenantsModule,
     PrismaModule,
+    LeaseAgreementsModule,
   ],
-  controllers: [AppController, AuthController, TenantsController],
+  controllers: [AppController, AuthController],
   providers: [
     AppService,
     {
