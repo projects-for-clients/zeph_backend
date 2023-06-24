@@ -18,6 +18,7 @@ import { UsersController } from 'src/models/users/users.controller';
 import { TenantsService } from 'src/models/tenants/tenants.service';
 import { TenantsController } from 'src/models/tenants/tenants.controller';
 import { SharedModule } from 'src/shared/shared.module';
+import { UsersModule } from 'src/models/users/users.module';
 
 @Module({
   imports: [
@@ -30,7 +31,7 @@ import { SharedModule } from 'src/shared/shared.module';
     AgreementsModule,
     OtpModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, UsersController],
   providers: [
     RedisService,
     TenantsService,

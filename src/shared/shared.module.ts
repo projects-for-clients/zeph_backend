@@ -9,6 +9,6 @@ import { RequestService } from 'src/services/request.service';
 @Module({
   controllers: [TenantsController, UsersController],
   providers: [RedisService, TenantsService, RequestService],
-  exports: [RedisService, RequestService],
+  exports: [],
 })
 export class SharedModule {}

@@ -11,7 +11,8 @@ export class AuthService {
   constructor(
     private jwt: JwtService,
     private config: ConfigService,
-    private prisma: PrismaService, // private readonly requestService: RequestService,
+    private prisma: PrismaService,
+    private readonly requestService: RequestService,
   ) {}
   async register(dto: AuthRegister) {
     try {
@@ -49,7 +50,7 @@ export class AuthService {
 
     if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
 
-    // this.requestService.setUserId(user.id);
+    this.requestService.setUserId(user.id);
 
     return this.signToken(user.id);
   }
