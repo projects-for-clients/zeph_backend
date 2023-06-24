@@ -1,11 +1,12 @@
 import { RequestService } from './../services/request.service';
-import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import * as argon from 'argon2';
 import { AuthLogin, AuthRegister } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class AuthService {
@@ -65,16 +66,18 @@ export class AuthService {
       email,
     };
 
-    const token = await this.jwt.sign(payload, {
+    const token = this.jwt.sign(payload, {
       secret: this.secret,
     });
 
     const isProduction = this.config.get('NODE_ENV') === 'production';
 
-    const expiryTime = isProduction ? 3600 * 24 * 1000 : 0;
+    const expiryTime = isProduction
+      ? dayjs().add(1, 'day').toDate()
+      : dayjs().add(30, 'day').toDate();
 
-    const cookie = res.cookie('api-auth', token, {
-      expires: new Date(Date.now() + expiryTime),
+    res.cookie('api-auth', token, {
+      expires: expiryTime,
       httpOnly: true,
       secure: isProduction,
       sameSite: 'strict',
