@@ -59,7 +59,7 @@ export class AuthService {
 
     await this.signToken(user.id, user.email, res);
 
-    return 'ok';
+    res.send('Ok');
   }
 
   async signToken(
