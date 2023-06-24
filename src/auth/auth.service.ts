@@ -57,7 +57,7 @@ export class AuthService {
 
     this.requestService.setUserId(user.id);
 
-    await this.signToken(user.id, user.email, res);
+    return await this.signToken(user.id, user.email, res);
   }
 
   async signToken(
