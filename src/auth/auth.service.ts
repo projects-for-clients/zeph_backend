@@ -80,10 +80,10 @@ export class AuthService {
     // const isProduction = this.config.get('NODE_ENV') === 'production';
     const expiryTime = 3600 * 24 * 1000;
 
-    return res.cookie('cookieName', token, {
+    return res.cookie('api-auth', token, {
       expires: new Date(Date.now() + expiryTime),
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'strict',
     });
   }
