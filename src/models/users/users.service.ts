@@ -15,7 +15,8 @@ export class UsersService {
     private readonly requestService: RequestService,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto) {
+    await this.redis.del(UsersService.name);
     return 'This action adds a new user';
   }
 
