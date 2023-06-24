@@ -38,17 +38,17 @@ export class LogInterceptor implements NestInterceptor {
 
     handleCache();
 
-    this.logger.verbose('Request', JSON.stringify(headers));
+    // this.logger.verbose('Request', JSON.stringify(headers));
 
-    this.logger.log(`
-      ${method} ${url} ${JSON.stringify(body)} ${JSON.stringify(
-      query,
-    )} ${JSON.stringify(params)}: ${LogInterceptor.name}
-      ${(context.getClass().name, context.getHandler().name)}
+    // this.logger.log(`
+    //   ${method} ${url} ${JSON.stringify(body)} ${JSON.stringify(
+    //   query,
+    // )} ${JSON.stringify(params)}: ${LogInterceptor.name}
+    //   ${(context.getClass().name, context.getHandler().name)}
     
-    `);
+    // `);
 
-    this.logger.debug(this.requestService.getUserId());
+    // this.logger.debug(this.requestService.getUserId());
 
     const now = Date.now();
     return next.handle().pipe(
