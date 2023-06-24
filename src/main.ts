@@ -4,7 +4,12 @@ import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  // const app = await NestFactory.create(AppModule, { cors: {credentials: true, origin: process.env.CLIENT_URL });
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      credentials: true,
+    },
+  });
   app.setGlobalPrefix(process.env.API_PREFIX || 'v1');
   app.use(cookieParser(process.env.COOKIE_SECRET));
 
