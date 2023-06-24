@@ -17,7 +17,7 @@ export class LogInterceptor implements NestInterceptor {
 
   constructor(
     private readonly requestService: RequestService,
-    @Inject(CachE) private readonly cache: Cache,
+    @Inject(CACHE_MANAGER) private readonly cache: Cache,
   ) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
@@ -25,9 +25,10 @@ export class LogInterceptor implements NestInterceptor {
 
     const { method, url, body, query, params, headers } = req;
 
+    console.log('reset cache 1--------------', method);
     const handleCache = async () => {
       if (method === 'POST') {
-        this.logger.log('reset cache', method);
+        console.log('reset cache 2--------------', method);
         await this.cache.reset();
       }
     };
