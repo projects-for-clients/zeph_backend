@@ -25,11 +25,6 @@ import { UsersModule } from 'src/models/users/users.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
-    AuthModule,
-    PrismaModule,
-    AgreementsModule,
-    OtpModule,
     SharedModule,
   ],
   controllers: [AppController],
