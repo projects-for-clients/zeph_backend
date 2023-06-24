@@ -24,19 +24,19 @@ import { SharedModule } from 'src/shared/shared.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    SharedModule,
     RedisCacheModule,
     AuthModule,
     PrismaModule,
     AgreementsModule,
     OtpModule,
   ],
-  controllers: [AppController, UsersController, TenantsController],
+  controllers: [AppController],
   providers: [
+    RedisService,
+    TenantsService,
     AppService,
     UsersService,
     TenantsService,
-    RequestService,
     {
       provide: 'APP_GUARD',
       useClass: AuthGuard,
@@ -47,8 +47,6 @@ import { SharedModule } from 'src/shared/shared.module';
       useClass: LogInterceptor,
     },
   ],
-
-  exports: [RequestService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

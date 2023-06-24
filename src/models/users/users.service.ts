@@ -11,8 +11,7 @@ export class UsersService {
 
   constructor(
     private redis: RedisService,
-    private prisma: PrismaService,
-    private readonly requestService: RequestService,
+    private prisma: PrismaService, // private readonly requestService: RequestService,
   ) {}
 
   create(createUserDto: CreateUserDto) {
@@ -20,7 +19,7 @@ export class UsersService {
   }
 
   async findAll() {
-    this.logger.log(UsersService.name, this.requestService.getUserId());
+    // this.logger.log(UsersService.name, this.requestService.getUserId());
 
     const cached = await this.redis.getCache(UsersService.name);
 

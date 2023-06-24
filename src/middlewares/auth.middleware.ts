@@ -5,7 +5,7 @@ import { Injectable, NestMiddleware, Logger, Scope } from '@nestjs/common';
 export class AuthMiddleware implements NestMiddleware {
   private logger = new Logger(AuthMiddleware.name);
 
-  constructor(private request: RequestService) {}
+  // constructor(private request: RequestService) {}
 
   use(req: any, res: any, next: () => void) {
     this.logger.log('MiddleWare-------', AuthMiddleware.name);
@@ -14,7 +14,7 @@ export class AuthMiddleware implements NestMiddleware {
       : null;
 
     if (bearerToken) {
-      this.request.setUserId(bearerToken);
+      // this.request.setUserId(bearerToken);
     }
 
     next();
