@@ -77,13 +77,14 @@ export class AuthService {
   }
 
   setCookie(res: Response, token: string) {
-    // const isProduction = this.config.get('NODE_ENV') === 'production';
-    const expiryTime = 3600 * 24 * 1000;
+    const isProduction = this.config.get('NODE_ENV') === 'production';
+    console.log('isProduction', isProduction);
+    const expiryTime = isProduction ? 3600 * 24 * 1000 : 0;
 
     return res.cookie('api-auth', token, {
       expires: new Date(Date.now() + expiryTime),
       httpOnly: true,
-      secure: true,
+      secure: isProduction,
       sameSite: 'strict',
     });
   }
