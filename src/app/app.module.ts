@@ -5,9 +5,7 @@ import { AppService } from './app.service';
 import { AuthMiddleware } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { LogInterceptor } from 'src/interceptors/app.interceptor';
-controller';
 import { SharedModule } from 'src/shared/shared.module';
-import { UsersModule } from 'src/models/users/users.module';
 
 @Module({
   imports: [
