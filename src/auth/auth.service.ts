@@ -8,12 +8,16 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
+  private readonly secret: string;
+
   constructor(
     private jwt: JwtService,
     private config: ConfigService,
     private prisma: PrismaService,
     private readonly requestService: RequestService,
-  ) {}
+  ) {
+    this.secret = this.config.get('JWT_SECRET');
+  }
   async register(dto: AuthRegister) {
     try {
       const { email, password } = dto;
@@ -52,26 +56,20 @@ export class AuthService {
 
     this.requestService.setUserId(user.id);
 
-    return this.signToken(user.id, user.email);
+    const auth_token = this.signToken(user.id, user.email);
   }
 
-  async signToken(
-    userId: number,
-    email: string,
-  ): Promise<{ access_token: string }> {
+  async signToken(userId: number, email: string): Promise<string> {
     const payload = {
       id: userId,
       email,
     };
 
-    const secret = this.config.get('JWT_SECRET');
-
     const token = this.jwt.sign(payload, {
       expiresIn: '15m',
-      secret,
+      secret: this.secret,
     });
-    return {
-      access_token: token,
-    };
+
+    return token;
   }
 }
