@@ -1,11 +1,13 @@
 import { RequestService } from './../services/request.service';
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import * as argon from 'argon2';
 import { AuthLogin, AuthRegister } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class AuthService {
@@ -16,6 +18,7 @@ export class AuthService {
     private config: ConfigService,
     private prisma: PrismaService,
     private readonly requestService: RequestService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {
     this.secret = this.config.get('JWT_SECRET');
   }
