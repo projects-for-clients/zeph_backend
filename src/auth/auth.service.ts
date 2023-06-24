@@ -60,7 +60,7 @@ export class AuthService {
     return this.signToken(user.id, user.email, res);
   }
 
-  signToken(userId: number, email: string, res: Response): void {
+  signToken(userId: number, email: string, res: Response): any {
     const payload = {
       id: userId,
       email,
@@ -72,17 +72,17 @@ export class AuthService {
     });
 
     this.setCookie(res, token);
-    res.json('Ok');
+    res.json(token);
   }
 
   setCookie(res: Response, token: string) {
-    const isProduction = this.config.get('NODE_ENV') === 'production';
-    const expiryTime = isProduction ? 3600 * 24 * 1000 : 0;
+    // const isProduction = this.config.get('NODE_ENV') === 'production';
+    const expiryTime = 3600 * 24 * 1000;
 
-    res.cookie('cookieName', token, {
+    return res.cookie('cookieName', token, {
       expires: new Date(Date.now() + expiryTime),
       httpOnly: true,
-      secure: isProduction,
+      secure: true,
       sameSite: 'strict',
     });
   }
