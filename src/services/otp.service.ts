@@ -5,17 +5,23 @@ import { RedisService } from 'src/redis/redis.service';
 export class OtpService {
   private otp: number;
 
-  constructor(private redis: RedisService) {}
+  constructor(private redis: RedisService, private providedOtp) {}
 
   generateOtp() {
     this.otp = Math.floor(100000 + Math.random() * 900000);
+    this.redis.set(`otp-${this.otp}`, this.otp);
   }
 
   deleteOtp() {
     this.otp = null;
+    this.redis.del(`otp-${this.otp}`);
   }
 
-  verifyOtp() {}
+  verifyOtp() {
+    console.log('hello world');
+  }
 
-  sendOtp() {}
+  sendOtp() {
+    console.log('hellow o');
+  }
 }
