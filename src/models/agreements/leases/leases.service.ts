@@ -42,7 +42,7 @@ export class LeasesService {
       },
     });
 
-    this.redis.set(`${LeasesService.name + id}`, lease);
+    await this.redis.set(`${LeasesService.name + id}`, lease);
 
     return lease;
   }
@@ -68,12 +68,20 @@ export class LeasesService {
       },
     });
 
-    this.redis.set(`${LeasesService.name + id}`, lease);
+    await this.redis.set(`${LeasesService.name + id}`, lease);
 
     return lease;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} lease`;
+  async delete(id: number) {
+    const lease = await this.prisma.leases.delete({
+      where: {
+        id,
+      },
+    });
+
+    await this.redis.del(`${LeasesService.name + id}`);
+
+    return lease;
   }
 }
