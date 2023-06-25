@@ -9,14 +9,10 @@ import { RedisService } from 'src/redis/redis.service';
 export class UsersService {
   private readonly logger = new Logger(UsersService.name);
 
-  constructor(
-    private redis: RedisService,
-    private prisma: PrismaService,
-    private readonly userRequestService: UserRequestService,
-  ) {}
+  constructor(private redis: RedisService, private prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
-    const userId = this.userRequestService.getUserId();
+    const userId = UserRequestService.getUserId();
 
     console.log('userId', userId);
     //await this.redis.del(UsersService.name);
@@ -26,7 +22,7 @@ export class UsersService {
   async findAll() {
     const cached = await this.redis.get(UsersService.name);
 
-    const userId = this.userRequestService.getUserId();
+    const userId = UserRequestService.getUserId();
 
     console.log('userId', userId);
 
