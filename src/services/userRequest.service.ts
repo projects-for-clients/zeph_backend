@@ -15,6 +15,7 @@ export class UserRequestService {
   }
 
   static getUserId() {
+    console.log('get user', this.userId);
     return this.userId;
   }
 

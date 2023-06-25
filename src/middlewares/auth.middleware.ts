@@ -11,7 +11,7 @@ export class AuthMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: () => void) {
     interface Jwt {
-      userId: number;
+      id: number;
       email: string;
     }
 
@@ -45,7 +45,7 @@ export class AuthMiddleware implements NestMiddleware {
 
     console.log({ jwt });
 
-    UserRequestService.setUser(jwt.userId, jwt.email);
+    UserRequestService.setUser(jwt.id, jwt.email);
 
     res.json('Authorized');
   }
