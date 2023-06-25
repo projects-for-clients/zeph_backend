@@ -34,9 +34,9 @@ export class LeasesService {
 
     const allLeases = await this.prisma.leases.findMany();
 
-    const cache = await this.redis.set(LeasesService.name, allLeases);
+    const cached = await this.redis.set(LeasesService.name, allLeases);
 
-    return cache;
+    return cached;
   }
 
   async findOne(id: number) {
