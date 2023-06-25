@@ -18,8 +18,11 @@ export class LeasesService {
       },
     });
 
-    const cached = await this.redis.set(`${LeasesService.name + userId}`, lease);
-    return cache;
+    const cached = await this.redis.set(
+      `${LeasesService.name + userId}`,
+      lease,
+    );
+    return cached;
   }
 
   async findAll() {
@@ -31,9 +34,9 @@ export class LeasesService {
 
     const allLeases = await this.prisma.leases.findMany();
 
-    await this.redis.set(LeasesService.name, allLeases);
+    const cache = await this.redis.set(LeasesService.name, allLeases);
 
-    return allLeases;
+    return cache;
   }
 
   async findOne(id: number) {
