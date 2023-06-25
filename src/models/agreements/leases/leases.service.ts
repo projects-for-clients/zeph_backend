@@ -1,10 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { LeasesDto } from './dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class LeasesService {
-  create(createLeaseDto: LeasesDto) {
-    return 'This action adds a new lease';
+  constructor(private redis: RedisService, private prisma: PrismaService) {}
+  async create(createLeaseDto: LeasesDto) {
+    try {
+
+      const lease = await this.prisma.leases.create({
+        
+
+    } catch (err) {}
   }
 
   findAll() {
