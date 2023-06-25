@@ -25,7 +25,7 @@ export class UsersService {
 
     const userId = UserRequestService.getUserId();
 
-    
+    console.log('userId', userId);
 
     if (cached) {
       console.log('returning redis catch....', cached);
