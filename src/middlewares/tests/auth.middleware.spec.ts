@@ -1,4 +1,4 @@
-import { RequestService } from 'src/services/request.service';
+import { RequestService } from 'src/services/userRequest.service';
 import { AuthMiddleware } from '../auth.middleware';
 
 describe('AuthMiddleware', () => {

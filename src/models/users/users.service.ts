@@ -1,4 +1,4 @@
-import { RequestService } from './../../services/request.service';
+import { RequestService } from '../../services/userRequest.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Logger, Injectable, Scope } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';

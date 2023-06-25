@@ -3,19 +3,19 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthService } from 'src/auth/auth.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RedisService } from 'src/redis/redis.service';
-import { RequestService } from 'src/services/request.service';
+import { userRequestService } from 'src/services/userRequest.service';
 
 @Global()
 @Module({
   providers: [
-    RequestService,
+    userRequestService,
     AuthService,
     JwtService,
     RedisService,
     PrismaService,
   ],
   exports: [
-    RequestService,
+    userRequestService,
     RedisService,
     PrismaService,
     JwtService,

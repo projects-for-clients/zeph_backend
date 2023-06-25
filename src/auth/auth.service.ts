@@ -1,4 +1,4 @@
-import { RequestService } from './../services/request.service';
+import { RequestService } from '../services/userRequest.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import * as argon from 'argon2';
