@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { LeasesDto } from './dto';
+import { createDto, updateDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class LeasesService {
   constructor(private redis: RedisService, private prisma: PrismaService) {}
-  async create(createLeaseDto: LeasesDto) {
+  async create(createLeaseDto: createDto) {
     const lease = await this.prisma.leases.create({
       data: createLeaseDto,
     });
@@ -47,7 +47,7 @@ export class LeasesService {
     return lease;
   }
 
-  update(id: number, updateLeaseDto: LeasesDto) {
+  update(id: number, updateLeaseDto: updateDto) {
     const lease = this.prisma.leases.update({
       where: {
         id,
