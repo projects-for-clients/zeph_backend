@@ -30,7 +30,7 @@ export class LeasesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLeaseDto: UpdateLeaseDto) {
+  update(@Param('id') id: string, @Body() updateLeaseDto: LeasesDto) {
     return this.leasesService.update(+id, updateLeaseDto);
   }
 
