@@ -11,12 +11,13 @@ export class AuthMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: () => void) {
     this.logger.log(AuthMiddleware.name);
 
-    const { baseUrl, url, originalUrl } = req;
+    const { baseUrl } = req;
 
-    console.log({ baseUrl, url, originalUrl });
+    const urlWithoutVersion = baseUrl.replace(/\/v\d+/, '');
+    const allowedPaths = ['/auth/login', '/auth/register'];
 
     //not authorized
-    if (baseUrl === '/v1/auth/login' || baseUrl === '/v1/auth/register') {
+    if (allowedPaths.includes(urlWithoutVersion)) {
       return next();
     }
 
