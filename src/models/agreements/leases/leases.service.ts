@@ -1,3 +1,4 @@
+import { UserRequestService } from 'src/services/userRequest.service';
 import { Injectable } from '@nestjs/common';
 import { createDto, updateDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';

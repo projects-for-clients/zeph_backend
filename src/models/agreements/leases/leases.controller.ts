@@ -25,17 +25,17 @@ export class LeasesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.leasesService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLeaseDto: updateDto) {
+  update(@Param('id') id: number, @Body() updateLeaseDto: updateDto) {
     return this.leasesService.update(+id, updateLeaseDto);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: number) {
     return this.leasesService.delete(+id);
   }
 }
