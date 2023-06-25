@@ -7,12 +7,11 @@ import { RedisService } from 'src/redis/redis.service';
 export class LeasesService {
   constructor(private redis: RedisService, private prisma: PrismaService) {}
   async create(createLeaseDto: LeasesDto) {
-    try {
+    const lease = await this.prisma.leases.create({
+      data: createLeaseDto,
+    });
 
-      const lease = await this.prisma.leases.create({
-        
-
-    } catch (err) {}
+    await this.redis.del(LeasesService.name);
   }
 
   findAll() {
