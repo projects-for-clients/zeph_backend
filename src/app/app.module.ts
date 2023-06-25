@@ -8,7 +8,6 @@ import { AuthGuard } from 'src/guards/auth.guard';
 import { LogInterceptor } from 'src/interceptors/app.interceptor';
 import { SharedModule } from 'src/shared/shared.module';
 import { TenantsModule } from 'src/models/agreements/tenants/tenants.module';
-import { LeaseAgreementsModule } from 'src/lease_agreements/lease_agreements.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { RedisCacheModule } from 'src/redis/redis.module';
 import { LeasesModule } from 'src/models/agreements/leases/leases.module';
