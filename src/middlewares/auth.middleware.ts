@@ -7,7 +7,10 @@ import { UserRequestService } from 'src/services/userRequest.service';
 export class AuthMiddleware implements NestMiddleware {
   private logger = new Logger(AuthMiddleware.name);
 
-  constructor(private jwt: JwtService) {}
+  constructor(
+    private jwt: JwtService,
+    private readonly userRequestService: UserRequestService,
+  ) {}
 
   use(req: Request, res: Response, next: () => void) {
     interface Jwt {
@@ -45,7 +48,7 @@ export class AuthMiddleware implements NestMiddleware {
 
     console.log({ jwt });
 
-    UserRequestService.setUser(jwt.id, jwt.email);
+    this.userRequestService.setUser(jwt.id, jwt.email);
     next();
   }
 }

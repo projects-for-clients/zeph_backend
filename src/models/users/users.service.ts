@@ -12,7 +12,7 @@ export class UsersService {
   constructor(
     private redis: RedisService,
     private prisma: PrismaService,
-    private readonly UserRequestService: UserRequestService,
+    private readonly userRequestService: UserRequestService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -23,7 +23,7 @@ export class UsersService {
   async findAll() {
     const cached = await this.redis.get(UsersService.name);
 
-    const userId = UserRequestService.getUserId();
+    const userId = this.userRequestService.getUserId();
 
     console.log('userId', userId);
 
