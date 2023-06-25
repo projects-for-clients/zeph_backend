@@ -12,10 +12,21 @@ export class LeasesService {
     });
 
     await this.redis.del(LeasesService.name);
+    return lease;
   }
 
-  findAll() {
-    return `This action returns all leases`;
+  async findAll() {
+
+    const getAll = await this.redis.get(LeasesService.name);
+
+    if (getAll) {
+      return getAll;
+    }
+
+    const allLeases = await this.prisma.leases.findMany();
+
+    
+
   }
 
   findOne(id: number) {
