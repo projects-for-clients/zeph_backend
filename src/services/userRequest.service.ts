@@ -11,11 +11,9 @@ export class UserRequestService {
     this.logger.log('set user', userId, email);
     this.userId = userId;
     this.email = email;
-
   }
 
   static getUserId() {
-    console.log('get user', this.userId);
     return this.userId;
   }
 
