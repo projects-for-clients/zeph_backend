@@ -18,15 +18,13 @@ export class AuthMiddleware implements NestMiddleware {
     //not authorized
     if (baseUrl === '/v1/auth/login' || baseUrl === '/v1/auth/register') {
       return next();
-    } else {
-      console.log(
-        '**********************************************',
-        'stop here',
-      );
-
-      res.send('Not authorized').status(401);
-
-      next();
     }
+    console.log('**********************************************', 'stop here');
+
+    res.send('Not authorized').status(401);
+
+    console.log("I'm here")
+
+    next();
   }
 }
