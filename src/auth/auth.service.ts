@@ -33,8 +33,6 @@ export class AuthService {
 
       return this.signToken(user.id, user.email, res);
     } catch (err) {
-      this.EmailService.send();
-
       if (err.code === 'P2002') {
         throw new ForbiddenException(`${err.meta.target} already exists`);
       }
@@ -56,6 +54,8 @@ export class AuthService {
     const isPasswordValid = await argon.verify(user.password, password);
 
     if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
+
+    await this.EmailService.send();
 
     return this.signToken(user.id, user.email, res);
   }

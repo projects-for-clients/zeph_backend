@@ -8,7 +8,6 @@ export class UserRequestService {
   static logger: any;
 
   static setUser(userId: number, email: string) {
-    this.logger.log('set user', userId, email);
     this.userId = userId;
     this.email = email;
   }
