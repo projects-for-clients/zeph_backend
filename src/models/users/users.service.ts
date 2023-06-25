@@ -23,6 +23,10 @@ export class UsersService {
   async findAll() {
     const cached = await this.redis.get(UsersService.name);
 
+    const userId = UserRequestService.getUserId();
+
+    
+
     if (cached) {
       console.log('returning redis catch....', cached);
       return cached;
