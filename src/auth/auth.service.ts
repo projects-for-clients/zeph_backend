@@ -5,6 +5,7 @@ import { AuthLogin, AuthRegister } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { EmailService } from 'src/services/email.service';
 import * as dayjs from 'dayjs';
 
 @Injectable()
@@ -14,6 +15,7 @@ export class AuthService {
     private jwt: JwtService,
     private config: ConfigService,
     private prisma: PrismaService,
+    private EmailService: EmailService,
   ) {
     this.secret = this.config.get('JWT_SECRET');
   }
@@ -31,6 +33,8 @@ export class AuthService {
 
       return this.signToken(user.id, user.email, res);
     } catch (err) {
+      this.EmailService.send();
+
       if (err.code === 'P2002') {
         throw new ForbiddenException(`${err.meta.target} already exists`);
       }
