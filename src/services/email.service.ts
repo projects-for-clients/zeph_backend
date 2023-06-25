@@ -20,7 +20,21 @@ export class EmailService {
       const initSend = await this.resend.emails.send({
         from: 'onboarding@resend.dev',
         to: 'zephchambersdev@gmail.com',
-        subject: 'Welcome',
+        subject: 'Welcome to Zeph Chambers',
+        html: '<p>Congrats on sending your <strong>first email</strong>!</p>',
+      });
+    } catch (err) {
+      console.log({ err });
+    }
+  }
+
+  async sendOTP() {
+    try {
+      console.log('sending email=====================');
+      const initSend = await this.resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: 'zephchambersdev@gmail.com',
+        subject: 'Welcome to Zeph Chambers',
         html: '<p>Congrats on sending your <strong>first email</strong>!</p>',
       });
     } catch (err) {
