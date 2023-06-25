@@ -9,7 +9,6 @@ export class OtpService {
 
   generateOtp() {
     this.otp = Math.floor(100000 + Math.random() * 900000);
-    
   }
 
   deleteOtp() {
