@@ -9,15 +9,11 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(private request: RequestService) {}
 
   use(req: Request, res: Response, next: () => void) {
-    this.logger.log('MiddleWare-------', AuthMiddleware.name);
-    this.logger.debug(req.cookies, req.headers);
-    const bearerToken = req['headers']['authorization']
-      ? req['headers']['authorization'].split(' ')[1]
-      : null;
+    this.logger.log(AuthMiddleware.name);
 
-    // if (bearerToken) {
-    //   this.request.setUserId(bearerToken);
-    // }
+    const { baseUrl, url, user } = req;
+
+    console.log({ baseUrl, url, user });
 
     next();
   }
