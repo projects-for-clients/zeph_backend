@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Resend } from 'resend';
-import { OtpController } from 'src/otp/otp.controller';
 
 @Injectable()
 export class EmailService {
@@ -36,7 +35,7 @@ export class EmailService {
         from: 'onboarding@resend.dev',
         to: 'zephchambersdev@gmail.com',
         subject: 'Welcome to Zeph Chambers',
-        html: `<p>This is your OTP code: <strong>${OtpController}</strong>!</p>`,
+        html: `<p>This is your OTP code: <strong>${755}</strong>!</p>`,
       });
     } catch (err) {
       console.log({ err });

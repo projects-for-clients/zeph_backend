@@ -2,9 +2,13 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class OtpService {
-  
-  constructor() {
+  constructor() {}
 
-    
-  }
+  generateOtp() {}
+
+  deleteOtp() {}
+
+  verifyOtp() {}
+
+  sendOtp() {}
 }
