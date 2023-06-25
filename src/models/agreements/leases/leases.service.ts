@@ -29,14 +29,14 @@ export class LeasesService {
     return allLeases;
   }
 
-  findOne(id: number) {
-    const checkCache = this.redis.get(`${LeasesService.name + id}`);
+  async findOne(id: number) {
+    const checkCache = await this.redis.get(`${LeasesService.name + id}`);
 
     if (checkCache) {
       return checkCache;
     }
 
-    const lease = this.prisma.leases.findUnique({
+    const lease = await this.prisma.leases.findUnique({
       where: {
         id,
       },
@@ -47,12 +47,25 @@ export class LeasesService {
     return lease;
   }
 
-  update(id: number, updateLeaseDto: updateDto) {
+  async update(id: number, updateLeaseDto: updateDto) {
+    const findCache = await this.redis.get(`${LeasesService.name + id}`);
+
+    console.log({ findCache });
+
+    const find = await this.prisma.leases.findUnique({
+      where: {
+        id,
+      },
+    });
+
     const lease = this.prisma.leases.update({
       where: {
         id,
       },
-      data: updateLeaseDto,
+      data: {
+        ...find,
+        ...updateLeaseDto,
+      },
     });
 
     this.redis.set(`${LeasesService.name + id}`, lease);
