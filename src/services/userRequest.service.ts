@@ -3,10 +3,12 @@ import { Injectable, Logger, Scope } from '@nestjs/common';
 @Injectable({ scope: Scope.REQUEST })
 export class UserRequestService {
   private userId: number;
+  private email: string;
   private readonly logger = new Logger(UserRequestService.name);
 
   constructor() {
     this.userId = null;
+    this.email = null;
   }
 
   setUserId(userId: number) {

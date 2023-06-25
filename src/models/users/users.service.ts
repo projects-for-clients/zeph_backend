@@ -1,4 +1,4 @@
-import { RequestService } from '../../services/userRequest.service';
+import { UserRequestService } from '../../services/userRequest.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Logger, Injectable, Scope } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -12,7 +12,7 @@ export class UsersService {
   constructor(
     private redis: RedisService,
     private prisma: PrismaService,
-    private readonly requestService: RequestService,
+    private readonly UserRequestService: UserRequestService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -21,7 +21,7 @@ export class UsersService {
   }
 
   async findAll() {
-    this.logger.log(UsersService.name, this.requestService.getUserId());
+    this.logger.log(UsersService.name, this.UserRequestService.getUserId());
 
     const cached = await this.redis.get(UsersService.name);
 

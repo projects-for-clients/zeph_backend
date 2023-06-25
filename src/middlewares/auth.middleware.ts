@@ -1,12 +1,16 @@
 import { Request, Response } from 'express';
 import { Injectable, NestMiddleware, Logger, Scope } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { UserRequestService } from 'src/services/userRequest.service';
 
 @Injectable({ scope: Scope.REQUEST })
 export class AuthMiddleware implements NestMiddleware {
   private logger = new Logger(AuthMiddleware.name);
 
-  constructor(private jwt: JwtService) {}
+  constructor(
+    private jwt: JwtService,
+    userRequestService: UserRequestService,
+  ) {}
 
   use(req: Request, res: Response, next: () => void) {
     this.logger.log(AuthMiddleware.name);
