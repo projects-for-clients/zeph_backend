@@ -21,9 +21,9 @@ export class AuthMiddleware implements NestMiddleware {
     }
     console.log('**********************************************', 'stop here');
 
-    res.send('Not authorized').status(401);
+    return res.send('Not authorized').status(401);
 
-    console.log("I'm here")
+    console.log("I'm here***************");
 
     next();
   }
