@@ -4,7 +4,9 @@ import { Injectable } from '@nestjs/common';
 export class OtpService {
   constructor() {}
 
-  generateOtp() {}
+  generateOtp() {
+    const otp = Math.floor(100000 + Math.random() * 900000);
+  }
 
   deleteOtp() {}
 
