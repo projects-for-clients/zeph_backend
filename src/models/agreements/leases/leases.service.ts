@@ -8,8 +8,13 @@ import { RedisService } from 'src/redis/redis.service';
 export class LeasesService {
   constructor(private redis: RedisService, private prisma: PrismaService) {}
   async create(createLeaseDto: createDto) {
+    const userId = await UserRequestService.getUserId();
+
     const lease = await this.prisma.leases.create({
-      data: createLeaseDto,
+      data: {
+        ...createLeaseDto,
+        userId,
+      },
     });
 
     await this.redis.del(LeasesService.name);
