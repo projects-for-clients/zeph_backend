@@ -16,7 +16,6 @@ export class LeasesService {
   }
 
   async findAll() {
-
     const getAll = await this.redis.get(LeasesService.name);
 
     if (getAll) {
@@ -25,16 +24,40 @@ export class LeasesService {
 
     const allLeases = await this.prisma.leases.findMany();
 
-    
+    await this.redis.set(LeasesService.name, allLeases);
 
+    return allLeases;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} lease`;
+    const checkCache = this.redis.get(`${LeasesService.name + id}`);
+
+    if (checkCache) {
+      return checkCache;
+    }
+
+    const lease = this.prisma.leases.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    this.redis.set(`${LeasesService.name + id}`, lease);
+
+    return lease;
   }
 
   update(id: number, updateLeaseDto: LeasesDto) {
-    return `This action updates a #${id} lease`;
+    const lease = this.prisma.leases.update({
+      where: {
+        id,
+      },
+      data: updateLeaseDto,
+    });
+
+    this.redis.set(`${LeasesService.name + id}`, lease);
+
+    return lease;
   }
 
   remove(id: number) {
