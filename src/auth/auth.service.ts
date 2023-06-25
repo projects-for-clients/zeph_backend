@@ -1,4 +1,4 @@
-import { RequestService } from '../services/userRequest.service';
+import { UserRequestService } from '../services/userRequest.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import * as argon from 'argon2';
@@ -15,7 +15,7 @@ export class AuthService {
     private jwt: JwtService,
     private config: ConfigService,
     private prisma: PrismaService,
-    private readonly requestService: RequestService,
+    private readonly UserRequestService: UserRequestService,
   ) {
     this.secret = this.config.get('JWT_SECRET');
   }
@@ -55,7 +55,7 @@ export class AuthService {
 
     if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
 
-    this.requestService.setUserId(user.id);
+    this.UserRequestService.setUserId(user.id);
 
     return this.signToken(user.id, user.email, res);
   }
