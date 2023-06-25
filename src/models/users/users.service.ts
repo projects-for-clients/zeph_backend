@@ -21,8 +21,6 @@ export class UsersService {
   }
 
   async findAll() {
-    this.logger.log(UsersService.name, this.UserRequestService.getUserId());
-
     const cached = await this.redis.get(UsersService.name);
 
     if (cached) {

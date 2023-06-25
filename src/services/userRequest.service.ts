@@ -2,28 +2,23 @@ import { Injectable, Logger, Scope } from '@nestjs/common';
 
 @Injectable({ scope: Scope.REQUEST })
 export class UserRequestService {
-  private userId: number;
-  private email: string;
+  static userId: number;
+  static email: string;
   private readonly logger = new Logger(UserRequestService.name);
+  static logger: any;
 
-  constructor() {
-    this.userId = null;
-    this.email = null;
-  }
-
-  setUser(userId: number, email: string) {
-    this.logger.log('SET-USERID', UserRequestService.name, userId);
+  static setUser(userId: number, email: string) {
     this.userId = userId;
     this.email = email;
+
+    console.log('set user', this.userId, this.email);
   }
 
-  getUserId() {
-    this.logger.log('GET-USERID', UserRequestService.name, this.userId);
-
+  static getUserId() {
     return this.userId;
   }
 
-  getUser() {
+  static getUser() {
     return {
       userId: this.userId,
       email: this.email,
