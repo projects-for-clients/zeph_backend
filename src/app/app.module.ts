@@ -11,6 +11,7 @@ import { TenantsModule } from 'src/models/agreements/tenants/tenants.module';
 import { LeaseAgreementsModule } from 'src/lease_agreements/lease_agreements.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { RedisCacheModule } from 'src/redis/redis.module';
+import { LeasesModule } from 'src/models/agreements/leases/leases.module';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { RedisCacheModule } from 'src/redis/redis.module';
     AuthModule,
     SharedModule,
     TenantsModule,
-    LeaseAgreementsModule,
+    LeasesModule,
   ],
   controllers: [AppController],
   providers: [
