@@ -48,6 +48,8 @@ export class LeasesService {
       },
     });
 
+    console.log({ lease });
+
     await this.redis.set(`${LeasesService.name + id}`, lease);
 
     return lease;

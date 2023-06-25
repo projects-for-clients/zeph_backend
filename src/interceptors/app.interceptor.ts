@@ -22,7 +22,7 @@ export class LogInterceptor implements NestInterceptor {
     const { method, url, body, query, params, headers } = req;
 
     const handleCache = async () => {
-      if (method === 'POST') {
+      if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
         await this.cache.reset();
       }
     };
