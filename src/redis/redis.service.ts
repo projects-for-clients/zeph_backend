@@ -15,7 +15,6 @@ export class RedisService {
     });
   }
 
-  //TODOput the local for update
   async set(key: string, value: any): Promise<string> {
     console.log('set', key);
 
@@ -26,6 +25,13 @@ export class RedisService {
       3600 * 24 * 7,
     );
 
+    return res;
+  }
+
+  async appendToCache(key: string, value: any): Promise<any> {
+    console.log('appendToCache', key);
+
+    const res = await this.redis.sadd(key, JSON.stringify(value));
     return res;
   }
 

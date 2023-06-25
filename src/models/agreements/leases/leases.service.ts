@@ -22,6 +22,13 @@ export class LeasesService {
       `${LeasesService.name + userId}`,
       lease,
     );
+
+    const appendToCache = await this.redis.appendToCache(
+      LeasesService.name,
+      lease,
+    );
+
+    
     return cached;
   }
 
