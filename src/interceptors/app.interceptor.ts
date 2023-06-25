@@ -20,6 +20,8 @@ export class LogInterceptor implements NestInterceptor {
     const req = context.switchToHttp().getRequest();
 
     const { method, url, body, query, params, headers } = req;
+    console.log(req.cookies);
+    console.log(req);
 
     const handleCache = async () => {
       if (method === 'POST') {
