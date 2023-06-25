@@ -27,17 +27,6 @@ export class AuthMiddleware implements NestMiddleware {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    console.log({ cookie });
-
-    //check if the cookie time is expired
-    const cookieTime = cookie.split('.')[1];
-    const cookieTimeInMs = parseInt(cookieTime) * 1000;
-    console.log({ cookieTimeInMs });
-    const now = Date.now();
-    if (now > cookieTimeInMs) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-
     //decrypt jwt
     const jwt = this.jwt.verify(cookie, {
       secret: process.env.JWT_SECRET,
