@@ -66,6 +66,8 @@ export class LeasesService {
       },
     });
 
+    console.log({ find });
+
     const lease = this.prisma.leases.update({
       where: {
         id,
