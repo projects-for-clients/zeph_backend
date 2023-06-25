@@ -15,7 +15,6 @@ export class AuthService {
     private jwt: JwtService,
     private config: ConfigService,
     private prisma: PrismaService,
-    private readonly UserRequestService: UserRequestService,
   ) {
     this.secret = this.config.get('JWT_SECRET');
   }
@@ -54,8 +53,6 @@ export class AuthService {
     const isPasswordValid = await argon.verify(user.password, password);
 
     if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
-
-    this.UserRequestService.setUserId(user.id);
 
     return this.signToken(user.id, user.email, res);
   }
