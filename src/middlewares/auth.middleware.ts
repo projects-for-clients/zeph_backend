@@ -11,10 +11,22 @@ export class AuthMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: () => void) {
     this.logger.log(AuthMiddleware.name);
 
-    const { baseUrl, url, user } = req;
+    const { baseUrl, url, originalUrl } = req;
 
-    console.log({ baseUrl, url, user });
+    console.log({ baseUrl, url, originalUrl });
 
-    next();
+    //not authorized
+    if (baseUrl === '/v1/auth/login' || baseUrl === '/v1/auth/register') {
+      return next();
+    } else {
+      console.log(
+        '**********************************************',
+        'stop here',
+      );
+
+      res.send('Not authorized').status(401);
+
+      next();
+    }
   }
 }
