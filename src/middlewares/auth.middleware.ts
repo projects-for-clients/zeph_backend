@@ -13,6 +13,10 @@ export class AuthMiddleware implements NestMiddleware {
   ) {}
 
   use(req: Request, res: Response, next: () => void) {
+    interface Jwt {
+      userId: number;
+      email: string;
+    }
     this.logger.log(AuthMiddleware.name);
 
     const { baseUrl } = req;
@@ -33,7 +37,7 @@ export class AuthMiddleware implements NestMiddleware {
     }
 
     //decrypt jwt
-    const jwt = this.jwt.verify(cookie, {
+    const jwt: Jwt = this.jwt.verify(cookie, {
       secret: process.env.JWT_SECRET,
     });
 
