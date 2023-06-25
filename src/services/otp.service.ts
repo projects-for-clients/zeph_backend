@@ -5,10 +5,12 @@ export class OtpService {
   private otp: number;
 
   generateOtp() {
-    const otp = Math.floor(100000 + Math.random() * 900000);
+    this.otp = Math.floor(100000 + Math.random() * 900000);
   }
 
-  deleteOtp() {}
+  deleteOtp() {
+    this.otp = null;
+  }
 
   verifyOtp() {}
 
