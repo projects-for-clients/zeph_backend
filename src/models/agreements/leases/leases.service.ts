@@ -52,11 +52,9 @@ export class LeasesService {
       },
     });
 
-    console.log({ lease });
+    const cache = await this.redis.set(`${LeasesService.name + id}`, lease);
 
-    await this.redis.set(`${LeasesService.name + id}`, lease);
-
-    return lease;
+    return cache;
   }
 
   async update(id: number, updateLeaseDto: updateDto) {
