@@ -8,15 +8,14 @@ import {
   Delete,
 } from '@nestjs/common';
 import { LeasesService } from './leases.service';
-import { CreateLeaseDto } from './dto/leases.dto';
-import { UpdateLeaseDto } from './dto/update-lease.dto';
+import { LeasesDto } from './dto';
 
 @Controller('leases')
 export class LeasesController {
   constructor(private readonly leasesService: LeasesService) {}
 
   @Post()
-  create(@Body() createLeaseDto: CreateLeaseDto) {
+  create(@Body() createLeaseDto: LeasesDto) {
     return this.leasesService.create(createLeaseDto);
   }
 
