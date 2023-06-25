@@ -11,14 +11,22 @@ export class UserRequestService {
     this.email = null;
   }
 
-  setUserId(userId: number) {
+  setUser(userId: number, email: string) {
     this.logger.log('SET-USERID', UserRequestService.name, userId);
     this.userId = userId;
+    this.email = email;
   }
 
   getUserId() {
     this.logger.log('GET-USERID', UserRequestService.name, this.userId);
 
     return this.userId;
+  }
+
+  getUser() {
+    return {
+      userId: this.userId,
+      email: this.email,
+    };
   }
 }
