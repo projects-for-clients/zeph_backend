@@ -7,6 +7,7 @@ import { RedisService } from 'src/redis/redis.service';
 @Injectable()
 export class LeasesService {
   constructor(private redis: RedisService, private prisma: PrismaService) {}
+
   async create(createLeaseDto: createDto) {
     const userId = await UserRequestService.getUserId();
 
@@ -17,8 +18,8 @@ export class LeasesService {
       },
     });
 
-    await this.redis.del(LeasesService.name);
-    return lease;
+    const cached = await this.redis.set(`${LeasesService.name + userId}`, lease);
+    return cache;
   }
 
   async findAll() {
