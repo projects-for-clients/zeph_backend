@@ -48,6 +48,7 @@ export class LeasesService {
     const checkCache = await this.redis.get(`${LeasesService.name + id}`);
 
     if (checkCache) {
+      console.log({checkCache})
       return checkCache;
     }
 
@@ -95,14 +96,14 @@ export class LeasesService {
   }
 
   async delete(id: number) {
-    await this.redis.flushAll();
+    // await this.redis.flushAll();
     const lease = await this.prisma.leases.delete({
       where: {
         id,
       },
     });
 
-    //await this.redis.del(`${LeasesService.name + id}`);
+    await this.redis.del(`${LeasesService.name + id}`);
 
     return lease;
   }
