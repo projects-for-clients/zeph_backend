@@ -57,9 +57,13 @@ export class LeasesService {
       },
     });
 
-    const cache = await this.redis.set(`${LeasesService.name + id}`, lease);
+    if (!lease) {
+      throw new ForbiddenException('Lease not found');
+    }
 
-    return cache;
+    await this.redis.set(`${LeasesService.name + id}`, lease);
+
+    return lease;
   }
 
   async update(id: number, updateLeaseDto: updateDto) {
