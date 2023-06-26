@@ -71,7 +71,9 @@ export class LeasesService {
       where: {
         id,
       },
-    });
+    }).catch((err) => {
+        throw new ForbiddenException(err.meta.cause ?? 'Not found');
+      });
 
     console.log({ find });
 
@@ -85,9 +87,7 @@ export class LeasesService {
           ...updateLeaseDto,
         },
       })
-      .catch((err) => {
-        throw new ForbiddenException(err);
-      });
+      
 
     await this.redis.set(`${LeasesService.name + id}`, lease);
 
