@@ -90,7 +90,7 @@ export class LeasesService {
 
       return lease;
     } catch (err) {
-      console.log({err})
+      console.log('Error in leases.service.ts update method. Error: ', err);
       return 'Not found';
     }
   }
