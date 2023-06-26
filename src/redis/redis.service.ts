@@ -23,7 +23,7 @@ export class RedisService {
     return res;
   }
 
-  async appendToCache(key: string, value: any): Promise<any> {
+  async append(key: string, value: any): Promise<any> {
     console.log('appendToCache', key);
 
     const res = await this.redis.append(key, JSON.stringify(value));

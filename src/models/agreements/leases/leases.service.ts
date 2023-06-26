@@ -9,7 +9,7 @@ export class LeasesService {
   constructor(private redis: RedisService, private prisma: PrismaService) {}
 
   async create(createLeaseDto: createDto) {
-    const userId = await UserRequestService.getUserId();
+    const userId = UserRequestService.getUserId();
 
     const lease = await this.prisma.leases.create({
       data: {
@@ -23,7 +23,7 @@ export class LeasesService {
       lease,
     );
 
-    const appendToCache = await this.redis.appendToCache(
+    const appendToCache = await this.redis.append(
       LeasesService.name,
       lease,
     );
