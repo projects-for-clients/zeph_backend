@@ -23,7 +23,6 @@ export class TenantsService {
   }
 
   async findAll() {
-    await this.redis.flushAll();
     return `This action returns all tenants`;
   }
 

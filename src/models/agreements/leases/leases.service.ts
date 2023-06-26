@@ -42,7 +42,6 @@ export class LeasesService {
   }
 
   async findOne(id: number) {
-    console.log('find one ', id);
     const checkCache = await this.redis.get(`${LeasesService.name + id}`);
 
     if (checkCache) {
