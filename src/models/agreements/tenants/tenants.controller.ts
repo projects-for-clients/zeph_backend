@@ -7,13 +7,36 @@ import {
   Param,
   Delete,
   Headers,
+  UseInterceptors,
+  ValidationPipe,
+  UploadedFile,
 } from '@nestjs/common';
 import { TenantsService } from './tenants.service';
 import { TenantDto } from './dto';
+import { ParseFormDataJsonPipe } from 'src/pipes/parseFormDataJson.pipe';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('tenants')
 export class TenantsController {
   constructor(private readonly tenantsService: TenantsService) {}
+
+  // @Post()
+  // @ApiConsumes('multipart/form-data')
+  // @UseInterceptors(
+  //   FileInterceptor('image', {
+  //     limits: { fileSize: imgurConfig.fileSizeLimit },
+  //   }),
+  // )
+  // async createProductByAdmin(
+  //   @Body(
+  //     new ParseFormDataJsonPipe({ except: ['image', 'categoryIds'] }),
+  //     new ValidationPipe(),
+  //   )
+  //   createDto: TenantDto,
+  //   @UploadedFile() image: Express.Multer.File,
+  // ) {
+  //   console.log(`createDto`, createDto);
+  // }
 
   @Post()
   create(@Headers() headers, @Body() tenantDto: TenantDto) {

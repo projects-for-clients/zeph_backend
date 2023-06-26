@@ -13,13 +13,7 @@ export class TenantsService {
 
   async create(createTenantDto: TenantDto) {
     console.log({ createTenantDto });
-    const tenant = await this.prisma.tenants.create({
-      data: {
-        ...createTenantDto,
-      },
-    });
-
-    return tenant;
+    return `This action adds a new tenant`;
   }
 
   async findAll() {
