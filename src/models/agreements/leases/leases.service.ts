@@ -9,26 +9,28 @@ export class LeasesService {
   constructor(private redis: RedisService, private prisma: PrismaService) {}
 
   async create(createLeaseDto: createDto) {
-    let count = 0;
+    const count = 0;
     const userId = UserRequestService.getUserId();
 
-    const cached = await this.redis.set(`${LeasesService.name + count++}`, {
+    const lease = await this.prisma.leases.create({
+      data: {
+        ...createLeaseDto,
+        userId,
+      },
+    });
+
+    if (!lease) throw new ForbiddenException('Unable to create lease');
+
+    const cached = await this.redis.set(`${LeasesService.name + lease.id}`, {
       ...createLeaseDto,
       userId,
     });
 
-    // const lease = await this.prisma.leases.create({
-    //   data: {
-    //     ...createLeaseDto,
-    //     userId,
-    //   },
-    // });
+    await this.redis.append(LeasesService.name, cached);
 
-    const appendToCache = await this.redis.append(LeasesService.name, cached);
-
-    console.log({ appendToCache });
-
-    const getFromCache = await this.redis.get(LeasesService.name + count++);
+    const getFromCache = await this.redis.get(
+      `${LeasesService.name + lease.id}`,
+    );
 
     console.log({ getFromCache });
 
