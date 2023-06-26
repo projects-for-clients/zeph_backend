@@ -78,7 +78,7 @@ export class LeasesService {
       throw new ForbiddenException('Lease not found');
     }
 
-    const lease = this.prisma.leases.update({
+    const lease = await this.prisma.leases.update({
       where: {
         id,
       },
