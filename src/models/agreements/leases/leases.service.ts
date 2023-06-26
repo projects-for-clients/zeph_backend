@@ -59,7 +59,7 @@ export class LeasesService {
       throw new ForbiddenException('Lease not found');
     }
 
-    await this.redis.set(`${LeasesService.name + id}`, lease);
+    await this.redis.update(`${LeasesService.name + id}`, lease);
 
     return lease;
   }
