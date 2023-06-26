@@ -9,7 +9,6 @@ export class LeasesService {
   constructor(private redis: RedisService, private prisma: PrismaService) {}
 
   async create(createLeaseDto: createDto) {
-    const count = 0;
     const userId = UserRequestService.getUserId();
 
     const lease = await this.prisma.leases.create({
@@ -28,25 +27,19 @@ export class LeasesService {
 
     await this.redis.append(LeasesService.name, cached);
 
-    const getFromCache = await this.redis.get(
-      `${LeasesService.name + lease.id}`,
-    );
-
-    console.log({ getFromCache });
-
-    return getFromCache;
+    return lease;
   }
 
   async findAll() {
     const getAll = await this.redis.get(LeasesService.name);
 
-    // if (getAll) {
-    //   return getAll;
-    // }
+    if (getAll) {
+      return getAll;
+    }
 
     const allLeases = await this.prisma.leases.findMany();
 
-    const cached = await this.redis.set(LeasesService.name, allLeases);
+    await this.redis.set(LeasesService.name, allLeases);
 
     return allLeases;
   }
