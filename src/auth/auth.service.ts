@@ -53,7 +53,7 @@ export class AuthService {
 
     const isPasswordValid = await argon.verify(user.password, password);
 
-    if (!isPasswordValid) throw new ForbiddenException('Invalid Password');
+    if (!isPasswordValid) throw new ForbiddenException('Invalid Password!');
 
     await this.EmailService.send();
 
