@@ -71,23 +71,21 @@ export class LeasesService {
       where: {
         id,
       },
-    }).catch((err) => {
-        throw new ForbiddenException(err.meta.cause ?? 'Not found');
-      });
+    });
 
-    console.log({ find });
+    if (!find) {
+      throw new ForbiddenException('Lease not found');
+    }
 
-    const lease = this.prisma.leases
-      .update({
-        where: {
-          id,
-        },
-        data: {
-          ...find,
-          ...updateLeaseDto,
-        },
-      })
-      
+    const lease = this.prisma.leases.update({
+      where: {
+        id,
+      },
+      data: {
+        ...find,
+        ...updateLeaseDto,
+      },
+    });
 
     await this.redis.set(`${LeasesService.name + id}`, lease);
 
