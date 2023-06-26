@@ -49,15 +49,11 @@ export class RedisService {
   }
 
   async update(key: string, value: any): Promise<any> {
+    await this.redis.set(key, JSON.stringify(value));
+
     const get = await this.redis.get(key);
 
-    if (!get) {
-      return null;
-    }
-
-    const res = await this.redis.set(key, JSON.stringify(value));
-
-    return res;
+    return get;
   }
 
   async del(key: string): Promise<void> {

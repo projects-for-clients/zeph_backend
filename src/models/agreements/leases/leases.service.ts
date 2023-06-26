@@ -42,6 +42,7 @@ export class LeasesService {
   }
 
   async findOne(id: number) {
+    console.log('find one ', id);
     const checkCache = await this.redis.get(`${LeasesService.name + id}`);
 
     if (checkCache) {
@@ -58,6 +59,8 @@ export class LeasesService {
     if (!lease) {
       throw new ForbiddenException('Lease not found');
     }
+
+    console.log('reached the database');
 
     await this.redis.update(`${LeasesService.name + id}`, lease);
 
