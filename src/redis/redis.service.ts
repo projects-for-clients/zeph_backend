@@ -24,8 +24,6 @@ export class RedisService {
   }
 
   async append(key: string, value: any): Promise<any> {
-    console.log('appendToCache', key);
-
     const cached = await this.redis.get(key);
 
     const jsonRes = JSON.parse(cached);
@@ -36,17 +34,12 @@ export class RedisService {
 
     const res = await this.redis.get(key);
 
-    console.log({ res });
     return res;
   }
 
   async get(key: string) {
     const cached = await this.redis.get(key);
-    console.log({ cached });
-    //return cached;
     const jsonRes = JSON.parse(cached);
-
-    console.log({ jsonRes });
 
     return jsonRes;
   }
