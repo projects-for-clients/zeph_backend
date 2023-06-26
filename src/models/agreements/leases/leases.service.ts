@@ -46,7 +46,6 @@ export class LeasesService {
     const checkCache = await this.redis.get(`${LeasesService.name + id}`);
 
     if (checkCache) {
-      console.log('returning redis catch....', checkCache);
       return checkCache;
     }
 
@@ -59,8 +58,6 @@ export class LeasesService {
     if (!lease) {
       throw new ForbiddenException('Lease not found');
     }
-
-    console.log('reached the database');
 
     await this.redis.update(`${LeasesService.name + id}`, lease);
 
