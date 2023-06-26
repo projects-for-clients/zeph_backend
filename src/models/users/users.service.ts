@@ -54,7 +54,6 @@ export class UsersService {
       },
     });
 
-    await this.redis.del(UsersService.name);
-    
+    return user;
   }
 }
