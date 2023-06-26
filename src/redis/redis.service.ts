@@ -26,7 +26,17 @@ export class RedisService {
   async append(key: string, value: any): Promise<any> {
     console.log('appendToCache', key);
 
-    const res = await this.redis.append(key, JSON.stringify(value));
+    const cached = await this.redis.get(key);
+
+    const jsonRes = JSON.parse(cached);
+
+    jsonRes.push(value);
+
+    await this.redis.set(key, JSON.stringify(jsonRes));
+
+    const res = await this.redis.get(key);
+
+    console.log({ res });
     return res;
   }
 
@@ -38,7 +48,7 @@ export class RedisService {
 
     console.log({ jsonRes });
 
-    return '';
+    return jsonRes;
   }
 
   async del(key: string): Promise<void> {
