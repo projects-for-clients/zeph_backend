@@ -32,7 +32,13 @@ export class RedisService {
 
   async get(key: string) {
     const cached = await this.redis.get(key);
-    return JSON.parse(cached);
+    console.log({ cached });
+    //return cached;
+    const jsonRes = JSON.parse(cached);
+
+    console.log({ jsonRes });
+
+    return '';
   }
 
   async del(key: string): Promise<void> {

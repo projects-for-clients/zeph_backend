@@ -20,12 +20,9 @@ export class LeasesService {
 
     if (!lease) throw new ForbiddenException('Unable to create lease');
 
-    const cached = await this.redis.set(`${LeasesService.name + lease.id}`, {
-      ...createLeaseDto,
-      userId,
-    });
+    await this.redis.set(`${LeasesService.name + lease.id}`, lease);
 
-    await this.redis.append(LeasesService.name, cached);
+    await this.redis.append(LeasesService.name, lease);
 
     return lease;
   }
