@@ -67,10 +67,6 @@ export class LeasesService {
   }
 
   async update(id: number, updateLeaseDto: updateDto) {
-    const findCache = await this.redis.get(`${LeasesService.name + id}`);
-
-    console.log({ findCache });
-
     const find = await this.prisma.leases.findUnique({
       where: {
         id,
