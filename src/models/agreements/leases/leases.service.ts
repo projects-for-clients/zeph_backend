@@ -1,5 +1,5 @@
 import { UserRequestService } from 'src/services/userRequest.service';
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { createDto, updateDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RedisService } from 'src/redis/redis.service';
@@ -63,20 +63,20 @@ export class LeasesService {
   }
 
   async update(id: number, updateLeaseDto: updateDto) {
-    try {
-      const findCache = await this.redis.get(`${LeasesService.name + id}`);
+    const findCache = await this.redis.get(`${LeasesService.name + id}`);
 
-      console.log({ findCache });
+    console.log({ findCache });
 
-      const find = await this.prisma.leases.findUnique({
-        where: {
-          id,
-        },
-      });
+    const find = await this.prisma.leases.findUnique({
+      where: {
+        id,
+      },
+    });
 
-      console.log({ find });
+    console.log({ find });
 
-      const lease = this.prisma.leases.update({
+    const lease = this.prisma.leases
+      .update({
         where: {
           id,
         },
@@ -84,15 +84,14 @@ export class LeasesService {
           ...find,
           ...updateLeaseDto,
         },
+      })
+      .catch((err) => {
+        throw new ForbiddenException(err);
       });
 
-      await this.redis.set(`${LeasesService.name + id}`, lease);
+    await this.redis.set(`${LeasesService.name + id}`, lease);
 
-      return lease;
-    } catch (err) {
-      console.log('Error in leases.service.ts update method. Error: ', err);
-      return 'Not found';
-    }
+    return lease;
   }
 
   async delete(id: number) {
