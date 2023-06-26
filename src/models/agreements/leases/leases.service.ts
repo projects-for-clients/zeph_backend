@@ -45,7 +45,7 @@ export class LeasesService {
     const checkCache = await this.redis.get(`${LeasesService.name + id}`);
 
     if (checkCache) {
-      console.log({ checkCache });
+      console.log('returning redis catch....', checkCache);
       return checkCache;
     }
 
