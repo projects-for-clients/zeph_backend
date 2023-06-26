@@ -26,6 +26,10 @@ export class RedisService {
   async append(key: string, value: any): Promise<any> {
     const cached = await this.redis.get(key);
 
+    if (!cached) {
+      return null;
+    }
+
     const jsonRes = JSON.parse(cached);
 
     jsonRes.push(value);
