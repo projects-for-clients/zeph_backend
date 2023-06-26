@@ -28,7 +28,8 @@ export class LeasesService {
       lease,
     );
 
-    
+    console.log({ appendToCache });
+
     return cached;
   }
 

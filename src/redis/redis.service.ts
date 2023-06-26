@@ -18,12 +18,7 @@ export class RedisService {
   async set(key: string, value: any): Promise<string> {
     console.log('set', key);
 
-    const res = await this.redis.set(
-      key,
-      JSON.stringify(value),
-      'EX',
-      3600 * 24 * 7,
-    );
+    const res = await this.redis.set(key, JSON.stringify(value));
 
     return res;
   }
@@ -31,7 +26,7 @@ export class RedisService {
   async appendToCache(key: string, value: any): Promise<any> {
     console.log('appendToCache', key);
 
-    const res = await this.redis.sadd(key, JSON.stringify(value));
+    const res = await this.redis.append(key, JSON.stringify(value));
     return res;
   }
 
