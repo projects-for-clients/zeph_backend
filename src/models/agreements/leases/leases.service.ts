@@ -23,10 +23,7 @@ export class LeasesService {
       lease,
     );
 
-    const appendToCache = await this.redis.append(
-      LeasesService.name,
-      lease,
-    );
+    const appendToCache = await this.redis.append(LeasesService.name, lease);
 
     console.log({ appendToCache });
 

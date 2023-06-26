@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "contracts" (
-    "id" SERIAL NOT NULL,
-    "user_id" INTEGER,
+    "id" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
 
     CONSTRAINT "contracts_pkey" PRIMARY KEY ("id")
@@ -17,7 +17,7 @@ CREATE TABLE "deed_of_assignments" (
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
     "property_description" TEXT,
     "relevant_documents" TEXT,
-    "userId" INTEGER,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "deed_of_assignments_pkey" PRIMARY KEY ("id")
 );
@@ -27,7 +27,7 @@ CREATE TABLE "leases" (
     "id" SERIAL NOT NULL,
     "leasor_name" VARCHAR(100) NOT NULL,
     "leasee_name" VARCHAR(100) NOT NULL,
-    "userId" INTEGER,
+    "userId" INTEGER NOT NULL,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
 
     CONSTRAINT "leases_pkey" PRIMARY KEY ("id")
@@ -39,7 +39,7 @@ CREATE TABLE "loans" (
     "borrower_name" VARCHAR(100) NOT NULL,
     "lender_name" VARCHAR(100) NOT NULL,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
-    "userId" INTEGER,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "loans_pkey" PRIMARY KEY ("id")
 );
@@ -54,7 +54,7 @@ CREATE TABLE "power_of_attorneys" (
     "property_description" TEXT,
     "relevant_documents" TEXT,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
-    "userId" INTEGER,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "power_of_attorneys_pkey" PRIMARY KEY ("id")
 );
@@ -68,7 +68,7 @@ CREATE TABLE "sales" (
     "amount" DECIMAL(10,2),
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
     "relevant_documents" TEXT,
-    "userId" INTEGER,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "sales_pkey" PRIMARY KEY ("id")
 );
@@ -85,7 +85,7 @@ CREATE TABLE "tenants" (
     "amount" DECIMAL(10,2) NOT NULL,
     "duration" VARCHAR(100) NOT NULL,
     "relevant_documents" TEXT,
-    "userId" INTEGER,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "tenants_pkey" PRIMARY KEY ("id")
 );
@@ -104,7 +104,7 @@ CREATE TABLE "users" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- AddForeignKey
-ALTER TABLE "contracts" ADD CONSTRAINT "contracts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE "contracts" ADD CONSTRAINT "contracts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "deed_of_assignments" ADD CONSTRAINT "deed_of_assignments_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
