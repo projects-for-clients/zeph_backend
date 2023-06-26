@@ -19,7 +19,7 @@ export class LeasesService {
     });
 
     const cached = await this.redis.set(
-      `${LeasesService.name + userId}`,
+      `${LeasesService.name + lease.id}`,
       lease,
     );
 
@@ -63,41 +63,47 @@ export class LeasesService {
   }
 
   async update(id: number, updateLeaseDto: updateDto) {
-    const findCache = await this.redis.get(`${LeasesService.name + id}`);
+    try {
+      const findCache = await this.redis.get(`${LeasesService.name + id}`);
 
-    console.log({ findCache });
+      console.log({ findCache });
 
-    const find = await this.prisma.leases.findUnique({
-      where: {
-        id,
-      },
-    });
+      const find = await this.prisma.leases.findUnique({
+        where: {
+          id,
+        },
+      });
 
-    console.log({ find });
+      console.log({ find });
 
-    const lease = this.prisma.leases.update({
-      where: {
-        id,
-      },
-      data: {
-        ...find,
-        ...updateLeaseDto,
-      },
-    });
+      const lease = this.prisma.leases.update({
+        where: {
+          id,
+        },
+        data: {
+          ...find,
+          ...updateLeaseDto,
+        },
+      });
 
-    await this.redis.set(`${LeasesService.name + id}`, lease);
+      await this.redis.set(`${LeasesService.name + id}`, lease);
 
-    return lease;
+      return lease;
+    } catch (err) {
+      console.log({err})
+      return 'Not found';
+    }
   }
 
   async delete(id: number) {
+    await this.redis.flushAll();
     const lease = await this.prisma.leases.delete({
       where: {
         id,
       },
     });
 
-    await this.redis.del(`${LeasesService.name + id}`);
+    //await this.redis.del(`${LeasesService.name + id}`);
 
     return lease;
   }

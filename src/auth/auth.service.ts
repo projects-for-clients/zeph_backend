@@ -5,7 +5,6 @@ import { AuthLogin, AuthRegister } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { EmailService } from 'src/services/email.service';
 import * as dayjs from 'dayjs';
 
