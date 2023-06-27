@@ -39,19 +39,14 @@ export class TenantsController {
       limits: { fileSize: imgConfig.maxFileSize },
     }),
   )
-  async createProductByAdmin(
+  async create(
     @Body(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
-    createDto: TenantDto,
-    @UploadedFile() image: Express.Multer.File,
+    tenantDto: TenantDto,
+    @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(`createDto`, createDto, `image`, image);
+    console.log(`createDto`, tenantDto, `image`, file);
+    return this.tenantsService.create(tenantDto, file);
   }
-
-  // @Post()
-  // create(@Headers() headers, @Body() tenantDto: TenantDto) {
-  //   console.log({ headers });
-  //   return this.tenantsService.create(tenantDto);
-  // }
 
   @Get()
   findAll() {

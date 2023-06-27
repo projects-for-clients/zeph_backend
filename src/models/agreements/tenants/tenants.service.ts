@@ -11,8 +11,8 @@ export class TenantsService {
     private redis: RedisService,
   ) {}
 
-  async create(createTenantDto: TenantDto) {
-    console.log({ createTenantDto });
+  async create(createTenantDto: TenantDto, file: Express.Multer.File) {
+    console.log({ createTenantDto, file });
     return `This action adds a new tenant`;
   }
 
