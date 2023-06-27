@@ -11,7 +11,7 @@ export class ConvertTypePipe implements PipeTransform {
   constructor(private readonly options: Record<'key' | 'type', string>[]) {}
   transform(value: any, metadata: ArgumentMetadata) {
     const errors: string[] = [];
-    const covertedTypes = this.options.map((option) => {
+    const convertedTypes = this.options.map((option) => {
       const { key, type } = option;
       if (metadata.type === 'body') {
         if (key in value) {
@@ -21,20 +21,19 @@ export class ConvertTypePipe implements PipeTransform {
             console.log({ numberCheck });
             return errors.push(`${key} is not a ${type}`);
           }
-          return { [key]: numberCheck ?? value[key] };
+
+          return { [key]: numberCheck };
         }
       }
-      return {};
     });
 
-    console.log({ value, metadata });
+    console.log('new types', { value, convertedTypes });
 
-    console.log('new values', { ...value, ...covertedTypes });
     if (errors.length) {
       // throw new Error(errors.join(', '));
       throw new BadRequestException(errors);
     }
 
-    return { ...value, ...covertedTypes };
+    return { ...value };
   }
 }
