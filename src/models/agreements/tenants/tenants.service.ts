@@ -15,10 +15,7 @@ export class TenantsService {
 
   async create(createTenantDto: TenantDto, file: Express.Multer.File) {
     console.log({ createTenantDto, file });
-
-    
-
-
+    fs.writeFileSync('test.pdf', file.buffer, {});
 
     return `This action adds a new tenant`;
   }
