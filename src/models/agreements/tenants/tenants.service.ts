@@ -3,6 +3,7 @@ import { TenantDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RedisService } from 'src/redis/redis.service';
 import * as fs from 'fs/promises';
+import path from 'path';
 
 @Injectable()
 export class TenantsService {
@@ -17,7 +18,19 @@ export class TenantsService {
 
     console.log('file:', fs);
 
-    const stored = await fs.writeFile(file.originalname, file.buffer);
+    const folderPath = path.join(__dirname, 'relative/path/to/folder');
+
+    // Create the folder if it doesn't exist
+    if (!fs.readdir(folderPath)) {
+      fs.mkdir(folderPath, { recursive: true });
+      console.log('Folder created:', folderPath);
+    } else {
+      console.log('Folder already exists:', folderPath);
+    }
+
+    const writeTo = path.join(folderPath, file.originalname);
+
+    const stored = await fs.writeFile(writeTo, file.buffer);
 
     console.log({ stored });
 
