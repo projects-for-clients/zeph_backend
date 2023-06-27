@@ -9,6 +9,7 @@ import {
 @Injectable()
 export class ConvertTypePipe implements PipeTransform {
   constructor(private readonly options: Record<'key' | 'type', string>[]) {}
+
   transform(value: any, metadata: ArgumentMetadata) {
     const errors: string[] = [];
     const convertedTypes = this.options.map((option) => {
@@ -18,7 +19,6 @@ export class ConvertTypePipe implements PipeTransform {
           const numberCheck = type === 'number' && Number(value[key]);
 
           if (!numberCheck) {
-            console.log({ numberCheck });
             return errors.push(`${key} is not a ${type}`);
           }
 
@@ -27,6 +27,16 @@ export class ConvertTypePipe implements PipeTransform {
       }
     });
 
+    const updatedValue = {
+      ...value,
+      ...convertedTypes.reduce(
+        (acc: any, curr: any) => ({ ...acc, ...curr }),
+        {},
+      ),
+    };
+
+
+
     console.log('new types', { value, convertedTypes });
 
     if (errors.length) {
@@ -34,6 +44,6 @@ export class ConvertTypePipe implements PipeTransform {
       throw new BadRequestException(errors);
     }
 
-    return { ...value };
+    return { ...updatedValue };
   }
 }
