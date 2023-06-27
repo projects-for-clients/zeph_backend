@@ -16,7 +16,19 @@ export class TenantsService {
   async create(createTenantDto: TenantDto, file: Express.Multer.File) {
     console.log({ createTenantDto, file });
 
-    const folderPath = path.join(__dirname, 'uploads', 'tenants');
+    const folderPath = path.join('uploads', 'tenants');
+    await fs
+      .mkdir(folderPath, {
+        recursive: true,
+      })
+      .then((res) => {
+        console.log("not create")
+        console.log({ res });
+      })
+      .catch((e) => {
+        console.log("create now ")
+        console.log({ e });
+      });
 
     console.log({ folderPath });
 
