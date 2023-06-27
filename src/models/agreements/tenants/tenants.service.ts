@@ -38,8 +38,9 @@ export class TenantsService {
 
 		console.log({ isError });
 
-		if (isError) {
+		if (!isError) {
 			console.log("isError", isError);
+			return "Hello world";
 		}
 
 		console.log("should not reach here, not stored", isError);
