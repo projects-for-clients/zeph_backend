@@ -19,17 +19,17 @@ export class TenantsService {
 		await fs.mkdir(folderPath, {
 			recursive: true,
 		});
-		
-		console.log({ files })
 
-		files.forEach(async (file) => {
-			console.log({ file });
-			// const writeTo = `${folderPath}/${file.originalname}`;
+		console.log({ files }, "type", typeof files);
 
-			// await fs.writeFile(writeTo, file.buffer).catch(() => {
-			// 	throw new ForbiddenException("File could not be written");
-			// });
-		});
+		// files.forEach(async (file) => {
+		// 	console.log({ file });
+		// 	// const writeTo = `${folderPath}/${file.originalname}`;
+
+		// 	// await fs.writeFile(writeTo, file.buffer).catch(() => {
+		// 	// 	throw new ForbiddenException("File could not be written");
+		// 	// });
+		// });
 
 		return "Hello world";
 	}
