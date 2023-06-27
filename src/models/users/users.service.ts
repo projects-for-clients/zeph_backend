@@ -12,17 +12,6 @@ export class UsersService {
   constructor(private redis: RedisService, private prisma: PrismaService) {}
 
   async findAll() {
-    // const cached = await this.redis.get(UsersService.name);
-
-    // const userId = UserRequestService.getUserId();
-
-    // console.log('userId', userId);
-
-    // if (cached) {
-    //   console.log('returning redis catch....', cached);
-    //   return cached;
-    // }
-
     console.log('call the database');
 
     const allUsers = await this.prisma.users.findMany();
