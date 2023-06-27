@@ -17,9 +17,10 @@ export class TenantsService {
     console.log({ createTenantDto, file });
 
     const folderPath = path.dirname(__dirname);
+    const readFolder = await fs.readdir(folderPath + '/uploads');
 
-    console.log({ folderPath });
-    if (!fs.readdir(folderPath + '/uploads')) {
+    console.log({ folderPath, readFolder });
+    if (!readFolder) {
       console.log("doesn't exist");
       fs.mkdir('uploads/' + folderPath, { recursive: true });
 
