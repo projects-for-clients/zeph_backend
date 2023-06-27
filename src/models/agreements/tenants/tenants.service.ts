@@ -3,7 +3,6 @@ import { TenantDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RedisService } from 'src/redis/redis.service';
 import * as fs from 'fs/promises';
-import { Buffer } from 'buffer';
 
 @Injectable()
 export class TenantsService {

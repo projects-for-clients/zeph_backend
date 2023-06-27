@@ -22,6 +22,6 @@ export class ParseFormDataJsonPipe implements PipeTransform {
       ...deserializedValue,
       amount: parseInt(deserializedValue.amount),
     };
-    return { ...updated, ...originProperties };
+    return { ...deserializedValue, ...originProperties };
   }
 }
