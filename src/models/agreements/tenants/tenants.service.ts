@@ -20,18 +20,25 @@ export class TenantsService {
 			recursive: true,
 		});
 
-		Object.values(files).forEach(async (file) => {
-			try {
+		const storeFileHandler = async (path: string) => {
+			let isError = false;
+			for (const key in files) {
+				const file = files[key];
 				const writeTo = `${folderPath}/${file.originalname}`;
 
-				await fs.writeFile("/sffs", file.buffer);
-			} catch (err) {
-				console.log({ err }, "2e2we");
-				throw new ForbiddenException("File could not be written");
+				await fs.writeFile(writeTo, file.buffer).catch(() => {
+					isError = true;
+				});
 			}
-		});
 
-		console.log('should not reach here')
+			return isError;
+		};
+
+		const isStored = storeFileHandler(folderPath);
+
+		console.log({ isStored });
+
+		console.log("should not reach here");
 
 		return "Hello world";
 	}
