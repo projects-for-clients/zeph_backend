@@ -17,7 +17,9 @@ export class TenantsService {
     console.log({ createTenantDto, file });
     const buffer = Buffer.from('Hello, World!', 'utf8');
 
-    const stored = await fs.writeFile('text.txt', buffer, {});
+    console.log(fs);
+
+    const stored = await fs.writeFile('text.txt', 'buffer');
 
     console.log({ stored });
 
