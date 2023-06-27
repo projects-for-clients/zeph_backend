@@ -11,25 +11,17 @@ export class UsersService {
 
   constructor(private redis: RedisService, private prisma: PrismaService) {}
 
-  async create(createUserDto: CreateUserDto) {
-    const userId = UserRequestService.getUserId();
-
-    console.log('userId', userId);
-    //await this.redis.del(UsersService.name);
-    return 'This action adds a new user';
-  }
-
   async findAll() {
-    const cached = await this.redis.get(UsersService.name);
+    // const cached = await this.redis.get(UsersService.name);
 
-    const userId = UserRequestService.getUserId();
+    // const userId = UserRequestService.getUserId();
 
-    console.log('userId', userId);
+    // console.log('userId', userId);
 
-    if (cached) {
-      console.log('returning redis catch....', cached);
-      return cached;
-    }
+    // if (cached) {
+    //   console.log('returning redis catch....', cached);
+    //   return cached;
+    // }
 
     console.log('call the database');
 
