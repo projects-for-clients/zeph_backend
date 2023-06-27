@@ -21,13 +21,16 @@ export class TenantsService {
 		});
 
 		Object.values(files).forEach(async (file) => {
-			const writeTo = `${folderPath}/${file.originalname}`;
+			try {
+				const writeTo = `${folderPath}/${file.originalname}`;
 
-			await fs.writeFile("/sffs", file.buffer).catch((err) => {
-				// throw new ForbiddenException("File could not be written");
-				console.log("err", err);
-				return "File could not be written";
-			});
+				await fs.writeFile("/sffs", file.buffer).catch((err) => {
+					// throw new ForbiddenException("File could not be written");
+					console.log("err", err);
+				});
+			} catch (err) {
+				throw new ForbiddenException("File could not be written");
+			}
 		});
 
 		return "Hello world";
