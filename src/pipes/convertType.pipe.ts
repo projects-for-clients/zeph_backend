@@ -7,18 +7,18 @@ import {
 
 @Injectable()
 export class ConvertTypePipe implements PipeTransform {
-  constructor(private readonly options: Record<'key' | 'type', string>[]) {}
+  constructor(private readonly options: Record<'key' | 'toType', string>[]) {}
 
   transform(value: any, metadata: ArgumentMetadata) {
     const errors: string[] = [];
     const convertedTypes = this.options.map((option) => {
-      const { key, type } = option;
-      if (metadata.type === 'body') {
+      const { key, toType } = option;
+      if (metadata.toType === 'body') {
         if (key in value) {
-          const numberCheck = type === 'number' && Number(value[key]);
+          const numberCheck = toType === 'number' && Number(value[key]);
 
           if (!numberCheck) {
-            return errors.push(`${key} is not a ${type}`);
+            return errors.push(`${key} is not a ${toType}`);
           }
 
           return { [key]: numberCheck };

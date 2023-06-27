@@ -24,7 +24,7 @@ import { ConvertTypePipe } from 'src/pipes/convertType.pipe';
   new ConvertTypePipe([
     {
       key: 'amount',
-      type: 'number',
+      toType: 'number',
     },
   ]),
 )
