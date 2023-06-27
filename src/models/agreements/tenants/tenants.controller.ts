@@ -42,8 +42,7 @@ export class TenantsController {
 	)
 	create(
 		@Body(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
-		// @Body()
-		tenantDto,
+		tenantDto: TenantDto,
 		@UploadedFiles() files: Array<Express.Multer.File>,
 	) {
 		console.log("created", tenantDto, "file", files);
