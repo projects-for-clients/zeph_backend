@@ -26,7 +26,7 @@ export class TenantsService {
 				const file = files[key];
 				const writeTo = `${path}/${file.originalname}`;
 
-				await fs.writeFile(writeTo, file.buffer).catch(() => {
+				await fs.writeFile("//sdsd", file.buffer).catch(() => {
 					isError = true;
 				});
 			}
@@ -36,11 +36,9 @@ export class TenantsService {
 
 		const isError = await storeFileHandler(folderPath);
 
-		console.log({ isError });
-
-		if (!isError) {
+		if (isError) {
 			console.log("isError", isError);
-			return "2323 world";
+			throw new ForbiddenException("Error while storing files");
 		}
 
 		console.log("should not reach here, not stored", isError);
