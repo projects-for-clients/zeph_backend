@@ -17,7 +17,7 @@ import { ApiConsumes } from "@nestjs/swagger";
 import { TenantsService } from "./tenants.service";
 import { TenantDto } from "./dto";
 import { ParseFormDataJsonPipe } from "src/pipes/parseFormDataJson.pipe";
-import { FileInterceptor } from "@nestjs/platform-express";
+import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { imgConfig } from "src/config/img.config";
 import { ConvertTypePipe } from "src/pipes/convertType.pipe";
 
@@ -34,18 +34,14 @@ export class TenantsController {
 	constructor(private readonly tenantsService: TenantsService) {}
 
 	@Post()
-	@ApiConsumes("multipart/form-data")
-	@UseInterceptors(
-		FileInterceptor("relevant_documents", {
-			limits: { fileSize: imgConfig.maxFileSize },
-		}),
-	)
+	// @ApiConsumes("multipart/form-data")
+	@UseInterceptors(FilesInterceptor("relevant_documents"))
 	create(
-		@Body(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
-		tenantDto: TenantDto,
+		// @Body(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
+		// tenantDto: TenantDto,
 		@UploadedFiles() files: Array<Express.Multer.File>,
 	) {
-		console.log("created", tenantDto, "file", files);
+		console.log("created", "file", files);
 		// return this.tenantsService.create(tenantDto, file);
 
 		return "hello wolrd";
