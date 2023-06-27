@@ -3,6 +3,7 @@ import { TenantDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RedisService } from 'src/redis/redis.service';
 import fs from 'fs/promises';
+import { Buffer } from 'buffer';
 
 @Injectable()
 export class TenantsService {
@@ -14,7 +15,9 @@ export class TenantsService {
 
   async create(createTenantDto: TenantDto, file: Express.Multer.File) {
     console.log({ createTenantDto, file });
-    const stored = await fs.writeFile(file.fieldname, file.buffer, {});
+    const buffer = Buffer.from('Hello, World!', 'utf8');
+
+    const stored = await fs.writeFile('text.txt', buffer, {});
 
     console.log({ stored });
 
