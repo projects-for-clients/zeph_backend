@@ -18,8 +18,16 @@ import { TenantDto } from './dto';
 import { ParseFormDataJsonPipe } from 'src/pipes/parseFormDataJson.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { imgConfig } from 'src/config/img.config';
+import { ConvertTypePipe } from 'src/pipes/convertType.pipe';
 
-@UsePipes(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
+@UsePipes(
+  new ConvertTypePipe([
+    {
+      key: 'amount',
+      type: 'number',
+    },
+  ]),
+)
 @Controller('tenants')
 export class TenantsController {
   constructor(private readonly tenantsService: TenantsService) {}
@@ -32,7 +40,7 @@ export class TenantsController {
     }),
   )
   async createProductByAdmin(
-    @Body(new ValidationPipe())
+    @Body(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
     createDto: TenantDto,
     @UploadedFile() image: Express.Multer.File,
   ) {
