@@ -27,10 +27,9 @@ export class ConvertTypePipe implements PipeTransform {
       return {};
     });
 
-    console.log({ value, covertedTypes });
-
     console.log({ value, metadata });
 
+    console.log('new values', { ...value, ...covertedTypes });
     if (errors.length) {
       // throw new Error(errors.join(', '));
       throw new BadRequestException(errors);
