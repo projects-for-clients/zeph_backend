@@ -14,43 +14,21 @@ export class TenantsService {
   ) {}
 
   async create(createTenantDto: TenantDto, file: Express.Multer.File) {
-    console.log({ createTenantDto, file });
-
-    const folderPath = path.join('uploads', 'tenants');
-    await fs
-      .mkdir(folderPath, {
-        recursive: true,
-      })
-      .then((res) => {
-        console.log("not create")
-        console.log({ res });
-      })
-      .catch((e) => {
-        console.log("create now ")
-        console.log({ e });
-      });
-
-    console.log({ folderPath });
-
-    // const readFolder = await fs.mkdir(folderPath).catch(async (e) => {
-    //   console.log({ e });
-    //   const mkdir = await fs.mkdir(folderPath, {
-    //     recursive: true,
-    //   });
-    //   console.log({ mkdir });
-
-    //   return 'File created';
-    // });
-
-    // console.log({ folderPath, readFolder });
-
-    return 'Hello';
-    const toUploadsFolder = fs.mkdir(`uploads/` + folderPath, {
+    const folderPath = path.join('uploads', TenantsService.name);
+    await fs.mkdir(folderPath, {
       recursive: true,
     });
-    const writeTo = `${toUploadsFolder}/${file.originalname}`;
 
-    const stored = await fs.writeFile(writeTo, file.buffer);
+    const writeTo = `${folderPath}/${file.originalname}`;
+
+    console.log({writeTo})
+
+    const stored = await fs.writeFile(writeTo, file.buffer).catch((err) => {
+      console.log(err);
+      return 'stored';
+    });
+
+    console.log({ stored });
 
     return `This action adds a new tenant`;
   }
