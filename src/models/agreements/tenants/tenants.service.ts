@@ -24,7 +24,7 @@ export class TenantsService {
 			let isError = false;
 			for (const key in files) {
 				const file = files[key];
-				const writeTo = `${folderPath}/${file.originalname}`;
+				const writeTo = `${path}/${file.originalname}`;
 
 				await fs.writeFile(writeTo, file.buffer).catch(() => {
 					isError = true;
