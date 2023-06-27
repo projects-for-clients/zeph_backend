@@ -31,6 +31,8 @@ export class TenantsService {
 			}
 		});
 
+		console.log('should not reach here')
+
 		return "Hello world";
 	}
 
