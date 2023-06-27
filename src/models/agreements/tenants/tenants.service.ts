@@ -34,15 +34,15 @@ export class TenantsService {
 			return isError;
 		};
 
-		const isStored = await storeFileHandler(folderPath);
+		const isError = await storeFileHandler(folderPath);
 
-		console.log({ isStored });
+		console.log({ isError });
 
-		if (isStored) {
-			console.log("isStored", isStored);
+		if (isError) {
+			console.log("isError", isError);
 		}
 
-		console.log("should not reach here, not stored", isStored);
+		console.log("should not reach here, not stored", isError);
 
 		return "Hello world";
 	}
