@@ -2,7 +2,6 @@ import {
   ArgumentMetadata,
   Injectable,
   PipeTransform,
-  Logger,
   BadRequestException,
 } from '@nestjs/common';
 
@@ -35,12 +34,7 @@ export class ConvertTypePipe implements PipeTransform {
       ),
     };
 
-
-
-    console.log('new types', { value, convertedTypes });
-
     if (errors.length) {
-      // throw new Error(errors.join(', '));
       throw new BadRequestException(errors);
     }
 
