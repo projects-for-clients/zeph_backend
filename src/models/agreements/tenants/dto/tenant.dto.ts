@@ -28,7 +28,7 @@ export class TenantDto {
   // @IsString()
   // relevant_documents: string;
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  amount: string;
+  amount: number;
 }

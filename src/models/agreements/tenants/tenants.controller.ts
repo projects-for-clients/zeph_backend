@@ -10,6 +10,7 @@ import {
   UseInterceptors,
   ValidationPipe,
   UploadedFile,
+  UsePipes,
 } from '@nestjs/common';
 import { ApiConsumes } from '@nestjs/swagger';
 import { TenantsService } from './tenants.service';
@@ -18,6 +19,7 @@ import { ParseFormDataJsonPipe } from 'src/pipes/parseFormDataJson.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { imgConfig } from 'src/config/img.config';
 
+@UsePipes(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
 @Controller('tenants')
 export class TenantsController {
   constructor(private readonly tenantsService: TenantsService) {}
@@ -25,15 +27,12 @@ export class TenantsController {
   @Post()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
-    FileInterceptor('image', {
+    FileInterceptor('relevant_documents', {
       limits: { fileSize: imgConfig.maxFileSize },
     }),
   )
   async createProductByAdmin(
-    @Body(
-      new ParseFormDataJsonPipe({ except: ['image'] }),
-      new ValidationPipe(),
-    )
+    @Body(new ValidationPipe())
     createDto: TenantDto,
     @UploadedFile() image: Express.Multer.File,
   ) {
