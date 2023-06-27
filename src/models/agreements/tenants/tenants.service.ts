@@ -19,6 +19,8 @@ export class TenantsService {
 		await fs.mkdir(folderPath, {
 			recursive: true,
 		});
+		
+		console.log({ files })
 
 		files.forEach(async (file) => {
 			console.log({ file });
