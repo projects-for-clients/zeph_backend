@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { TenantDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RedisService } from 'src/redis/redis.service';
-import fs from 'fs';
+import fs from 'fs/promises';
 
 @Injectable()
 export class TenantsService {
@@ -14,7 +14,9 @@ export class TenantsService {
 
   async create(createTenantDto: TenantDto, file: Express.Multer.File) {
     console.log({ createTenantDto, file });
-    fs.writeFileSync(file.fieldname, file.buffer, {});
+    const stored = await fs.writeFile(file.fieldname, file.buffer, {});
+
+    console.log({ stored });
 
     return `This action adds a new tenant`;
   }
