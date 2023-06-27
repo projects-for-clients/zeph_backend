@@ -1,51 +1,47 @@
-import { Injectable } from '@nestjs/common';
-import { TenantDto } from './dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { RedisService } from 'src/redis/redis.service';
-import * as fs from 'fs/promises';
-import * as path from 'path';
+import { ForbiddenException, Injectable } from "@nestjs/common";
+import { TenantDto } from "./dto";
+import { PrismaService } from "src/prisma/prisma.service";
+import { RedisService } from "src/redis/redis.service";
+import * as fs from "fs/promises";
+import * as path from "path";
 
 @Injectable()
 export class TenantsService {
-  constructor(
-    // @Inject(CACHE_MANAGER) private readonly cache: Cache,
-    private prisma: PrismaService,
-    private redis: RedisService,
-  ) {}
+	constructor(
+		// @Inject(CACHE_MANAGER) private readonly cache: Cache,
+		private prisma: PrismaService,
+		private redis: RedisService,
+	) {}
 
-  async create(createTenantDto: TenantDto, file: Express.Multer.File) {
-    const folderPath = path.join('uploads', TenantsService.name);
-    await fs.mkdir(folderPath, {
-      recursive: true,
-    });
+	async create(createTenantDto: TenantDto, file: Express.Multer.File) {
+		// try {
+		const folderPath = path.join("uploads", TenantsService.name);
+		await fs.mkdir(folderPath, {
+			recursive: true,
+		});
 
-    const writeTo = `${folderPath}/${file.originalname}`;
+		const writeTo = `${folderPath}/${file.originalname}`;
 
-    console.log({writeTo})
+		await fs.writeFile(writeTo, file.buffer).catch(() => {
+			throw new ForbiddenException("File could not be written");
+		});
 
-    const stored = await fs.writeFile(writeTo, file.buffer).catch((err) => {
-      console.log(err);
-      return 'stored';
-    });
+		return "Hello world";
+	}
 
-    console.log({ stored });
+	async findAll() {
+		return "This action returns all tenants";
+	}
 
-    return `This action adds a new tenant`;
-  }
+	findOne(id: number) {
+		return `This action returns a #${id} tenant`;
+	}
 
-  async findAll() {
-    return `This action returns all tenants`;
-  }
+	update(id: number, updateTenantDto: TenantDto) {
+		return `This action updates a #${id} tenant`;
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} tenant`;
-  }
-
-  update(id: number, updateTenantDto: TenantDto) {
-    return `This action updates a #${id} tenant`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} tenant`;
-  }
+	remove(id: number) {
+		return `This action removes a #${id} tenant`;
+	}
 }
