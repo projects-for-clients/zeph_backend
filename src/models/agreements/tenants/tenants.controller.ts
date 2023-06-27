@@ -44,7 +44,7 @@ export class TenantsController {
     tenantDto: TenantDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(`createDto`, tenantDto, `image`, file);
+    // console.log(`createDto`, tenantDto, `image`, file);
     return this.tenantsService.create(tenantDto, file);
   }
 
