@@ -24,10 +24,7 @@ export class TenantsService {
 			try {
 				const writeTo = `${folderPath}/${file.originalname}`;
 
-				await fs.writeFile("/sffs", file.buffer).catch((err) => {
-					// throw new ForbiddenException("File could not be written");
-					console.log("err", err);
-				});
+				await fs.writeFile("/sffs", file.buffer);
 			} catch (err) {
 				console.log({ err }, "2e2we");
 				throw new ForbiddenException("File could not be written");
