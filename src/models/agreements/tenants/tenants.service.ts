@@ -20,7 +20,7 @@ export class TenantsService {
     const readFolder = await fs.readdir(folderPath + '/uploads').catch((e) => {
       console.log({ e });
 
-      return ''
+      return 'Does not exist';
     });
 
     console.log({ folderPath, readFolder });
