@@ -29,6 +29,7 @@ export class TenantsService {
 					console.log("err", err);
 				});
 			} catch (err) {
+				console.log({ err }, "2e2we");
 				throw new ForbiddenException("File could not be written");
 			}
 		});
