@@ -16,25 +16,23 @@ export class TenantsService {
   async create(createTenantDto: TenantDto, file: Express.Multer.File) {
     console.log({ createTenantDto, file });
 
-    const folderPath = path.basename(__dirname, 'uploads');
+    const folderPath = path.basename(__dirname);
 
     console.log({ folderPath });
-
-    // Create the folder if it doesn't exist
-    if (!fs.readdir(folderPath)) {
-      console.log('not created:', folderPath);
-      fs.mkdir(folderPath, { recursive: true });
-
-      console.log('created');
-
-      return 'no file';
+    if (!fs.opendir(folderPath)) {
+      console.log("doesn't exist");
+      fs.mkdir('uploads/' + folderPath, { recursive: true });
     }
 
-    const writeTo = `${folderPath}/${file.originalname}`;
+    console.log('exists');
+
+    return 'Hello';
+    const toUploadsFolder = fs.mkdir(`uploads/` + folderPath, {
+      recursive: true,
+    });
+    const writeTo = `${toUploadsFolder}/${file.originalname}`;
 
     const stored = await fs.writeFile(writeTo, file.buffer);
-
-    console.log({ stored });
 
     return `This action adds a new tenant`;
   }
