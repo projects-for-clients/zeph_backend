@@ -17,7 +17,11 @@ export class TenantsService {
     console.log({ createTenantDto, file });
 
     const folderPath = path.dirname(__dirname);
-    const readFolder = await fs.readdir(folderPath + '/uploads');
+    const readFolder = await fs.readdir(folderPath + '/uploads').catch((e) => {
+      console.log({ e });
+
+      return ''
+    });
 
     console.log({ folderPath, readFolder });
     if (!readFolder) {
