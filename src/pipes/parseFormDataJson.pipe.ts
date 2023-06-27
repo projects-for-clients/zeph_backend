@@ -17,11 +17,7 @@ export class ParseFormDataJsonPipe implements PipeTransform {
       _.merge(originProperties, _.pick(serializedValue, ...except));
     }
     const deserializedValue = deepParseJson(value);
-    console.log(`deserializedValue`, deserializedValue);
-    const updated = {
-      ...deserializedValue,
-      amount: parseInt(deserializedValue.amount),
-    };
+
     return { ...deserializedValue, ...originProperties };
   }
 }
