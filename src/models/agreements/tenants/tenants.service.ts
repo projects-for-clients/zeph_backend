@@ -42,7 +42,7 @@ export class TenantsService {
 			console.log("isStored", isStored);
 		}
 
-		console.log("should not reach here");
+		console.log("should not reach here, not stored", isStored);
 
 		return "Hello world";
 	}
