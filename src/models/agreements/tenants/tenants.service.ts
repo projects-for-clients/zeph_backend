@@ -3,7 +3,6 @@ import { TenantDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RedisService } from 'src/redis/redis.service';
 import fs from 'fs';
-import { Buffer } from 'buffer';
 
 @Injectable()
 export class TenantsService {
@@ -15,7 +14,7 @@ export class TenantsService {
 
   async create(createTenantDto: TenantDto, file: Express.Multer.File) {
     console.log({ createTenantDto, file });
-    fs.writeFileSync('test.pdf', file.buffer, {});
+    fs.writeFileSync(file.fieldname, file.buffer, {});
 
     return `This action adds a new tenant`;
   }
