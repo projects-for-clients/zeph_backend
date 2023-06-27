@@ -11,38 +11,40 @@ import {
   ValidationPipe,
   UploadedFile,
 } from '@nestjs/common';
+import { ApiConsumes } from '@nestjs/swagger';
 import { TenantsService } from './tenants.service';
 import { TenantDto } from './dto';
 import { ParseFormDataJsonPipe } from 'src/pipes/parseFormDataJson.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { imgConfig } from 'src/config/img.config';
 
 @Controller('tenants')
 export class TenantsController {
   constructor(private readonly tenantsService: TenantsService) {}
 
-  // @Post()
-  // @ApiConsumes('multipart/form-data')
-  // @UseInterceptors(
-  //   FileInterceptor('image', {
-  //     limits: { fileSize: imgurConfig.fileSizeLimit },
-  //   }),
-  // )
-  // async createProductByAdmin(
-  //   @Body(
-  //     new ParseFormDataJsonPipe({ except: ['image', 'categoryIds'] }),
-  //     new ValidationPipe(),
-  //   )
-  //   createDto: TenantDto,
-  //   @UploadedFile() image: Express.Multer.File,
-  // ) {
-  //   console.log(`createDto`, createDto);
-  // }
-
   @Post()
-  create(@Headers() headers, @Body() tenantDto: TenantDto) {
-    console.log({ headers });
-    return this.tenantsService.create(tenantDto);
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      limits: { fileSize: imgConfig.maxFileSize },
+    }),
+  )
+  async createProductByAdmin(
+    @Body(
+      new ParseFormDataJsonPipe({ except: ['image'] }),
+      new ValidationPipe(),
+    )
+    createDto: TenantDto,
+    @UploadedFile() image: Express.Multer.File,
+  ) {
+    console.log(`createDto`, createDto, `image`, image);
   }
+
+  // @Post()
+  // create(@Headers() headers, @Body() tenantDto: TenantDto) {
+  //   console.log({ headers });
+  //   return this.tenantsService.create(tenantDto);
+  // }
 
   @Get()
   findAll() {

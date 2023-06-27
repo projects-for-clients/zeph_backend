@@ -12,8 +12,6 @@ export class UsersService {
   constructor(private redis: RedisService, private prisma: PrismaService) {}
 
   async findAll() {
-    console.log('call the database');
-
     const allUsers = await this.prisma.users.findMany();
     await this.redis.set(UsersService.name, allUsers);
 
