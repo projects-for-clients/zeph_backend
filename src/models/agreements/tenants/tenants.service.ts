@@ -16,22 +16,21 @@ export class TenantsService {
   async create(createTenantDto: TenantDto, file: Express.Multer.File) {
     console.log({ createTenantDto, file });
 
-    const folderPath = path.dirname(__dirname);
-    const readFolder = await fs.readdir(folderPath + '/uploads').catch((e) => {
-      console.log({ e });
+    const folderPath = path.join(__dirname, 'uploads', 'tenants');
 
-      return 'Does not exist';
-    });
+    console.log({ folderPath });
 
-    console.log({ folderPath, readFolder });
-    if (!readFolder) {
-      console.log("doesn't exist");
-      fs.mkdir('uploads/' + folderPath, { recursive: true });
+    // const readFolder = await fs.mkdir(folderPath).catch(async (e) => {
+    //   console.log({ e });
+    //   const mkdir = await fs.mkdir(folderPath, {
+    //     recursive: true,
+    //   });
+    //   console.log({ mkdir });
 
-      return;
-    }
+    //   return 'File created';
+    // });
 
-    console.log('exists');
+    // console.log({ folderPath, readFolder });
 
     return 'Hello';
     const toUploadsFolder = fs.mkdir(`uploads/` + folderPath, {
