@@ -39,8 +39,6 @@ export class ConvertTypePipe implements PipeTransform {
 			),
 		};
 
-		console.log({ updatedValue, errors });
-
 		if (errors.length) {
 			throw new BadRequestException(errors);
 		}

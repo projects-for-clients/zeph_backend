@@ -13,7 +13,7 @@ export class TenantsService {
 		private redis: RedisService,
 	) {}
 
-	async create(createTenantDto: TenantDto, file: Express.Multer.File) {
+	async create(createTenantDto: TenantDto, file: Array<Express.Multer.File>) {
 		// try {
 		const folderPath = path.join("uploads", TenantsService.name);
 		await fs.mkdir(folderPath, {

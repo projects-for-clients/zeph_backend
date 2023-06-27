@@ -37,14 +37,11 @@ export class TenantsController {
 	// @ApiConsumes("multipart/form-data")
 	@UseInterceptors(FilesInterceptor("relevant_documents"))
 	create(
-		// @Body(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
-		// tenantDto: TenantDto,
+		@Body(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
+		tenantDto: TenantDto,
 		@UploadedFiles() files: Array<Express.Multer.File>,
 	) {
-		console.log("created", "file", files);
-		// return this.tenantsService.create(tenantDto, file);
-
-		return "hello wolrd";
+		return this.tenantsService.create(tenantDto, files);
 	}
 
 	@Get()
