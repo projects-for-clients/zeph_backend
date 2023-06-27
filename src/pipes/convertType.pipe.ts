@@ -13,7 +13,7 @@ export class ConvertTypePipe implements PipeTransform {
     const errors: string[] = [];
     const convertedTypes = this.options.map((option) => {
       const { key, toType } = option;
-      if (metadata.toType === 'body') {
+      if (metadata.type === 'body') {
         if (key in value) {
           const numberCheck = toType === 'number' && Number(value[key]);
 
