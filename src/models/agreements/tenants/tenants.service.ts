@@ -24,6 +24,8 @@ export class TenantsService {
 
 	async create(createTenantDto: TenantDto, files: Array<Express.Multer.File>) {
 
+		console.log({createTenantDto})
+
 		const folderPath = path.join("uploads", TenantsService.name);
 		const currDir = path.join(process.cwd(), folderPath);
 
@@ -71,7 +73,9 @@ export class TenantsService {
 			throw new ForbiddenException("Error while storing files");
 		}
 
-		console.log({ uploadedFiles })
+		// console.log({ uploadedFiles })
+
+		console.log(createTenantDto)
 
 		const tenant = await this.prisma.tenants.create({
 			data: {

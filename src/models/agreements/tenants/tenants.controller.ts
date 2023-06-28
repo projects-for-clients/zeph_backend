@@ -41,7 +41,8 @@ export class TenantsController {
 		// @UploadedFiles() files: Array<Express.Multer.File>,
 		@UploadedFiles(new FileSizeValidationPipe()) files: Array<Express.Multer.File>,
 	) {
-		return this.tenantsService.create(tenantDto, files);
+		console.log({tenantDto})
+		//return this.tenantsService.create(tenantDto, files);
 	}
 
 	@Get()

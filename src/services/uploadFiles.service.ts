@@ -26,8 +26,6 @@ export class UploadedFilesService {
                 },
             );
 
-            console.log(upload);
-
             return upload;
         }
 
