@@ -116,6 +116,7 @@ export class TenantsService {
 		});
 
 		if (!one) {
+			
 			throw new ForbiddenException("Tenant not found")
 		}
 
