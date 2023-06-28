@@ -4,6 +4,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { RedisService } from "src/redis/redis.service";
 import * as fs from "fs/promises";
 import * as path from "path";
+import { Buffer } from "buffer";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
 
 @Injectable()
@@ -28,16 +29,22 @@ export class TenantsService {
 				const file = files[key];
 				const writeTo = `${path}/${file.originalname}`;
 
-				// const uploadToCDN = await this.uploadFiles.uploadBasic(file, writeTo);
 
 
-				const stored = await fs.writeFile(writeTo, file.buffer, 'base64url').then((res) => {
-					console.log({ res })
-				}).catch(() => {
+
+
+
+				// const stored = await fs.writeFile(writeTo, file.buffer).catch(() => {
+				// 	isError = true;
+				// });
+
+				const base64String = Buffer.from(file.buffer).toString("base64");
+
+				const uploadToCDN = await this.uploadFiles.uploadBasic(base64String, writeTo).catch(() => {
 					isError = true;
-				});
+				}
+				);
 
-				console.log({ stored })
 			}
 
 			return isError;
