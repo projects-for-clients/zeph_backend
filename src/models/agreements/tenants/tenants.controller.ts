@@ -49,17 +49,18 @@ export class TenantsController {
 	}
 
 	@Get(":id")
-	findOne(@Param('id') id: string) {
+	findOne(@Param('id') id: number) {
 		return this.tenantsService.findOne(+id);
 	}
 
 	@Patch(":id")
-	update(@Param('id') id: string, @Body() updateTenantDto: UpdateTdo) {
-		return this.tenantsService.update(+id, updateTenantDto);
+	update(@Param('id') id: number, @Body() updateTenantDto: UpdateTdo) {
+		console.log({id})
+		//return this.tenantsService.update(+id, updateTenantDto);
 	}
 
 	@Delete(":id")
-	remove(@Param('id') id: string) {
+	remove(@Param('id') id: number) {
 		return this.tenantsService.remove(+id);
 	}
 }
