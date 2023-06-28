@@ -74,7 +74,7 @@ export class TenantsService {
 			})
 
 
-			const relevant_documents = executed.map((fileData) => fileData.secure_url)
+			const relevant_documents: any = executed.map((fileData) => fileData.secure_url)
 
 
 			const tenant = await this.prisma.tenants.create({
