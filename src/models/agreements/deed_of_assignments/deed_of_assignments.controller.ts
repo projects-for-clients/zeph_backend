@@ -1,34 +1,54 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { DeedOfAssignmentsService } from './deed_of_assignments.service';
-import { CreateDeedOfAssignmentDto } from './dto/create-deed_of_assignment.dto';
-import { UpdateDeedOfAssignmentDto } from './dto/update-deed_of_assignment.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UsePipes,
+  UploadedFiles,
+} from "@nestjs/common";
 
-@Controller('deed-of-assignments')
-export class DeedOfAssignmentsController {
-  constructor(private readonly deedOfAssignmentsService: DeedOfAssignmentsService) {}
+import { CreateDto, UpdateTdo } from "./dto";
+import { FilesInterceptor } from "@nestjs/platform-express";
+
+import { FileSizeValidationPipe } from "src/pipes/fileSize.pipe";
+import { DeedOfAssignmentsService } from './deed_of_assignments.service';
+
+@UsePipes(
+)
+@Controller("deed_of_assignments")
+export class TenantsController {
+  constructor(private readonly DeedOfAssignment: DeedOfAssignmentsService) { }
 
   @Post()
-  create(@Body() createDeedOfAssignmentDto: CreateDeedOfAssignmentDto) {
-    return this.deedOfAssignmentsService.create(createDeedOfAssignmentDto);
+  @UseInterceptors(FilesInterceptor("relevant_documents"))
+  create(
+    @Body() create: CreateDto,
+    @UploadedFiles(new FileSizeValidationPipe()) files: Array<Express.Multer.File>,
+  ) {
+    return this.DeedOfAssignment.create(create, files);
   }
 
   @Get()
   findAll() {
-    return this.deedOfAssignmentsService.findAll();
+    return this.DeedOfAssignment.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.deedOfAssignmentsService.findOne(+id);
+  @Get(":id")
+  findOne(@Param('id') id: number) {
+    return this.DeedOfAssignment.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDeedOfAssignmentDto: UpdateDeedOfAssignmentDto) {
-    return this.deedOfAssignmentsService.update(+id, updateDeedOfAssignmentDto);
+  @Patch(":id")
+  update(@Param('id') id: number, @Body() update: UpdateTdo) {
+    return this.DeedOfAssignment.update(+id, update);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.deedOfAssignmentsService.remove(+id);
+  @Delete(":id")
+  delete(@Param('id') id: number) {
+    return this.DeedOfAssignment.delete(+id);
   }
 }

@@ -17,18 +17,13 @@ export class CreateDto {
     @IsNotEmpty()
     donee_address: string;
 
-    
+
 
     @IsString()
     @IsNotEmpty()
     property_description: string;
 
-    // @IsArray()
-    // relevant_documents: string[];
 
-    @IsString()
-    @IsNotEmpty()
-    amount: number;
 }
 
 
@@ -53,7 +48,7 @@ export class UpdateTdo {
     @IsString()
     @IsNotEmpty()
     donee_address: string;
-    
+
 
     @IsOptional()
     @IsString()
@@ -63,8 +58,5 @@ export class UpdateTdo {
     // @IsArray()
     // relevant_documents: string[];
 
-    @IsOptional()
-    @IsString()
-    @IsNotEmpty()
-    amount: number;
+
 }
