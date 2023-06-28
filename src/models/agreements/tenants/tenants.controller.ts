@@ -37,11 +37,11 @@ export class TenantsController {
 	@Post()
 	@UseInterceptors(FilesInterceptor("relevant_documents"))
 	create(
-		tenantDto: TenantDto,
+		@Body() tenantDto: TenantDto,
 		// @UploadedFiles() files: Array<Express.Multer.File>,
 		@UploadedFiles(new FileSizeValidationPipe()) files: Array<Express.Multer.File>,
 	) {
-		console.log({tenantDto})
+		console.log({ tenantDto })
 		//return this.tenantsService.create(tenantDto, files);
 	}
 

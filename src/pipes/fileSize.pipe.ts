@@ -24,7 +24,6 @@ export class FileSizeValidationPipe implements PipeTransform {
             throw new ForbiddenException(errMessage);
         }
 
-
         return value;
 
     }
