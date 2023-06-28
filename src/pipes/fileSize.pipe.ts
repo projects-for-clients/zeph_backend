@@ -1,9 +1,8 @@
-import { PipeTransform, Injectable, ArgumentMetadata, ForbiddenException } from '@nestjs/common';
+import { PipeTransform, Injectable, ForbiddenException } from '@nestjs/common';
 
 @Injectable()
 export class FileSizeValidationPipe implements PipeTransform {
-    transform(value: any, metadata: any) {
-        // "value" is an object containing the file's attributes and metadata
+    transform(value: Express.Multer.File[]) {
 
         let mbTotalFileSize = 0
 
