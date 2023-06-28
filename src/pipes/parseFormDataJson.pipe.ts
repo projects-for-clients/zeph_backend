@@ -10,6 +10,8 @@ export class ParseFormDataJsonPipe implements PipeTransform {
 	constructor(private options?: TParseFormDataJsonOptions) {}
 
 	// rome-ignore lint/suspicious/noExplicitAny: <explanation>
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	// rome-ignore lint/suspicious/noExplicitAny: <explanation>
 	transform(value: any, _metadata: ArgumentMetadata) {
 		const { except } = this.options;
 		const serializedValue = value;
@@ -18,9 +20,8 @@ export class ParseFormDataJsonPipe implements PipeTransform {
 			_.merge(originProperties, _.pick(serializedValue, ...except));
 		}
 
-		console.log({ value });
-
 		const deserializedValue = deepParseJson(value);
+		console.log({ ...deserializedValue });
 
 		return { ...deserializedValue, ...originProperties };
 	}
