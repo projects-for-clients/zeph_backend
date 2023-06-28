@@ -1,3 +1,4 @@
+import { UserRequestService } from 'src/services/userRequest.service';
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import { TenantDto } from "./dto";
 import { PrismaService } from "src/prisma/prisma.service";
@@ -9,12 +10,16 @@ import { UploadedFilesService } from "src/services/uploadFiles.service";
 
 @Injectable()
 export class TenantsService {
+	private userId: number;
 	constructor(
 		// @Inject(CACHE_MANAGER) private readonly cache: Cache,
 		private prisma: PrismaService,
 		private redis: RedisService,
-		private uploadFiles: UploadedFilesService
-	) { }
+		private uploadFiles: UploadedFilesService,
+	) {
+		this.userId = UserRequestService.getUserId();
+	}
+
 
 	async create(createTenantDto: TenantDto, files: Array<Express.Multer.File>) {
 		// try {
@@ -36,7 +41,7 @@ export class TenantsService {
 				});
 
 
-				await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, folderPath).catch((e) => {
+				await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/user/${this.userId}`).catch((e) => {
 					console.log({ e })
 					isError = true;
 				}
