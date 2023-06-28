@@ -31,12 +31,12 @@ export class UploadedFilesService {
             return upload;
         }
 
-        const result = await execute();
+        // const result =  execute(); //makes it to run in the background, very fast
 
 
-        return result
+        //return result
 
-        //return execute()
+        return execute()
     }
 }
 
