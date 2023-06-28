@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DeedOfAssignmentsController } from '../deed_of_assignments.controller';
 import { DeedOfAssignmentsService } from '../deed_of_assignments.service';
+import { DeedOfAssignmentsController } from '../deed_of_assignments.controller';
 
 describe('DeedOfAssignmentsController', () => {
   let controller: DeedOfAssignmentsController;

@@ -1,3 +1,4 @@
+
 import {
   Controller,
   Get,
@@ -20,7 +21,7 @@ import { DeedOfAssignmentsService } from './deed_of_assignments.service';
 @UsePipes(
 )
 @Controller("deed_of_assignments")
-export class TenantsController {
+export class DeedOfAssignmentsController {
   constructor(private readonly DeedOfAssignment: DeedOfAssignmentsService) { }
 
   @Post()
