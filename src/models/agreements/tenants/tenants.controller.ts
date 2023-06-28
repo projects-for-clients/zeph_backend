@@ -34,7 +34,7 @@ export class TenantsController {
 	@Post()
 	@UseInterceptors(FilesInterceptor("relevant_documents"))
 	create(
-		@Body(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
+		@Body()
 		tenantDto: TenantDto,
 		@UploadedFiles(new ParseFilePipe()) files: Array<Express.Multer.File>,
 	) {
