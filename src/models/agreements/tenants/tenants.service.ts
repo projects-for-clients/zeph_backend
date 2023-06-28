@@ -76,6 +76,8 @@ export class TenantsService {
 
 		console.log({ executed })
 
+		const relevant_documents = executed.map
+
 
 		if (isError) {
 			console.log("Error while storing files")
