@@ -9,7 +9,7 @@ export class FileSizeValidationPipe implements PipeTransform {
         let mbTotalFileSize = 0
 
         const limitFileSize = 1000 * 1000 * 5; // 5MB
-        
+
         const handleFileSize = (file: Buffer) => {
             const kbSize = Math.floor(file.byteLength / 1000);
 
@@ -19,6 +19,7 @@ export class FileSizeValidationPipe implements PipeTransform {
         }
         Object.values(value).forEach((file: Express.Multer.File) => handleFileSize(file.buffer))
 
+        console.log({ mbTotalFileSize, limitFileSize })
 
         if (mbTotalFileSize > limitFileSize) {
             throw new Error(`File size too large. Max file size is ${limitFileSize} bytes.`);
