@@ -18,7 +18,7 @@ export class TenantsService {
 
 	) { }
 
-	private userId = this.userRequest.getUserId()
+	private userId = this.userRequest.getUserId();
 
 
 

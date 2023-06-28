@@ -6,10 +6,10 @@ import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class LeasesService {
-  constructor(private redis: RedisService, private prisma: PrismaService) {}
+  constructor(private redis: RedisService, private prisma: PrismaService, private userRequest: UserRequestService) {}
 
   async create(createLeaseDto: createDto) {
-    const userId = UserRequestService.getUserId();
+    const userId = this.userRequest.getUserId();
 
     const lease = await this.prisma.leases.create({
       data: {
