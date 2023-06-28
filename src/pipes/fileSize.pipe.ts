@@ -8,7 +8,7 @@ export class FileSizeValidationPipe implements PipeTransform {
         console.log({ value, metadata })
         let mbTotalFileSize = 0
 
-        const limitFileSize = 1000 * 1000 * 5; // 5MB
+        const limitFileSize = 5; // 5MB
 
         const handleFileSize = (file: Buffer) => {
             const kbSize = Math.floor(file.byteLength / 1000);
