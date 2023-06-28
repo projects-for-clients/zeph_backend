@@ -91,9 +91,11 @@ export class LeasesService {
       where: {
         id,
       },
-    });
+    }).catch(() => {
 
-    if (!lease) throw new ForbiddenException("Lease not found")
+      throw new ForbiddenException("Lease not found")
+
+    })
 
     await this.redis.del(`${LeasesService.name + id}`);
 
