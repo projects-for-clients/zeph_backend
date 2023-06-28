@@ -60,11 +60,11 @@ export class TenantsService {
 
 		console.log({ uploadedFiles })
 
-		// const executed = await Promise.all(uploadedFiles.map(async (upload) => {
-		// 	return await upload();
-		// }));
+		const executed = await Promise.all(uploadedFiles.map(async (upload) => {
+			return await upload()();
+		}));
 
-		// console.log({ executed })
+		console.log({ executed })
 
 		const isError = await storeFileHandler(folderPath);
 
