@@ -5,20 +5,20 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { RedisService } from "src/redis/redis.service";
 import * as fs from "fs/promises";
 import * as path from "path";
-import { Buffer } from "buffer";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
 
 @Injectable()
 export class TenantsService {
-
 	constructor(
 		// @Inject(CACHE_MANAGER) private readonly cache: Cache,
 		private prisma: PrismaService,
 		private redis: RedisService,
 		private uploadFiles: UploadedFilesService,
+		private userRequest: UserRequestService
+
 	) { }
 
-	private userId = UserRequestService.getUserId()
+	private userId = this.userRequest.getUserId()
 
 
 
