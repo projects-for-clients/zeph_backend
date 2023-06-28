@@ -73,11 +73,9 @@ export class LoansService {
             where: {
                 id,
             },
-        });
-
-        if (!loan) throw new ForbiddenException("Loan not found")
-
-
+        }).catch(() => {
+            throw new ForbiddenException("Loan not found")
+        })
 
         return loan;
     }
