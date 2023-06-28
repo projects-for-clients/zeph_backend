@@ -18,7 +18,6 @@ export class FileSizeValidationPipe implements PipeTransform {
         }
         Object.values(value).forEach((file: Express.Multer.File) => handleFileSize(file.buffer))
 
-        console.log({ mbTotalFileSize, limitFileSize })
 
         if (mbTotalFileSize > limitFileSize) {
             const errMessage = `File size too large. Max file size is ${limitFileSize} mb.`
