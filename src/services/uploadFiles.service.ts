@@ -18,7 +18,7 @@ export class UploadedFilesService {
 
         const upload = await v2.uploader.upload(file,
             {
-                folder: `uploads/${filePath}`,
+                folder: filePath,
                 use_filename: true,
                 unique_filename: true,
                 resource_type: "auto",
