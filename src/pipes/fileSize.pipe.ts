@@ -1,4 +1,4 @@
-import { PipeTransform, Injectable, ArgumentMetadata } from '@nestjs/common';
+import { PipeTransform, Injectable, ArgumentMetadata, ForbiddenException } from '@nestjs/common';
 
 @Injectable()
 export class FileSizeValidationPipe implements PipeTransform {
@@ -21,7 +21,9 @@ export class FileSizeValidationPipe implements PipeTransform {
         console.log({ mbTotalFileSize, limitFileSize })
 
         if (mbTotalFileSize > limitFileSize) {
-            throw new Error(`File size too large. Max file size is ${limitFileSize} bytes.`);
+            const errMessage = `File size too large. Max file size is ${limitFileSize} bytes.`
+
+            throw new ForbiddenException(errMessage);
         }
 
 
