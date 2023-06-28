@@ -76,7 +76,7 @@ export class TenantsService {
 
 		console.log({ executed })
 
-		const relevant_documents = executed.map
+		const relevant_documents = executed.map((fileData) => fileData.secure_url)
 
 
 		if (isError) {
