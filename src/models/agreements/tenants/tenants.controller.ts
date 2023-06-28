@@ -32,7 +32,12 @@ export class TenantsController {
 	constructor(private readonly tenantsService: TenantsService) {}
 
 	@Post()
-	@UseInterceptors(FilesInterceptor("relevant_documents"))
+	@UseInterceptors(FilesInterceptor("relevant_documents", 3, {
+		limits: {
+			fileSize: 1024 * 1024 * 5,
+		},
+
+	}))
 	create(
 		@Body()
 		tenantDto: TenantDto,
