@@ -34,6 +34,7 @@ export class UploadedFilesService {
         const result = await execute();
 
 
+        return result
 
         //return execute()
     }
