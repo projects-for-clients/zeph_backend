@@ -48,10 +48,10 @@ export class TenantsService {
 
 				uploadedFiles.push(await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`));
 
-				await fs.unlink(writeTo).catch(() => {
-					isError = true;
-				}
-				);
+				// await fs.unlink(writeTo).catch(() => {
+				// 	isError = true;
+				// }
+				// );
 
 
 			}
