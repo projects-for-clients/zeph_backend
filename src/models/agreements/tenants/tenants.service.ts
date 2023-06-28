@@ -99,19 +99,31 @@ export class TenantsService {
 	}
 
 	async findAll() {
-		return await this.prisma.tenants.findMany();
+		const all = await this.prisma.tenants.findMany();
+
+		if (!all) {
+			throw new ForbiddenException("No tenants found")
+		}
+
+		return all
 	}
 
 	async findOne(id: number) {
-		return await this.prisma.leases.findUnique({
+		const one = await this.prisma.tenants.findUnique({
 			where: {
 				id,
 			},
 		});
+
+		if (!one) {
+			throw new ForbiddenException("No tenant found")
+		}
+
+		return one
 	}
 
 	async update(id: number, updateTenantDto: UpdateTdo) {
-		console.log({id})
+		console.log({ id })
 		const find = await this.prisma.tenants.findUnique({
 			where: {
 				id,
@@ -122,7 +134,7 @@ export class TenantsService {
 			throw new ForbiddenException('Tenant not found');
 		}
 
-		return await this.prisma.tenants.update({
+		const update = await this.prisma.tenants.update({
 			where: {
 				id,
 			},
@@ -131,13 +143,25 @@ export class TenantsService {
 				...updateTenantDto,
 			},
 		});
+
+		if (!update) {
+			throw new ForbiddenException("Unable to update")
+		}
+
+		return update
 	}
 
-	async remove(id: number) {
-		return await this.prisma.tenants.delete({
+	async delete(id: number) {
+		const remove = await this.prisma.tenants.delete({
 			where: {
 				id,
 			},
 		});
+
+		if (!remove) {
+			throw new ForbiddenException("Unable to delete")
+		}
+
+		return remove
 	}
 }

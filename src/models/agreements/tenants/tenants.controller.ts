@@ -59,7 +59,7 @@ export class TenantsController {
 	}
 
 	@Delete(":id")
-	remove(@Param('id') id: number) {
-		return this.tenantsService.remove(+id);
+	delete(@Param('id') id: number) {
+		return this.tenantsService.delete(+id);
 	}
 }
