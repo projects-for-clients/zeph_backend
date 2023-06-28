@@ -101,11 +101,6 @@ export class TenantsService {
 			throw new ForbiddenException("Error while storing files");
 		}
 
-
-
-
-
-
 	}
 
 	async findAll() {
