@@ -6,7 +6,7 @@ import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class LeasesService {
-  constructor(private redis: RedisService, private prisma: PrismaService, private userRequest: UserRequestService) {}
+  constructor(private redis: RedisService, private prisma: PrismaService, private userRequest: UserRequestService) { }
 
   async create(createLeaseDto: createDto) {
     const userId = this.userRequest.getUserId();
@@ -36,17 +36,12 @@ export class LeasesService {
 
     const allLeases = await this.prisma.leases.findMany();
 
-    await this.redis.set(LeasesService.name, allLeases);
 
     return allLeases;
   }
 
   async findOne(id: number) {
-    const checkCache = await this.redis.get(`${LeasesService.name + id}`);
 
-    if (checkCache) {
-      return checkCache;
-    }
 
     const lease = await this.prisma.leases.findUnique({
       where: {
@@ -84,7 +79,6 @@ export class LeasesService {
       },
     });
 
-    console.log({ lease });
 
     await this.redis.set(`${LeasesService.name + id}`, lease);
 
@@ -92,7 +86,7 @@ export class LeasesService {
   }
 
   async delete(id: number) {
-    // await this.redis.flushAll();
+
     const lease = await this.prisma.leases.delete({
       where: {
         id,
