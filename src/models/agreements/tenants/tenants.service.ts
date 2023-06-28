@@ -33,6 +33,8 @@ export class TenantsService {
 			recursive: true,
 		});
 
+		const storePaths = []
+
 		const uploadedFiles: any[] = []
 		const storeFileHandler = async (path: string) => {
 			let isError = false;
@@ -41,19 +43,17 @@ export class TenantsService {
 				const file = files[key];
 				const writeTo = `${path}/${file.originalname}`;
 
+				storePaths.push(writeTo);
 				await fs.writeFile(writeTo, file.buffer).catch(() => {
 					isError = true;
 				});
 
 
-				const toUpload = await (await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`))();
+				const toUpload = await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`);
 
 				uploadedFiles.push(toUpload);
 
-				// await fs.unlink(writeTo).catch(() => {
-				// 	isError = true;
-				// }
-				// );
+
 
 
 			}
@@ -66,15 +66,15 @@ export class TenantsService {
 
 		const isError = await storeFileHandler(folderPath);
 
-		console.log({ uploadedFiles })
+		const executed = await Promise.all(uploadedFiles.map(async (file) => {
+			return await file()
+		}));
 
-		// const executed = await Promise.all(uploadedFiles.map(async (file) => {
-		// 	console.log(file)
+		storePaths.map(async (writeTo) => {
+			await fs.unlink(writeTo)
+		})
 
-		// 	await file()
-		// }));
-
-		// console.log({ executed })
+		console.log({ executed })
 
 
 		if (isError) {
