@@ -13,7 +13,7 @@ export class FileSizeValidationPipe implements PipeTransform {
             const kbSize = Math.floor(file.byteLength / 1000);
 
             const mbSize = kbSize / 1000
-            mbTotalFileSize += mbSize;
+            mbTotalFileSize += parseInt(mbSize.toFixed(2));
 
             console.log({ mbTotalFileSize })
 
