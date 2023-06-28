@@ -1,43 +1,24 @@
 import { Injectable } from "@nestjs/common";
-import * as fs from "fs";
-import { google } from "googleapis";
-import { GoogleAuth } from "google-auth-library";
-import * as cloudinary from "cloudinary";
+
+import { v2 } from "cloudinary";
 
 @Injectable()
 export class UploadedFilesService {
-    // async uploadBasic() {
-    // 	const auth = new GoogleAuth({
-    //         scopes: "https://www.googleapis.com/auth/drive",
-    //         keyFile: "src/credentials/googleKey.json",
-    // 	});
-    // 	const service = google.drive({ version: "v3", auth });
-    // 	const requestBody = {
-    // 		name: "3000_followers.jpg",
-    // 		// fields: "id",
-    //         // parents: ["uploads"]
-    // 	};
-    // 	const media = {
-    // 		mimeType: "image/png",
-    // 		body: fs.createReadStream("uploads/TenantsService/3000_followers.png"),
-    // 	};
-    // 	try {
-    // 		const file = await service.files.create({
-    // 			requestBody,
-    // 			media: media,
-    // 		});
-    // 		console.log("File Id:", file.data.id);
-    // 		return file.data.id;
-    // 	} catch (err) {
-    // 		console.log({ err });
-    // 		throw err;
-    // 	}
-    // }
+
 
     async uploadBasic() {
 
-        const upload = await cloudinary.v2.uploader.upload("src/uploads/TenantsService/3000_followers.png",
-            { public_id: "olympic_flag" }, function (error, result) { console.log(result, error) })
+        v2.config({
+            cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+            api_key: process.env.CLOUDINARY_API_KEY,
+            api_secret: process.env.CLOUDINARY_PASSWORD
+        });
+
+        const upload = await v2.uploader.upload("src/uploads/TenantsService/3000_followers.png",
+            { public_id: "olympic_flag" },
+            function (error, result) {
+                console.log(result, error)
+            })
         console.log({ upload })
     }
 }
