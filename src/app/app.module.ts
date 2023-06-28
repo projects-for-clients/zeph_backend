@@ -13,6 +13,7 @@ import { RedisCacheModule } from 'src/redis/redis.module';
 import { LeasesModule } from 'src/models/agreements/leases/leases.module';
 import { DeedOfAssignmentsModule } from 'src/models/agreements/deed_of_assignments/deed_of_assignments.module';
 import { LoansModule } from 'src/models/loans/loans.module';
+import { SalesModule } from 'src/models/agreements/sales/sales.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { LoansModule } from 'src/models/loans/loans.module';
     TenantsModule,
     LeasesModule,
     DeedOfAssignmentsModule,
-    LoansModule
+    LoansModule,
+    SalesModule,
   ],
   controllers: [AppController],
   providers: [
