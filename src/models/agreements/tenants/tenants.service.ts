@@ -62,17 +62,20 @@ export class TenantsService {
 		};
 
 
-		// const executed = await Promise.all(uploadedFiles.map(async (file) => {
-		// 	console.log(file)
-
-		// 	await file()
-		// }));
-
-		// console.log({ executed })
+		
 
 		const isError = await storeFileHandler(folderPath);
 
 		console.log({ uploadedFiles })
+
+		const executed = await Promise.all(uploadedFiles.map(async (file) => {
+			console.log(file)
+
+			await file()
+		}));
+
+		console.log({ executed })
+
 
 		if (isError) {
 			console.log("Error while storing files")
