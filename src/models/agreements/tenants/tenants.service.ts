@@ -10,15 +10,15 @@ import { UploadedFilesService } from "src/services/uploadFiles.service";
 
 @Injectable()
 export class TenantsService {
-	private userId: number;
+	
 	constructor(
 		// @Inject(CACHE_MANAGER) private readonly cache: Cache,
 		private prisma: PrismaService,
 		private redis: RedisService,
 		private uploadFiles: UploadedFilesService,
-	) {
-		this.userId = UserRequestService.getUserId();
-	}
+	) { }
+
+	private userId = UserRequestService.getUserId()
 
 
 	async create(createTenantDto: TenantDto, files: Array<Express.Multer.File>) {
@@ -41,7 +41,7 @@ export class TenantsService {
 				});
 
 
-				await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/user/${UserRequestService.getUserId() }`).catch((e) => {
+				await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/user/${this.userId}`).catch((e) => {
 					console.log({ e })
 					isError = true;
 				}
