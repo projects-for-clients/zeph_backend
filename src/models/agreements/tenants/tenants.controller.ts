@@ -39,9 +39,7 @@ export class TenantsController {
 	create(
 		tenantDto: TenantDto,
 		// @UploadedFiles(new ParseFilePipe()) files: Array<Express.Multer.File>,
-		@UploadedFiles(new FileSizeValidationPipe(
-
-		)) files: Array<Express.Multer.File>,
+		@UploadedFiles(new FileSizeValidationPipe()) files: Array<Express.Multer.File>,
 	) {
 		return this.tenantsService.create(tenantDto, files);
 	}
