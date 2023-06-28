@@ -31,16 +31,22 @@ export class TenantsService {
 				const file = files[key];
 				const writeTo = `${path}/${file.originalname}`;
 
-				const stored = await fs.writeFile(writeTo, file.buffer).catch(() => {
+				await fs.writeFile(writeTo, file.buffer).catch(() => {
 					isError = true;
 				});
 
 
-				const uploadToCDN = await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, folderPath).catch((e) => {
+				await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, folderPath).catch((e) => {
 					console.log({ e })
 					isError = true;
 				}
 				);
+
+				await fs.unlink(writeTo).catch(() => {
+					isError = true;
+				}
+				);
+
 
 			}
 
