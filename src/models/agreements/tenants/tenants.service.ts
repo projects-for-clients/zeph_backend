@@ -137,7 +137,11 @@ export class TenantsService {
 		});
 	}
 
-	remove(id: number) {
-		return `This action removes a #${id} tenant`;
+	async remove(id: number) {
+		return await this.prisma.tenants.delete({
+			where: {
+				id,
+			},
+		});
 	}
 }
