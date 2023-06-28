@@ -24,7 +24,7 @@ export class TenantsService {
 
 	async create(createTenantDto: TenantDto, files: Array<Express.Multer.File>) {
 
-		console.log({createTenantDto})
+		console.log({ createTenantDto })
 
 		const folderPath = path.join("uploads", TenantsService.name);
 		const currDir = path.join(process.cwd(), folderPath);
@@ -48,10 +48,10 @@ export class TenantsService {
 
 				uploadedFiles.push(await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`));
 
-				// await fs.unlink(writeTo).catch(() => {
-				// 	isError = true;
-				// }
-				// );
+				await fs.unlink(writeTo).catch(() => {
+					isError = true;
+				}
+				);
 
 
 			}
