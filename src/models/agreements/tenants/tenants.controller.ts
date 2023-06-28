@@ -15,7 +15,7 @@ import {
 } from "@nestjs/common";
 
 import { TenantsService } from "./tenants.service";
-import { TenantDto } from "./dto";
+import { CreateDto, UpdateTdo } from "./dto";
 import { FilesInterceptor } from "@nestjs/platform-express";
 
 import { ConvertTypePipe } from "src/pipes/convertType.pipe";
@@ -37,7 +37,7 @@ export class TenantsController {
 	@Post()
 	@UseInterceptors(FilesInterceptor("relevant_documents"))
 	create(
-		@Body() tenantDto: TenantDto,
+		@Body() tenantDto: CreateDto,
 		@UploadedFiles(new FileSizeValidationPipe()) files: Array<Express.Multer.File>,
 	) {
 		return this.tenantsService.create(tenantDto, files);
@@ -54,7 +54,7 @@ export class TenantsController {
 	}
 
 	@Patch(":id")
-	update(@Param('id') id: string, @Body() updateTenantDto: TenantDto) {
+	update(@Param('id') id: string, @Body() updateTenantDto: UpdateTdo) {
 		return this.tenantsService.update(+id, updateTenantDto);
 	}
 
