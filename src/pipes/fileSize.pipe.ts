@@ -7,7 +7,7 @@ export class FileSizeValidationPipe implements PipeTransform {
 
         let mbTotalFileSize = 0
 
-        const limitFileSize = 1; // 5MB
+        const limitFileSize = 5; // 5MB
 
         const handleFileSize = (file: Buffer) => {
             const kbSize = Math.floor(file.byteLength / 1000);
@@ -21,14 +21,13 @@ export class FileSizeValidationPipe implements PipeTransform {
         console.log({ mbTotalFileSize, limitFileSize })
 
         if (mbTotalFileSize > limitFileSize) {
-            const errMessage = `File size too large. Max file size is ${limitFileSize} bytes.`
+            const errMessage = `File size too large. Max file size is ${limitFileSize} mb.`
 
             throw new ForbiddenException(errMessage);
         }
 
 
-        const oneKb = 1000;
-        return value.size < oneKb;
+        return value;
 
     }
 
