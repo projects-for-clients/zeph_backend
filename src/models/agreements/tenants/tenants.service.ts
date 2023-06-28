@@ -63,6 +63,7 @@ export class TenantsService {
 
 
 		if (isError) {
+			console.log("Error while storing files")
 			throw new ForbiddenException("Error while storing files");
 		}
 
