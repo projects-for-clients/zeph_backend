@@ -24,7 +24,6 @@ export class TenantsService {
 
 	async create(createTenantDto: TenantDto, files: Array<Express.Multer.File>) {
 
-		console.log({ createTenantDto })
 
 		const folderPath = path.join("uploads", TenantsService.name);
 		const currDir = path.join(process.cwd(), folderPath);
