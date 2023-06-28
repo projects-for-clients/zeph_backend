@@ -29,15 +29,10 @@ import { ConvertTypePipe } from "src/pipes/convertType.pipe";
 )
 @Controller("tenants")
 export class TenantsController {
-	constructor(private readonly tenantsService: TenantsService) {}
+	constructor(private readonly tenantsService: TenantsService) { }
 
 	@Post()
-	@UseInterceptors(FilesInterceptor("relevant_documents", 3, {
-		limits: {
-			fileSize: 1024 * 1024 * 5,
-		},
-
-	}))
+	@UseInterceptors(FilesInterceptor("relevant_documents"))
 	create(
 		@Body()
 		tenantDto: TenantDto,
