@@ -64,6 +64,8 @@ export class TenantsService {
 			return await upload();
 		}));
 
+		console.log({ executed })
+
 		const isError = await storeFileHandler(folderPath);
 
 
