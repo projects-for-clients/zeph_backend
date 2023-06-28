@@ -40,8 +40,6 @@ export class TenantsService {
 					isError = true;
 				});
 
-				const base64String = Buffer.from(file.buffer).toString("base64");
-				console.log({ currDir })
 
 				const uploadToCDN = await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, folderPath).catch((e) => {
 					console.log({ e })
