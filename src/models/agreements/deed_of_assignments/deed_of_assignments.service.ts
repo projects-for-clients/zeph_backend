@@ -23,7 +23,7 @@ export class DeedOfAssignmentsService {
   async create(createTenantDto: CreateDto, files: Array<Express.Multer.File>) {
 
 
-    const folderPath = path.join("uploads", TenantsService.name);
+    const folderPath = path.join("uploads", DeedOfAssignmentsService.name);
     const currDir = path.join(process.cwd(), folderPath);
 
     await fs.mkdir(folderPath, {
@@ -75,7 +75,7 @@ export class DeedOfAssignmentsService {
       const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
 
 
-      const tenant = await this.prisma.tenants.create({
+      const tenant = await this.prisma.deed_of_assignments.create({
         data: {
           ...createTenantDto,
           relevant_documents,
@@ -98,17 +98,17 @@ export class DeedOfAssignmentsService {
   }
 
   async findAll() {
-    const all = await this.prisma.tenants.findMany();
+    const all = await this.prisma.deed_of_assignments.findMany();
 
     if (!all) {
-      throw new ForbiddenException("No tenants found")
+      throw new ForbiddenException("No deed_of_assignments found")
     }
 
     return all
   }
 
   async findOne(id: number) {
-    const one = await this.prisma.tenants.findUnique({
+    const one = await this.prisma.deed_of_assignments.findUnique({
       where: {
         id,
       },
@@ -124,7 +124,7 @@ export class DeedOfAssignmentsService {
 
   async update(id: number, updateTenantDto: UpdateTdo) {
     console.log({ id })
-    const find = await this.prisma.tenants.findUnique({
+    const find = await this.prisma.deed_of_assignments.findUnique({
       where: {
         id,
       },
@@ -134,7 +134,7 @@ export class DeedOfAssignmentsService {
       throw new ForbiddenException('Tenant not found');
     }
 
-    const update = await this.prisma.tenants.update({
+    const update = await this.prisma.deed_of_assignments.update({
       where: {
         id,
       },
@@ -152,7 +152,7 @@ export class DeedOfAssignmentsService {
   }
 
   async delete(id: number) {
-    const remove = await this.prisma.tenants.delete({
+    const remove = await this.prisma.deed_of_assignments.delete({
       where: {
         id,
       },
