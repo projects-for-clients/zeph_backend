@@ -31,7 +31,7 @@ export class UploadedFilesService {
             return upload;
         }
 
-        execute();
+        const result = await execute();
 
 
 
