@@ -6,6 +6,7 @@ import { v2 } from "cloudinary";
 export class UploadedFilesService {
 
     async uploadBasic(file: string, filePath: string) {
+        console.log({ file, filePath })
 
         v2.config({
             cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -20,7 +21,7 @@ export class UploadedFilesService {
                 folder: `uploads/${filePath}`,
                 use_filename: true,
                 unique_filename: true,
-                resource_type: "raw"
+                resource_type: "auto",
             },
         );
 

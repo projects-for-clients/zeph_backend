@@ -19,28 +19,32 @@ export class TenantsService {
 	async create(createTenantDto: TenantDto, files: Array<Express.Multer.File>) {
 		// try {
 		const folderPath = path.join("uploads", TenantsService.name);
+		const currDir = path.join(process.cwd(), '/src/'+folderPath);
+
 		await fs.mkdir(folderPath, {
 			recursive: true,
 		});
-
+		
 		const storeFileHandler = async (path: string) => {
 			let isError = false;
 			for (const key in files) {
 				const file = files[key];
 				const writeTo = `${path}/${file.originalname}`;
-
-
-
-
-
-
-				// const stored = await fs.writeFile(writeTo, file.buffer).catch(() => {
-				// 	isError = true;
-				// });
-
+				
+				
+				
+				
+				
+				
+				const stored = await fs.writeFile(writeTo, file.buffer).catch(() => {
+					isError = true;
+				});
+				
 				const base64String = Buffer.from(file.buffer).toString("base64");
+				console.log({ currDir })
 
-				const uploadToCDN = await this.uploadFiles.uploadBasic(base64String, writeTo).catch(() => {
+				const uploadToCDN = await this.uploadFiles.uploadBasic(file.originalname, currDir).catch((e) => {
+					console.log({ e })
 					isError = true;
 				}
 				);
