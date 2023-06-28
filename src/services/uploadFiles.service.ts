@@ -21,10 +21,9 @@ export class UploadedFilesService {
                 use_filename: true,
                 unique_filename: true
             },
-            function (error, result) {
-                console.log(result, error)
-            })
-        console.log({ upload })
+        );
+
+        return upload;
     }
 }
 
