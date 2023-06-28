@@ -1,41 +1,61 @@
-import { Injectable } from '@nestjs/common';
-import { TenantDto } from './dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { RedisService } from 'src/redis/redis.service';
+import { ForbiddenException, Injectable } from "@nestjs/common";
+import { TenantDto } from "./dto";
+import { PrismaService } from "src/prisma/prisma.service";
+import { RedisService } from "src/redis/redis.service";
+import * as fs from "fs/promises";
+import * as path from "path";
 
 @Injectable()
 export class TenantsService {
-  constructor(
-    // @Inject(CACHE_MANAGER) private readonly cache: Cache,
-    private prisma: PrismaService,
-    private redis: RedisService,
-  ) {}
+	constructor(
+		// @Inject(CACHE_MANAGER) private readonly cache: Cache,
+		private prisma: PrismaService,
+		private redis: RedisService,
+	) {}
 
-  async create(createTenantDto: TenantDto) {
-    console.log({ createTenantDto });
-    const tenant = await this.prisma.tenants.create({
-      data: {
-        ...createTenantDto,
-      },
-    });
+	async create(createTenantDto: TenantDto, files: Array<Express.Multer.File>) {
+		// try {
+		const folderPath = path.join("uploads", TenantsService.name);
+		await fs.mkdir(folderPath, {
+			recursive: true,
+		});
 
-    return tenant;
-  }
+		const storeFileHandler = async (path: string) => {
+			let isError = false;
+			for (const key in files) {
+				const file = files[key];
+				const writeTo = `${path}/${file.originalname}`;
 
-  async findAll() {
-    await this.redis.flushAll();
-    return `This action returns all tenants`;
-  }
+				await fs.writeFile(writeTo, file.buffer).catch(() => {
+					isError = true;
+				});
+			}
 
-  findOne(id: number) {
-    return `This action returns a #${id} tenant`;
-  }
+			return isError;
+		};
 
-  update(id: number, updateTenantDto: TenantDto) {
-    return `This action updates a #${id} tenant`;
-  }
+		const isError = await storeFileHandler(folderPath);
 
-  remove(id: number) {
-    return `This action removes a #${id} tenant`;
-  }
+		if (isError) {
+			throw new ForbiddenException("Error while storing files");
+		}
+
+		return "Stored the service";
+	}
+
+	async findAll() {
+		return "This action returns all tenants";
+	}
+
+	findOne(id: number) {
+		return `This action returns a #${id} tenant`;
+	}
+
+	update(id: number, updateTenantDto: TenantDto) {
+		return `This action updates a #${id} tenant`;
+	}
+
+	remove(id: number) {
+		return `This action removes a #${id} tenant`;
+	}
 }

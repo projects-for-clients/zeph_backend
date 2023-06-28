@@ -24,15 +24,36 @@ export class RedisService {
   }
 
   async append(key: string, value: any): Promise<any> {
-    console.log('appendToCache', key);
+    const cached = await this.redis.get(key);
 
-    const res = await this.redis.append(key, JSON.stringify(value));
+    if (!cached) {
+      return null;
+    }
+
+    const jsonRes = JSON.parse(cached);
+
+    jsonRes.push(value);
+
+    await this.redis.set(key, JSON.stringify(jsonRes));
+
+    const res = await this.redis.get(key);
+
     return res;
   }
 
   async get(key: string) {
     const cached = await this.redis.get(key);
-    return JSON.parse(cached);
+    const jsonRes = JSON.parse(cached);
+
+    return jsonRes;
+  }
+
+  async update(key: string, value: any): Promise<any> {
+    await this.redis.set(key, JSON.stringify(value));
+
+    const get = await this.redis.get(key);
+
+    return get;
   }
 
   async del(key: string): Promise<void> {

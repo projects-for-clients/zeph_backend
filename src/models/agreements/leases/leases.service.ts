@@ -1,5 +1,5 @@
 import { UserRequestService } from 'src/services/userRequest.service';
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { createDto, updateDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RedisService } from 'src/redis/redis.service';
@@ -18,16 +18,13 @@ export class LeasesService {
       },
     });
 
-    const cached = await this.redis.set(
-      `${LeasesService.name + userId}`,
-      lease,
-    );
+    if (!lease) throw new ForbiddenException('Unable to create lease');
 
-    const appendToCache = await this.redis.append(LeasesService.name, lease);
+    await this.redis.set(`${LeasesService.name + lease.id}`, lease);
 
-    console.log({ appendToCache });
+    await this.redis.append(LeasesService.name, lease);
 
-    return cached;
+    return lease;
   }
 
   async findAll() {
@@ -39,9 +36,9 @@ export class LeasesService {
 
     const allLeases = await this.prisma.leases.findMany();
 
-    const cached = await this.redis.set(LeasesService.name, allLeases);
+    await this.redis.set(LeasesService.name, allLeases);
 
-    return cached;
+    return allLeases;
   }
 
   async findOne(id: number) {
@@ -57,25 +54,27 @@ export class LeasesService {
       },
     });
 
-    const cache = await this.redis.set(`${LeasesService.name + id}`, lease);
+    if (!lease) {
+      throw new ForbiddenException('Lease not found');
+    }
 
-    return cache;
+    await this.redis.update(`${LeasesService.name + id}`, lease);
+
+    return lease;
   }
 
   async update(id: number, updateLeaseDto: updateDto) {
-    const findCache = await this.redis.get(`${LeasesService.name + id}`);
-
-    console.log({ findCache });
-
     const find = await this.prisma.leases.findUnique({
       where: {
         id,
       },
     });
 
-    console.log({ find });
+    if (!find) {
+      throw new ForbiddenException('Lease not found');
+    }
 
-    const lease = this.prisma.leases.update({
+    const lease = await this.prisma.leases.update({
       where: {
         id,
       },
@@ -85,12 +84,15 @@ export class LeasesService {
       },
     });
 
+    console.log({ lease });
+
     await this.redis.set(`${LeasesService.name + id}`, lease);
 
     return lease;
   }
 
   async delete(id: number) {
+    // await this.redis.flushAll();
     const lease = await this.prisma.leases.delete({
       where: {
         id,

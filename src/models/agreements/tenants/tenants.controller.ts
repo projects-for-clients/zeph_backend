@@ -1,43 +1,73 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Headers,
-} from '@nestjs/common';
-import { TenantsService } from './tenants.service';
-import { TenantDto } from './dto';
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+	Headers,
+	UseInterceptors,
+	ValidationPipe,
+	UploadedFile,
+	UsePipes,
+	UploadedFiles,
+	FileTypeValidator,
+	MaxFileSizeValidator,
+	ParseFilePipe,
+} from "@nestjs/common";
+import { ApiConsumes } from "@nestjs/swagger";
+import { TenantsService } from "./tenants.service";
+import { TenantDto } from "./dto";
+import { ParseFormDataJsonPipe } from "src/pipes/parseFormDataJson.pipe";
+import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
+import { imgConfig } from "src/config/img.config";
+import { ConvertTypePipe } from "src/pipes/convertType.pipe";
 
-@Controller('tenants')
+@UsePipes(
+	new ConvertTypePipe([
+		{
+			key: "amount",
+			toType: "number",
+		},
+	]),
+)
+@Controller("tenants")
 export class TenantsController {
-  constructor(private readonly tenantsService: TenantsService) {}
+	constructor(private readonly tenantsService: TenantsService) {}
 
-  @Post()
-  create(@Headers() headers, @Body() tenantDto: TenantDto) {
-    console.log({ headers });
-    return this.tenantsService.create(tenantDto);
-  }
+	@Post()
+	// @ApiConsumes("multipart/form-data")
+	@UseInterceptors(FilesInterceptor("relevant_documents"))
+	create(
+		@Body(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
+		tenantDto: TenantDto,
+		@UploadedFiles(new ParseFilePipe({
+    validators: [
+      new MaxFileSizeValidator({ maxSize: 0 }),// 2MB
+    ],
+  })) files: Array<Express.Multer.File>,
+	) {
+		return this.tenantsService.create(tenantDto, files);
+	}
 
-  @Get()
-  findAll() {
-    return this.tenantsService.findAll();
-  }
+	@Get()
+	findAll() {
+		return this.tenantsService.findAll();
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tenantsService.findOne(+id);
-  }
+	@Get(":id")
+	findOne(@Param('id') id: string) {
+		return this.tenantsService.findOne(+id);
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTenantDto: TenantDto) {
-    return this.tenantsService.update(+id, updateTenantDto);
-  }
+	@Patch(":id")
+	update(@Param('id') id: string, @Body() updateTenantDto: TenantDto) {
+		return this.tenantsService.update(+id, updateTenantDto);
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tenantsService.remove(+id);
-  }
+	@Delete(":id")
+	remove(@Param('id') id: string) {
+		return this.tenantsService.remove(+id);
+	}
 }

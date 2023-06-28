@@ -25,11 +25,10 @@ export class TenantDto {
   @IsNotEmpty()
   property_description: string;
 
+  // @IsString()
+  // relevant_documents: string;
+
   @IsString()
   @IsNotEmpty()
-  relevant_documents: string;
-
-  @IsNumber()
-  @IsNotEmpty()
-  amount: string;
+  amount: number;
 }
