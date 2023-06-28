@@ -61,7 +61,11 @@ export class TenantsService {
 
 		console.log({ uploadedFiles })
 
-		// const executed = await Promise.all(uploadedFiles);
+		// const executed = await Promise.all(uploadedFiles.map(async (file) => {
+		// 	console.log(file)
+
+		// 	await file()
+		// }));
 
 		// console.log({ executed })
 
@@ -75,22 +79,23 @@ export class TenantsService {
 
 		// console.log({ uploadedFiles })
 
-		console.log(createTenantDto)
 
-		const tenant = await this.prisma.tenants.create({
-			data: {
-				...createTenantDto,
-				userId: this.userId
-			},
-		});
+		// const tenant = await this.prisma.tenants.create({
+		// 	data: {
+		// 		...createTenantDto,
+		// 		userId: this.userId
+		// 	},
+		// });
 
-		if (!tenant) throw new ForbiddenException('Unable to create lease');
 
-		await this.redis.set(`${TenantsService.name + tenant.id}`, tenant);
 
-		await this.redis.append(TenantsService.name, tenant);
+		// if (!tenant) throw new ForbiddenException('Unable to create lease');
 
-		return tenant;
+		// await this.redis.set(`${TenantsService.name + tenant.id}`, tenant);
+
+		// await this.redis.append(TenantsService.name, tenant);
+
+		// return tenant;
 
 
 

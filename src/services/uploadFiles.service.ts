@@ -29,7 +29,7 @@ export class UploadedFilesService {
             return upload;
         }
 
-        return execute()
+       return execute()
     }
 }
 
