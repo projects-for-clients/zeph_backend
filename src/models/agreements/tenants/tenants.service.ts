@@ -41,7 +41,7 @@ export class TenantsService {
 				});
 
 
-				await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/user/${this.userId}`).catch((e) => {
+				await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/user/${UserRequestService.getUserId() }`).catch((e) => {
 					console.log({ e })
 					isError = true;
 				}
