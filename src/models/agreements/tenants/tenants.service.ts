@@ -33,7 +33,7 @@ export class TenantsService {
 			recursive: true,
 		});
 
-		const storePaths = []
+		const cleanUpPaths = []
 
 		const uploadedFiles: any[] = []
 		const storeFileHandler = async (path: string) => {
@@ -43,7 +43,7 @@ export class TenantsService {
 				const file = files[key];
 				const writeTo = `${path}/${file.originalname}`;
 
-				storePaths.push(writeTo);
+				cleanUpPaths.push(writeTo);
 				await fs.writeFile(writeTo, file.buffer).catch(() => {
 					isError = true;
 				});
@@ -70,7 +70,7 @@ export class TenantsService {
 			return await file()
 		}));
 
-		storePaths.map(async (writeTo) => {
+		cleanUpPaths.map(async (writeTo) => {
 			await fs.unlink(writeTo)
 		})
 
