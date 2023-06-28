@@ -18,8 +18,7 @@ import { FilesInterceptor } from "@nestjs/platform-express";
 import { FileSizeValidationPipe } from "src/pipes/fileSize.pipe";
 import { DeedOfAssignmentsService } from './deed_of_assignments.service';
 
-@UsePipes(
-)
+
 @Controller("deed_of_assignments")
 export class DeedOfAssignmentsController {
   constructor(private readonly DeedOfAssignment: DeedOfAssignmentsService) { }
@@ -30,7 +29,8 @@ export class DeedOfAssignmentsController {
     @Body() create: CreateDto,
     @UploadedFiles(new FileSizeValidationPipe()) files: Array<Express.Multer.File>,
   ) {
-    return this.DeedOfAssignment.create(create, files);
+    console.log({create, files})
+    //return this.DeedOfAssignment.create(create, files);
   }
 
   @Get()
