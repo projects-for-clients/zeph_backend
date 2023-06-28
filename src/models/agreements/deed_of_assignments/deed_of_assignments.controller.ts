@@ -29,8 +29,7 @@ export class DeedOfAssignmentsController {
     @Body() create: CreateDto,
     @UploadedFiles(new FileSizeValidationPipe()) files: Array<Express.Multer.File>,
   ) {
-    console.log({create, files})
-    //return this.DeedOfAssignment.create(create, files);
+    return this.DeedOfAssignment.create(create, files);
   }
 
   @Get()

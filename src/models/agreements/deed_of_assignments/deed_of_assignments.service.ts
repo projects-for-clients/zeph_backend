@@ -22,7 +22,7 @@ export class DeedOfAssignmentsService {
 
   async create(createDto: CreateDto, files: Array<Express.Multer.File>) {
 
-    console.log({ files })
+    console.log({files})
 
 
     const folderPath = path.join("uploads", DeedOfAssignmentsService.name);
@@ -74,22 +74,22 @@ export class DeedOfAssignmentsService {
       })
 
 
-      // const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
+      const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
 
 
-      // const deedOfAssignment = await this.prisma.deed_of_assignments.create({
-      //   data: {
-      //     ...createDto,
-      //     relevant_documents,
-      //     userId: this.userId
-      //   },
-      // });
+      const deedOfAssignment = await this.prisma.deed_of_assignments.create({
+        data: {
+          ...createDto,
+          relevant_documents,
+          userId: this.userId
+        },
+      });
 
 
 
-      // if (!deedOfAssignment) throw new ForbiddenException('Unable to create deed of assignment');
+      if (!deedOfAssignment) throw new ForbiddenException('Unable to create deed of assignment');
 
-      // return deedOfAssignment;
+      return deedOfAssignment;
     }
     catch (err) {
 
