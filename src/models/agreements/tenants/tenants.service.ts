@@ -116,7 +116,7 @@ export class TenantsService {
 		});
 
 		if (!one) {
-			throw new ForbiddenException("No tenant found")
+			throw new ForbiddenException("Tenant not found")
 		}
 
 		return one
