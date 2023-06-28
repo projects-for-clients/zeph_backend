@@ -29,7 +29,11 @@ export class UploadedFilesService {
             return upload;
         }
 
-       return execute()
+        const upload = execute();
+        
+        console.log({ upload })
+
+       //return execute()
     }
 }
 

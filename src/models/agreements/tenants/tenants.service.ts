@@ -46,7 +46,9 @@ export class TenantsService {
 				});
 
 
-				uploadedFiles.push(await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`));
+				const toUpload = await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`);
+				
+				console.log({ toUpload })
 
 				// await fs.unlink(writeTo).catch(() => {
 				// 	isError = true;
