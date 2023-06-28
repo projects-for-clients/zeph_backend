@@ -15,7 +15,7 @@ export class UploadedFilesService {
 
 
         const execute = async () => {
-            console.log('inside execute',{ file, filePath })
+            console.log('inside execute', { file, filePath })
 
             const upload = await v2.uploader.upload(file,
                 {
@@ -26,16 +26,14 @@ export class UploadedFilesService {
                 },
             );
 
-            console.log({upload})
+            console.log({ upload })
 
             return upload;
         }
 
-        const upload = execute();
+        return execute();
 
-        return 'Helo'
 
-        console.log({ upload })
 
         //return execute()
     }
