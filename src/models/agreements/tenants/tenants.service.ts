@@ -89,10 +89,6 @@ export class TenantsService {
 
 			if (!tenant) throw new ForbiddenException('Unable to create lease');
 
-			await this.redis.set(`${TenantsService.name + tenant.id}`, tenant);
-
-			await this.redis.append(TenantsService.name, tenant);
-
 			return tenant;
 		}
 		catch (err) {
