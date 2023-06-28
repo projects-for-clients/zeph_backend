@@ -16,20 +16,18 @@ export class UploadedFilesService {
 
 
 
-        // const upload = await v2.uploader.upload(file,
-        //     {
-        //         folder: filePath,
-        //         use_filename: true,
-        //         unique_filename: true,
-        //         resource_type: "auto",
-        //     },
-        // );
+        const upload = await v2.uploader.upload(file,
+            {
+                folder: filePath,
+                use_filename: true,
+                unique_filename: true,
+                resource_type: "auto",
+            },
+        );
 
-        // console.log(upload);
+        console.log(upload);
 
-        // return upload;
-
-        return 'test'
+        return upload;
     }
 }
 
