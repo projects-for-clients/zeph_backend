@@ -21,7 +21,7 @@ export class TenantsService {
 	private userId = this.userRequest.getUserId();
 
 
-	async create(createTenantDto: TenantDto, files: Array<Express.Multer.File>) {
+	async create(createTenantDto: CreateDto, files: Array<Express.Multer.File>) {
 
 
 		const folderPath = path.join("uploads", TenantsService.name);
@@ -110,7 +110,7 @@ export class TenantsService {
 		});
 	}
 
-	async update(id: number, updateTenantDto: TenantDto) {
+	async update(id: number, updateTenantDto: UpdateTdo) {
 		const find = await this.prisma.tenants.findUnique({
 			where: {
 				id,
