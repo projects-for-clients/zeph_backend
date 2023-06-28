@@ -31,6 +31,7 @@ export class TenantsService {
 			recursive: true,
 		});
 
+		let uploadedFiles = null;
 		const storeFileHandler = async (path: string) => {
 			let isError = false;
 			for (const key in files) {
@@ -42,7 +43,7 @@ export class TenantsService {
 				});
 
 
-				await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`).catch(() => {
+				uploadedFiles = await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`).catch(() => {
 					isError = true;
 				}
 				);
@@ -61,11 +62,11 @@ export class TenantsService {
 		const isError = await storeFileHandler(folderPath);
 
 
-
-
 		if (isError) {
 			throw new ForbiddenException("Error while storing files");
 		}
+
+		console.log({ uploadedFiles })
 
 		return "Stored the service";
 	}
