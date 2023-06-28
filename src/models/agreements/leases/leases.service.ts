@@ -93,6 +93,8 @@ export class LeasesService {
       },
     });
 
+    if (!lease) throw new ForbiddenException("Lease not found")
+
     await this.redis.del(`${LeasesService.name + id}`);
 
     return lease;

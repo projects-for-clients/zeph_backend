@@ -75,6 +75,9 @@ export class LoansService {
             },
         });
 
+        if (!loan) throw new ForbiddenException("Loan not found")
+
+
 
         return loan;
     }
