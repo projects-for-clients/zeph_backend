@@ -6,7 +6,6 @@ import { RedisService } from "src/redis/redis.service";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
-import { UploadApiResponse } from 'cloudinary';
 
 @Injectable()
 export class TenantsService {
@@ -73,6 +72,24 @@ export class TenantsService {
 		}
 
 		console.log({ uploadedFiles })
+
+		const tenant = await this.prisma.tenants.create({
+			data: {
+				...createTenantDto,
+				userId: this.userId
+			},
+		});
+
+		if (!tenant) throw new ForbiddenException('Unable to create lease');
+
+		await this.redis.set(`${TenantsService.name + tenant.id}`, tenant);
+
+		await this.redis.append(TenantsService.name, tenant);
+
+		return tenant;
+
+
+
 
 		return "Stored the service";
 	}
