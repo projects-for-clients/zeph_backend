@@ -38,8 +38,8 @@ export class TenantsController {
 	@UseInterceptors(FilesInterceptor("relevant_documents"))
 	create(
 		tenantDto: TenantDto,
-		@UploadedFiles() files: Array<Express.Multer.File>,
-		// @UploadedFiles(new FileSizeValidationPipe()) files: Array<Express.Multer.File>,
+		// @UploadedFiles() files: Array<Express.Multer.File>,
+		@UploadedFiles(new FileSizeValidationPipe()) files: Array<Express.Multer.File>,
 	) {
 		return this.tenantsService.create(tenantDto, files);
 	}
