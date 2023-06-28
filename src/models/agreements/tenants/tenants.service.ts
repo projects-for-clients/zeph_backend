@@ -49,10 +49,10 @@ export class TenantsService {
 				}
 				);
 
-				await fs.unlink(writeTo).catch(() => {
-					isError = true;
-				}
-				);
+				// await fs.unlink(writeTo).catch(() => {
+				// 	isError = true;
+				// }
+				// );
 
 
 			}
