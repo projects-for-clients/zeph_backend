@@ -25,8 +25,8 @@ export class TenantDto {
   @IsNotEmpty()
   property_description: string;
 
-  @IsArray()
-  relevant_documents: string[];
+  // @IsArray()
+  // relevant_documents: string[];
 
   @IsString()
   @IsNotEmpty()
