@@ -9,8 +9,6 @@ import {
 	UseInterceptors,
 	UsePipes,
 	UploadedFiles,
-	ParseFilePipe,
-	MaxFileSizeValidator,
 
 } from "@nestjs/common";
 
