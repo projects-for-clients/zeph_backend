@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DeedOfAssignmentsService } from './deed_of_assignments.service';
+import { DeedOfAssignmentsService } from '../deed_of_assignments.service';
 
 describe('DeedOfAssignmentsService', () => {
   let service: DeedOfAssignmentsService;
