@@ -40,7 +40,7 @@ export class TenantsService {
 			throw new ForbiddenException("Error while storing files");
 		}
 
-		return "Stored the service"
+		return "Stored the service";
 	}
 
 	async findAll() {

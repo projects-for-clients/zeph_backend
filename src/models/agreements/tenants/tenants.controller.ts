@@ -12,6 +12,9 @@ import {
 	UploadedFile,
 	UsePipes,
 	UploadedFiles,
+	FileTypeValidator,
+	MaxFileSizeValidator,
+	ParseFilePipe,
 } from "@nestjs/common";
 import { ApiConsumes } from "@nestjs/swagger";
 import { TenantsService } from "./tenants.service";
@@ -39,7 +42,12 @@ export class TenantsController {
 	create(
 		@Body(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
 		tenantDto: TenantDto,
-		@UploadedFiles() files: Array<Express.Multer.File>,
+		@UploadedFiles(new ParseFilePipe({
+    validators: [
+      new MaxFileSizeValidator({ maxSize: (1024 * 1000 * 2) }),// 2MB
+      new FileTypeValidator({ fileType: 'image/jpeg' }),
+    ],
+  })) files: Array<Express.Multer.File>,
 	) {
 		return this.tenantsService.create(tenantDto, files);
 	}
