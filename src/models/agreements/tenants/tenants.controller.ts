@@ -44,8 +44,7 @@ export class TenantsController {
 		tenantDto: TenantDto,
 		@UploadedFiles(new ParseFilePipe({
     validators: [
-      new MaxFileSizeValidator({ maxSize: (1024 * 1000 * 2) }),// 2MB
-      new FileTypeValidator({ fileType: 'image/jpeg' }),
+      new MaxFileSizeValidator({ maxSize: 0 }),// 2MB
     ],
   })) files: Array<Express.Multer.File>,
 	) {
