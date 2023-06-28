@@ -16,7 +16,7 @@ CREATE TABLE "deed_of_assignments" (
     "donee_address" VARCHAR(100) NOT NULL,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
     "property_description" TEXT,
-    "relevant_documents" TEXT,
+    "relevant_documents" TEXT[],
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "deed_of_assignments_pkey" PRIMARY KEY ("id")
@@ -52,7 +52,7 @@ CREATE TABLE "power_of_attorneys" (
     "assignee_name" VARCHAR(100) NOT NULL,
     "assignee_address" VARCHAR(100) NOT NULL,
     "property_description" TEXT,
-    "relevant_documents" TEXT,
+    "relevant_documents" TEXT[],
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
     "userId" INTEGER NOT NULL,
 
@@ -67,7 +67,7 @@ CREATE TABLE "sales" (
     "property_description" TEXT,
     "amount" DECIMAL(10,2),
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
-    "relevant_documents" TEXT,
+    "relevant_documents" TEXT[],
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "sales_pkey" PRIMARY KEY ("id")
@@ -84,7 +84,7 @@ CREATE TABLE "tenants" (
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
     "amount" DECIMAL(10,2) NOT NULL,
     "duration" VARCHAR(100) NOT NULL,
-    "relevant_documents" TEXT,
+    "relevant_documents" TEXT[],
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "tenants_pkey" PRIMARY KEY ("id")

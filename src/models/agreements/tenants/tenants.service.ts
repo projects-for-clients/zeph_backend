@@ -6,6 +6,7 @@ import { RedisService } from "src/redis/redis.service";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
+import { UploadApiResponse } from 'cloudinary';
 
 @Injectable()
 export class TenantsService {
@@ -35,6 +36,7 @@ export class TenantsService {
 
 		const cleanUpPaths = []
 
+		// rome-ignore lint/suspicious/noExplicitAny: <explanation>
 		const uploadedFiles: any[] = []
 		const storeFileHandler = async (path: string) => {
 			let isError = false;
@@ -49,7 +51,7 @@ export class TenantsService {
 				});
 
 
-				const toUpload = await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`).catch(() => isError = true)
+				const toUpload = await this.uploadFiles.uploadBasic(`${currDir}/${file.originalname}`, `${folderPath}/users/${this.userId}`)
 
 				uploadedFiles.push(toUpload);
 
@@ -63,10 +65,10 @@ export class TenantsService {
 
 		try {
 
-			const isError = await storeFileHandler(folderPath);
+			await storeFileHandler(folderPath);
 
 			const executed = await Promise.all(uploadedFiles.map(async (file) => {
-				return await file()
+				return (await file)()
 			}));
 
 			cleanUpPaths.map(async (writeTo) => {
