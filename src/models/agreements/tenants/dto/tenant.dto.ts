@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateDto {
   @IsString()
@@ -35,26 +35,33 @@ export class CreateDto {
 
 
 export class UpdateTdo {
+
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   landlord_name: string;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   landlord_address: string;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   tenant_name: string;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   tenant_address: string;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   duration: string;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   property_description: string;
@@ -62,6 +69,7 @@ export class UpdateTdo {
   // @IsArray()
   // relevant_documents: string[];
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   amount: number;

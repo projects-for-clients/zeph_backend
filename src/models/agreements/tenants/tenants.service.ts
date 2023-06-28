@@ -111,6 +111,7 @@ export class TenantsService {
 	}
 
 	async update(id: number, updateTenantDto: UpdateTdo) {
+		console.log({id})
 		const find = await this.prisma.tenants.findUnique({
 			where: {
 				id,
