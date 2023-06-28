@@ -7,15 +7,13 @@ export class FileSizeValidationPipe implements PipeTransform {
 
         let mbTotalFileSize = 0
 
-        const limitFileSize = 5; // 5MB
+        const limitFileSize = 1; // 5MB
 
         const handleFileSize = (file: Buffer) => {
             const kbSize = Math.floor(file.byteLength / 1000);
 
             const mbSize = kbSize / 1000
-            mbTotalFileSize = parseInt((mbTotalFileSize + mbSize).toFixed(2))
-
-            console.log({ mbTotalFileSize })
+            mbTotalFileSize = Number((mbTotalFileSize + mbSize).toFixed(2))
 
         }
         Object.values(value).forEach((file: Express.Multer.File) => handleFileSize(file.buffer))
