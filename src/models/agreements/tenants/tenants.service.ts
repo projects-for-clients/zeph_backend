@@ -13,7 +13,6 @@ export class TenantsService {
 	constructor(
 		// @Inject(CACHE_MANAGER) private readonly cache: Cache,
 		private prisma: PrismaService,
-		private redis: RedisService,
 		private uploadFiles: UploadedFilesService,
 		private userRequest: UserRequestService
 
