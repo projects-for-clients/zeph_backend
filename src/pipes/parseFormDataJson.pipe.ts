@@ -1,4 +1,8 @@
-import { PipeTransform, ArgumentMetadata } from "@nestjs/common";
+import {
+	PipeTransform,
+	ArgumentMetadata,
+	ForbiddenException,
+} from "@nestjs/common";
 import { deepParseJson } from "deep-parse-json";
 import * as _ from "lodash";
 
@@ -19,10 +23,13 @@ export class ParseFormDataJsonPipe implements PipeTransform {
 		if (except?.length) {
 			_.merge(originProperties, _.pick(serializedValue, ...except));
 		}
+		console.log({ value });
 
 		const deserializedValue = deepParseJson(value);
 		console.log({ ...deserializedValue });
 
-		return { ...deserializedValue, ...originProperties };
+		throw new ForbiddenException("You are not allowed to access this resource");
+
+		//return { ...deserializedValue, ...originProperties };
 	}
 }

@@ -32,7 +32,6 @@ export class TenantsController {
 	constructor(private readonly tenantsService: TenantsService) {}
 
 	@Post()
-	// @ApiConsumes("multipart/form-data")
 	@UseInterceptors(FilesInterceptor("relevant_documents"))
 	create(
 		@Body(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
