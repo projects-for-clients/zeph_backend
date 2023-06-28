@@ -12,6 +12,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { RedisCacheModule } from 'src/redis/redis.module';
 import { LeasesModule } from 'src/models/agreements/leases/leases.module';
 import { DeedOfAssignmentsModule } from 'src/models/agreements/deed_of_assignments/deed_of_assignments.module';
+import { LoansModule } from 'src/models/loans/loans.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { DeedOfAssignmentsModule } from 'src/models/agreements/deed_of_assignmen
     SharedModule,
     TenantsModule,
     LeasesModule,
-    DeedOfAssignmentsModule
+    DeedOfAssignmentsModule,
+    LoansModule
   ],
   controllers: [AppController],
   providers: [
