@@ -115,8 +115,26 @@ export class TenantsService {
 		});
 	}
 
-	update(id: number, updateTenantDto: TenantDto) {
-		return `This action updates a #${id} tenant`;
+	async update(id: number, updateTenantDto: TenantDto) {
+		const find = await this.prisma.tenants.findUnique({
+			where: {
+				id,
+			},
+		});
+
+		if (!find) {
+			throw new ForbiddenException('Tenant not found');
+		}
+
+		return await this.prisma.tenants.update({
+			where: {
+				id,
+			},
+			data: {
+				...find,
+				...updateTenantDto,
+			},
+		});
 	}
 
 	remove(id: number) {
