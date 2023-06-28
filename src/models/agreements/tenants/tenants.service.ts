@@ -107,8 +107,12 @@ export class TenantsService {
 		return await this.prisma.tenants.findMany();
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} tenant`;
+	async findOne(id: number) {
+		return await this.prisma.leases.findUnique({
+			where: {
+				id,
+			},
+		});
 	}
 
 	update(id: number, updateTenantDto: TenantDto) {
