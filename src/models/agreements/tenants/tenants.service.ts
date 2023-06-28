@@ -104,7 +104,7 @@ export class TenantsService {
 	}
 
 	async findAll() {
-		return "This action returns all tenants";
+		return await this.prisma.tenants.findMany();
 	}
 
 	findOne(id: number) {
