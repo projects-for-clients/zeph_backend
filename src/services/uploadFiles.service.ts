@@ -13,11 +13,12 @@ export class UploadedFilesService {
 		const service = google.drive({ version: "v3", auth });
 		const requestBody = {
 			name: "3000_followers.jpg",
-			fields: "id",
+			// fields: "id",
+            parents: ["uploads/TenantService"]
 		};
 		const media = {
 			mimeType: "image/png",
-			body: fs.createReadStream("uploads/TenantsService/3000_followers.png"),
+			body: fs.createReadStream("3000_followers.png"),
 		};
 		try {
 			const file = await service.files.create({
