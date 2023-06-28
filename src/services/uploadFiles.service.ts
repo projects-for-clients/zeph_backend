@@ -6,7 +6,6 @@ import { v2 } from "cloudinary";
 export class UploadedFilesService {
 
     async uploadBasic(file: string, filePath: string) {
-        console.log({ file, filePath })
 
         v2.config({
             cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -30,10 +29,12 @@ export class UploadedFilesService {
         }
 
         const upload = execute();
-        
+
+        return 'Helo'
+
         console.log({ upload })
 
-       //return execute()
+        //return execute()
     }
 }
 
