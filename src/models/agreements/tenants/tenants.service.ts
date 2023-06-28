@@ -6,7 +6,7 @@ import { RedisService } from "src/redis/redis.service";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
-import { UploadApiResponse } from 'cloudinary';
+
 
 @Injectable()
 export class TenantsService {
@@ -20,7 +20,6 @@ export class TenantsService {
 	) { }
 
 	private userId = this.userRequest.getUserId();
-
 
 
 	async create(createTenantDto: TenantDto, files: Array<Express.Multer.File>) {
