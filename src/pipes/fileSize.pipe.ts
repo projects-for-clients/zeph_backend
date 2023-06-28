@@ -14,11 +14,11 @@ export class FileSizeValidationPipe implements PipeTransform {
 
             console.log({ kbSize })
 
-            const getKB = Math.floor(kbSize / 1000);
+            const mbSize = Math.floor(kbSize / 1000);
 
-            console.log({ getKB, limitFileSize })
+            console.log({ mbSize, limitFileSize })
 
-            if (getKB > limitFileSize) {
+            if (mbSize > limitFileSize) {
                 throw new Error(`File size too large. Max file size is ${limitFileSize} bytes.`);
             }
         }
