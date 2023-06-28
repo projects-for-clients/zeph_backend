@@ -2,7 +2,6 @@ import { UserRequestService } from 'src/services/userRequest.service';
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import { CreateDto, UpdateTdo } from "./dto";
 import { PrismaService } from "src/prisma/prisma.service";
-import { RedisService } from "src/redis/redis.service";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
