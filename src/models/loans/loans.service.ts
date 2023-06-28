@@ -2,11 +2,10 @@ import { UserRequestService } from 'src/services/userRequest.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { createDto, updateDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class LoansService {
-    constructor(private redis: RedisService, private prisma: PrismaService, private userRequest: UserRequestService) { }
+    constructor(private prisma: PrismaService, private userRequest: UserRequestService) { }
 
     async create(createLoanDto: createDto) {
         const userId = this.userRequest.getUserId();
@@ -22,16 +21,12 @@ export class LoansService {
     }
 
     async findAll() {
-
-
         const allLoans = await this.prisma.loans.findMany();
 
         return allLoans;
     }
 
     async findOne(id: number) {
-
-
         const loan = await this.prisma.loans.findUnique({
             where: {
                 id,
