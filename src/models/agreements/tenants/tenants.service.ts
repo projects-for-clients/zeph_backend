@@ -46,7 +46,7 @@ export class TenantsService {
 				});
 
 
-				const toUpload = await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`);
+				const toUpload = await (await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`))();
 
 				uploadedFiles.push(toUpload);
 
@@ -62,19 +62,19 @@ export class TenantsService {
 		};
 
 
-		
+
 
 		const isError = await storeFileHandler(folderPath);
 
 		console.log({ uploadedFiles })
 
-		const executed = await Promise.all(uploadedFiles.map(async (file) => {
-			console.log(file)
+		// const executed = await Promise.all(uploadedFiles.map(async (file) => {
+		// 	console.log(file)
 
-			await file()
-		}));
+		// 	await file()
+		// }));
 
-		console.log({ executed })
+		// console.log({ executed })
 
 
 		if (isError) {
