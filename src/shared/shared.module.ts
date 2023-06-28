@@ -15,8 +15,8 @@ import { UserRequestService } from "src/services/userRequest.service";
 		JwtService,
 		RedisService,
 		PrismaService,
-		UploadedFilesService,
 		EmailService,
+		UploadedFilesService,
 	],
 	exports: [
 		UserRequestService,
@@ -28,4 +28,4 @@ import { UserRequestService } from "src/services/userRequest.service";
 		UploadedFilesService,
 	],
 })
-export class SharedModule {}
+export class SharedModule { }

@@ -13,7 +13,7 @@ export class TenantsService {
 		private prisma: PrismaService,
 		private redis: RedisService,
 		private uploadFiles: UploadedFilesService
-	) {}
+	) { }
 
 	async create(createTenantDto: TenantDto, files: Array<Express.Multer.File>) {
 		// try {
@@ -28,14 +28,16 @@ export class TenantsService {
 				const file = files[key];
 				const writeTo = `${path}/${file.originalname}`;
 
-				const uploadToCDN = await this.uploadFiles.uploadBasic();
+				// const uploadToCDN = await this.uploadFiles.uploadBasic(file, writeTo);
 
-				console.log({uploadToCDN})
-				
 
-				await fs.writeFile(writeTo, file.buffer).catch(() => {
+				const stored = await fs.writeFile(writeTo, file.buffer, 'base64url').then((res) => {
+					console.log({ res })
+				}).catch(() => {
 					isError = true;
 				});
+
+				console.log({ stored })
 			}
 
 			return isError;
