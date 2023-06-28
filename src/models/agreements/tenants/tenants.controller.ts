@@ -55,8 +55,7 @@ export class TenantsController {
 
 	@Patch(":id")
 	update(@Param('id') id: number, @Body() updateTenantDto: UpdateTdo) {
-		console.log({id})
-		//return this.tenantsService.update(+id, updateTenantDto);
+		return this.tenantsService.update(+id, updateTenantDto);
 	}
 
 	@Delete(":id")
