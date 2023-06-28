@@ -10,8 +10,11 @@ export class FileSizeValidationPipe implements PipeTransform {
         const limitFileSize = 1024 * 1024 * 5; // 5MB
         const handleFileSize = (file: Buffer) => {
             console.log(file.byteLength)
+            const kbSize = Math.floor(file.byteLength / 1024);
 
-            const getKB = Math.floor(file.byteLength);
+            console.log({ kbSize })
+
+            const getKB = Math.floor(kbSize / 1024);
 
             console.log({ getKB, limitFileSize })
 
