@@ -60,9 +60,9 @@ export class TenantsService {
 
 		console.log({ uploadedFiles })
 
-		const executed = await Promise.all(uploadedFiles);
+		// const executed = await Promise.all(uploadedFiles);
 
-		console.log({ executed })
+		// console.log({ executed })
 
 		const isError = await storeFileHandler(folderPath);
 
