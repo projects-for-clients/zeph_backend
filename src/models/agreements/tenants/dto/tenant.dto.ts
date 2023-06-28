@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsOptional, IsArray } from 'class-validator';
 
 export class TenantDto {
   @IsString()
@@ -25,8 +25,8 @@ export class TenantDto {
   @IsNotEmpty()
   property_description: string;
 
-  // @IsString()
-  // relevant_documents: string;
+  @IsArray()
+  relevant_documents: string[];
 
   @IsString()
   @IsNotEmpty()

@@ -49,11 +49,9 @@ export class TenantsService {
 				});
 
 
-				const toUpload = await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`);
+				const toUpload = await this.uploadFiles.uploadBasic(currDir + '/' + file.originalname, `${folderPath}/users/${this.userId}`).catch(() => isError = true)
 
 				uploadedFiles.push(toUpload);
-
-
 
 
 			}
@@ -63,51 +61,51 @@ export class TenantsService {
 
 
 
+		try {
 
-		const isError = await storeFileHandler(folderPath);
+			const isError = await storeFileHandler(folderPath);
 
-		const executed = await Promise.all(uploadedFiles.map(async (file) => {
-			return await file()
-		}));
+			const executed = await Promise.all(uploadedFiles.map(async (file) => {
+				return await file()
+			}));
 
-		cleanUpPaths.map(async (writeTo) => {
-			await fs.unlink(writeTo)
-		})
-
-		console.log({ executed })
-
-		const relevant_documents = executed.map((fileData) => fileData.secure_url)
+			cleanUpPaths.map(async (writeTo) => {
+				await fs.unlink(writeTo)
+			})
 
 
-		if (isError) {
-			console.log("Error while storing files")
+			const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
+
+
+			const tenant = await this.prisma.tenants.create({
+				data: {
+					...createTenantDto,
+					relevant_documents,
+					userId: this.userId
+				},
+			});
+
+
+
+			if (!tenant) throw new ForbiddenException('Unable to create lease');
+
+			await this.redis.set(`${TenantsService.name + tenant.id}`, tenant);
+
+			await this.redis.append(TenantsService.name, tenant);
+
+			return tenant;
+		}
+		catch (err) {
+
+			console.log({ err })
 			throw new ForbiddenException("Error while storing files");
 		}
 
-		// console.log({ uploadedFiles })
-
-
-		// const tenant = await this.prisma.tenants.create({
-		// 	data: {
-		// 		...createTenantDto,
-		// 		userId: this.userId
-		// 	},
-		// });
-
-
-
-		// if (!tenant) throw new ForbiddenException('Unable to create lease');
-
-		// await this.redis.set(`${TenantsService.name + tenant.id}`, tenant);
-
-		// await this.redis.append(TenantsService.name, tenant);
-
-		// return tenant;
 
 
 
 
-		return "Stored the service";
+
 	}
 
 	async findAll() {
