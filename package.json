@@ -42,6 +42,7 @@
     "cache-manager-redis-yet": "^4.1.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "cloudinary": "^1.37.3",
     "cookie-parser": "^1.4.6",
     "dayjs": "^1.11.8",
     "deep-parse-json": "^1.0.2",
