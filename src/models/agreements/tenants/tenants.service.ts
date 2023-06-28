@@ -86,7 +86,7 @@ export class TenantsService {
 
 
 
-			if (!tenant) throw new ForbiddenException('Unable to create lease');
+			if (!tenant) throw new ForbiddenException('Unable to create Tenant');
 
 			return tenant;
 		}
@@ -116,7 +116,7 @@ export class TenantsService {
 		});
 
 		if (!one) {
-			
+
 			throw new ForbiddenException("Tenant not found")
 		}
 
