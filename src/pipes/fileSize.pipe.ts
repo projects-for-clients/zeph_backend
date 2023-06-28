@@ -7,9 +7,7 @@ export class FileSizeValidationPipe implements PipeTransform {
 
         console.log({ value, metadata })
 
-        console.log(metadata.metatype)
-
-        metadata.metatype[0].forEach((element: any) => console.log({ element }))
+       
 
         const oneKb = 1000;
         return value.size < oneKb;
