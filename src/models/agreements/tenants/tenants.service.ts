@@ -4,6 +4,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { RedisService } from "src/redis/redis.service";
 import * as fs from "fs/promises";
 import * as path from "path";
+import { UploadedFilesService } from "src/services/uploadFiles.service";
 
 @Injectable()
 export class TenantsService {
@@ -11,6 +12,7 @@ export class TenantsService {
 		// @Inject(CACHE_MANAGER) private readonly cache: Cache,
 		private prisma: PrismaService,
 		private redis: RedisService,
+		private uploadFiles: UploadedFilesService
 	) {}
 
 	async create(createTenantDto: TenantDto, files: Array<Express.Multer.File>) {
@@ -26,6 +28,11 @@ export class TenantsService {
 				const file = files[key];
 				const writeTo = `${path}/${file.originalname}`;
 
+				const uploadToCDN = await this.uploadFiles.uploadBasic();
+
+				console.log({uploadToCDN})
+				
+
 				await fs.writeFile(writeTo, file.buffer).catch(() => {
 					isError = true;
 				});
@@ -35,6 +42,9 @@ export class TenantsService {
 		};
 
 		const isError = await storeFileHandler(folderPath);
+
+
+
 
 		if (isError) {
 			throw new ForbiddenException("Error while storing files");
