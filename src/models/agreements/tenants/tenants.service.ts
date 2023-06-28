@@ -10,7 +10,7 @@ import { UploadedFilesService } from "src/services/uploadFiles.service";
 
 @Injectable()
 export class TenantsService {
-	
+
 	constructor(
 		// @Inject(CACHE_MANAGER) private readonly cache: Cache,
 		private prisma: PrismaService,
@@ -21,7 +21,9 @@ export class TenantsService {
 	private userId = UserRequestService.getUserId()
 
 
+
 	async create(createTenantDto: TenantDto, files: Array<Express.Multer.File>) {
+		console.log(this.userId)
 		// try {
 		const folderPath = path.join("uploads", TenantsService.name);
 		const currDir = path.join(process.cwd(), folderPath);
