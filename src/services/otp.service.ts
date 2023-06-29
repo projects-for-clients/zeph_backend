@@ -33,7 +33,8 @@ export class OtpService {
   }
 
   async sendOtp() {
-    await this.emailService.sendOTP(this.email, this.otp);
+    const email = await this.emailService.sendOTP(this.email, this.otp);
     
+    return email
   }
 }

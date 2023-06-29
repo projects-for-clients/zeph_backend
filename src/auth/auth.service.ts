@@ -39,7 +39,7 @@ export class AuthService {
     }
 
     const otp = this.OtpService.generateOtp(email)
-    this.EmailService.sendOTP(email, otp)
+    
 
     const user = await this.prisma.users.create({
       data: {
