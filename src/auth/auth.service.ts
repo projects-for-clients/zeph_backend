@@ -3,7 +3,7 @@ import { UserRequestService } from './../services/userRequest.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import * as argon from 'argon2';
-import { AuthLogin, AuthRegister } from 'src/auth/dto';
+import { AuthLogin, AuthRegister, AuthVefifyOtp } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -23,7 +23,7 @@ export class AuthService {
   ) {
     this.secret = this.config.get('JWT_SECRET');
   }
-  async register(dto: AuthRegister, res: Response) {
+  async register(dto: AuthRegister) {
 
     const { email, password } = dto;
     const hashedPassword = await argon.hash(password);
@@ -38,8 +38,23 @@ export class AuthService {
       throw new ForbiddenException(`User already exists`);
     }
 
-    const otp = this.OtpService.generateOtp(email)
-    
+    const otp = await this.OtpService.generateOtp(email)
+
+    if (!otp) {
+      throw new ForbiddenException(`Error sending OTP`);
+    }
+
+    return 'Otp sent'
+
+  }
+
+  async verifyOtp(dto: AuthVefifyOtp, res: Response) {
+    const {email, otp} = dto
+    const isValid = await this.OtpService.verifyOtp(email, otp);
+
+    if (!isValid) {
+      throw new ForbiddenException(`Invalid OTP`);
+    }
 
     const user = await this.prisma.users.create({
       data: {
@@ -48,9 +63,13 @@ export class AuthService {
       },
     });
 
+    if (!user) {
+      throw new ForbiddenException(`User not found`);
+    }
+    
     return this.signToken(user.id, user.email, res);
-
-  }
+   
+   }
 
   async login(dto: AuthLogin, res: Response) {
     const { email, password } = dto;
