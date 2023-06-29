@@ -14,7 +14,9 @@ export class AuthController {
   @Post('verify')
   verify(@Body() dto: AuthVefifyOtp, @Res() res: ExpressRes) {
     const { otp } = dto
-    if(otp)
+    if (otp.toString().length !== 6) {
+        return 'OTP must be 6 digits long'
+    }
     return this.authService.verifyOtp(dto, res);
   }
 
