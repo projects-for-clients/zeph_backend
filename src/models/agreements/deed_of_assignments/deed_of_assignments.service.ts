@@ -125,7 +125,7 @@ export class DeedOfAssignmentsService {
   }
 
   async update(id: number, updateTenantDto: UpdateTdo) {
-    console.log({ id })
+
     const find = await this.prisma.deed_of_assignments.findUnique({
       where: {
         id,

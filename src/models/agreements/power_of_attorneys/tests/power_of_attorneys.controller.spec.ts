@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PowerOfAttorneysController } from './power_of_attorneys.controller';
+import { PowerOfAttorneysController } from '../power_of_attorneys.controller';
 import { PowerOfAttorneysService } from '../power_of_attorneys.service';
 
 describe('PowerOfAttorneysController', () => {
