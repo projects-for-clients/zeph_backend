@@ -18,8 +18,8 @@ export class OtpService {
     this.redis.del(`otp-${email}-${this.otp}`);
   }
 
-  verifyOtp() {
-    console.log('hello world');
+  verifyOtp(email: string) {
+      this.redis.get(`otp-${email}-${this.otp}`)
   }
 
   sendOtp() {
