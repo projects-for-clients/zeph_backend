@@ -4,11 +4,6 @@ export class AuthRegister {
   @IsEmail()
   @IsNotEmpty()
   email: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(4)
-  password: string;
 }
 
 export class AuthLogin {
@@ -25,6 +20,11 @@ export class AuthVefifyOtp {
   @IsEmail()
   @IsNotEmpty()
   email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(4)
+  password: string;
 
   @IsNumber()
   @IsNotEmpty()

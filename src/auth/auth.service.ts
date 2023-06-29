@@ -25,8 +25,7 @@ export class AuthService {
   }
   async register(dto: AuthRegister) {
 
-    const { email, password } = dto;
-    const hashedPassword = await argon.hash(password);
+    const { email } = dto;
 
     const findUser = await this.prisma.users.findUnique({
       where: {
@@ -49,12 +48,15 @@ export class AuthService {
   }
 
   async verifyOtp(dto: AuthVefifyOtp, res: Response) {
-    const {email, otp} = dto
+    const {email, otp, password} = dto
     const isValid = await this.OtpService.verifyOtp(email, otp);
 
     if (!isValid) {
       throw new ForbiddenException(`Invalid OTP`);
     }
+
+    const hashedPassword = await argon.hash(password);
+
 
     const user = await this.prisma.users.create({
       data: {
