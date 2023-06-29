@@ -12,7 +12,7 @@ export class EmailService {
   //     private html: string,
   //   ) {}
 
-  async send(email: string) {
+  async welcome(email: string) {
     console.log('resend', this.resend);
 
     try {
@@ -28,13 +28,13 @@ export class EmailService {
     }
   }
 
-  async sendOTP() {
+  async sendOTP(email: string) {
     try {
       console.log('sending email=====================');
       const initSend = await this.resend.emails.send({
         from: 'onboarding@resend.dev',
-        to: 'zephchambersdev@gmail.com',
-        subject: 'Welcome to Zeph Chambers',
+        to: email,
+        subject: 'OTP Verification',
         html: `<p>This is your OTP code: <strong>${755}</strong>!</p>`,
       });
     } catch (err) {
