@@ -17,7 +17,7 @@ export class AuthController {
 
     console.log('otp', otp.toString().length)
     if (otp.toString().length !== 6) {
-      return 'OTP must be 6 digits long'
+      res.json('OTP must be 6 digits long')
     }
 
     console.log('correct otp')
