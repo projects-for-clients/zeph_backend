@@ -7,9 +7,10 @@ export class OtpService {
 
   constructor(private redis: RedisService, private providedOtp) {}
 
-  generateOtp() {
+  generateOtp(email: string) {
     this.otp = Math.floor(100000 + Math.random() * 900000);
-    this.redis.set(`otp-${this.otp}`, this.otp);
+    this.redis.set(`email-${this.otp}`, this.otp);
+    return this.otp;
   }
 
   deleteOtp() {

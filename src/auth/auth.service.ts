@@ -1,3 +1,4 @@
+import { OtpService } from './../services/otp.service';
 import { UserRequestService } from './../services/userRequest.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Response } from 'express';
@@ -16,6 +17,7 @@ export class AuthService {
     private jwt: JwtService,
     private config: ConfigService,
     private prisma: PrismaService,
+    private OtpService: OtpService,
     private userRequestService: UserRequestService,
     private EmailService: EmailService,
   ) {
@@ -36,8 +38,8 @@ export class AuthService {
       throw new ForbiddenException(`User already exists`);
     }
 
-    
-    this.EmailService.sendOTP(email)
+    const otp = this.OtpService.generateOtp(email)
+    this.EmailService.sendOTP(email, otp)
 
     const user = await this.prisma.users.create({
       data: {
@@ -64,8 +66,6 @@ export class AuthService {
     const isPasswordValid = await argon.verify(user.password, password);
 
     if (!isPasswordValid) throw new ForbiddenException('Invalid Password!');
-
-    await this.EmailService.send();
 
     return this.signToken(user.id, user.email, res);
   }
