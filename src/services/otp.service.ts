@@ -9,13 +9,13 @@ export class OtpService {
 
   generateOtp(email: string) {
     this.otp = Math.floor(100000 + Math.random() * 900000);
-    this.redis.set(`email-${this.otp}`, this.otp);
+    this.redis.set(`otp-${email}-${this.otp}`, this.otp);
     return this.otp;
   }
 
-  deleteOtp() {
+  deleteOtp(email: string) {
     this.otp = null;
-    this.redis.del(`otp-${this.otp}`);
+    this.redis.del(`otp-${email}-${this.otp}`);
   }
 
   verifyOtp() {
