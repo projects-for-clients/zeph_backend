@@ -11,7 +11,7 @@ export class OtpService {
 
   async generateOtp(email: string) {
     this.otp = Math.floor(100000 + Math.random() * 900000);
-    await this.redis.set(`otp-${email}-${this.otp}`, this.otp);
+    await this.redis.set(`otp-${email}-${this.otp}`, this.otp, 60 * 5);
     this.email = email;
   }
 
@@ -20,8 +20,9 @@ export class OtpService {
     return await this.redis.del(`otp-${this.email}-${this.otp}`);
   }
 
-  async verifyOtp() {
-      return await this.redis.get(`otp-${this.email}-${this.otp}`)
+  async verifyOtp(providedOtp: number) {
+    await this.redis.get(`otp-${this.email}-${this.otp}`)
+    
   }
 
   async sendOtp() {

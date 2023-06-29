@@ -15,10 +15,10 @@ export class RedisService {
     });
   }
 
-  async set(key: string, value: any): Promise<string> {
+  async set(key: string, value: any, expiryTime?: number): Promise<string> {
     console.log('set', key);
 
-    const res = await this.redis.set(key, JSON.stringify(value));
+    const res = await this.redis.set(key, JSON.stringify(value), 'EX', expiryTime);
 
     return res;
   }
