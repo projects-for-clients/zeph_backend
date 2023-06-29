@@ -7,7 +7,7 @@ import {
 
 @Injectable()
 export class ConvertTypePipe implements PipeTransform {
-	constructor(private readonly options: Record<"key" | "toType", string>[]) {}
+	constructor(private readonly options: Record<"key" | "toType", string>[]) { }
 
 	// rome-ignore lint/suspicious/noExplicitAny: <explanation>
 	transform(value: any, metadata: ArgumentMetadata) {
@@ -43,6 +43,6 @@ export class ConvertTypePipe implements PipeTransform {
 			throw new BadRequestException(errors);
 		}
 
-		return { ...updatedValue };
+		return metadata.type === 'body' ? { ...updatedValue } : value;
 	}
 }

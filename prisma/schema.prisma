@@ -23,7 +23,7 @@ model deed_of_assignments {
   donee_address        String  @db.VarChar(100)
   type                 String  @default("agreement") @db.VarChar(100)
   property_description String?
-  relevant_documents   String?
+  relevant_documents   String[]
   userId               Int
   user                 users?  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
@@ -53,7 +53,7 @@ model power_of_attorneys {
   assignee_name        String  @db.VarChar(100)
   assignee_address     String  @db.VarChar(100)
   property_description String?
-  relevant_documents   String?
+  relevant_documents   String[]
   type                 String  @default("agreement") @db.VarChar(100)
   userId               Int
   user                 users?  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -66,7 +66,7 @@ model sales {
   property_description String?
   amount               Decimal? @db.Decimal(10, 2)
   type                 String   @default("agreement") @db.VarChar(100)
-  relevant_documents   String?
+  relevant_documents   String[]
   userId               Int
   user                 users?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
@@ -81,7 +81,7 @@ model tenants {
   type                 String  @default("agreement") @db.VarChar(100)
   amount               Decimal @db.Decimal(10, 2)
   duration             String  @db.VarChar(100)
-  relevant_documents   String?
+  relevant_documents   String[]
   userId               Int
   user                 users?  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }

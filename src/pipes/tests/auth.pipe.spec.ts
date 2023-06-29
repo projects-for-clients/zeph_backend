@@ -1,4 +1,4 @@
-import { AuthPipe } from './auth.pipe';
+import { AuthPipe } from '../auth.pipe';
 
 describe('AuthPipe', () => {
   it('should be defined', () => {

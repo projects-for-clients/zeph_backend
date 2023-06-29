@@ -6,23 +6,18 @@ import {
 	Patch,
 	Param,
 	Delete,
-	Headers,
 	UseInterceptors,
-	ValidationPipe,
-	UploadedFile,
 	UsePipes,
 	UploadedFiles,
-	FileTypeValidator,
-	MaxFileSizeValidator,
-	ParseFilePipe,
+
 } from "@nestjs/common";
-import { ApiConsumes } from "@nestjs/swagger";
+
 import { TenantsService } from "./tenants.service";
-import { TenantDto } from "./dto";
-import { ParseFormDataJsonPipe } from "src/pipes/parseFormDataJson.pipe";
-import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
-import { imgConfig } from "src/config/img.config";
+import { CreateDto, UpdateTdo } from "./dto";
+import { FilesInterceptor } from "@nestjs/platform-express";
+
 import { ConvertTypePipe } from "src/pipes/convertType.pipe";
+import { FileSizeValidationPipe } from "src/pipes/fileSize.pipe";
 
 @UsePipes(
 	new ConvertTypePipe([
@@ -31,22 +26,17 @@ import { ConvertTypePipe } from "src/pipes/convertType.pipe";
 			toType: "number",
 		},
 	]),
+
 )
 @Controller("tenants")
 export class TenantsController {
-	constructor(private readonly tenantsService: TenantsService) {}
+	constructor(private readonly tenantsService: TenantsService) { }
 
 	@Post()
-	// @ApiConsumes("multipart/form-data")
 	@UseInterceptors(FilesInterceptor("relevant_documents"))
 	create(
-		@Body(new ParseFormDataJsonPipe({ except: ['relevant_documents'] }))
-		tenantDto: TenantDto,
-		@UploadedFiles(new ParseFilePipe({
-    validators: [
-      new MaxFileSizeValidator({ maxSize: 0 }),// 2MB
-    ],
-  })) files: Array<Express.Multer.File>,
+		@Body() tenantDto: CreateDto,
+		@UploadedFiles(new FileSizeValidationPipe()) files: Array<Express.Multer.File>,
 	) {
 		return this.tenantsService.create(tenantDto, files);
 	}
@@ -57,17 +47,17 @@ export class TenantsController {
 	}
 
 	@Get(":id")
-	findOne(@Param('id') id: string) {
+	findOne(@Param('id') id: number) {
 		return this.tenantsService.findOne(+id);
 	}
 
 	@Patch(":id")
-	update(@Param('id') id: string, @Body() updateTenantDto: TenantDto) {
+	update(@Param('id') id: number, @Body() updateTenantDto: UpdateTdo) {
 		return this.tenantsService.update(+id, updateTenantDto);
 	}
 
 	@Delete(":id")
-	remove(@Param('id') id: string) {
-		return this.tenantsService.remove(+id);
+	delete(@Param('id') id: number) {
+		return this.tenantsService.delete(+id);
 	}
 }
