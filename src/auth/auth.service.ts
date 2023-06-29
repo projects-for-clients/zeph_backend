@@ -43,13 +43,13 @@ export class AuthService {
   async login(dto: AuthLogin, res: Response) {
     const { email, password } = dto;
 
-    const user = await this.prisma.users.findFirst({
+    const user = await this.prisma.users.findUnique({
       where: {
         email,
       },
     });
 
-    console.log({user})
+    console.log({ user })
 
     if (!user) throw new ForbiddenException('Invalid credentials');
 
