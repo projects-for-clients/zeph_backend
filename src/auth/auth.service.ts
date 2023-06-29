@@ -1,3 +1,4 @@
+import { UserRequestService } from './../services/userRequest.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import * as argon from 'argon2';
@@ -15,6 +16,7 @@ export class AuthService {
     private jwt: JwtService,
     private config: ConfigService,
     private prisma: PrismaService,
+    private userRequestService: UserRequestService,
     private EmailService: EmailService,
   ) {
     this.secret = this.config.get('JWT_SECRET');
@@ -92,6 +94,7 @@ export class AuthService {
   async logout(res: Response): Promise<void> {
 
     res.clearCookie('api-auth');
+    this.userRequestService.clearUser();
     res.json({
       message: 'success',
     });
