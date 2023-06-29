@@ -20,7 +20,7 @@ export class AuthMiddleware implements NestMiddleware {
     const { baseUrl } = req;
 
     const urlWithoutVersion = baseUrl.replace(/\/v\d+/, '');
-    const allowedPaths = ['/auth/login', '/auth/register'];
+    const allowedPaths = ['/auth/login', '/auth/register', '/auth/verify'];
 
     //not authorized
     if (allowedPaths.includes(urlWithoutVersion)) {
