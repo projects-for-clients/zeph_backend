@@ -22,24 +22,30 @@ export class AuthService {
     this.secret = this.config.get('JWT_SECRET');
   }
   async register(dto: AuthRegister, res: Response) {
-    try {
-      const { email, password } = dto;
-      const hashedPassword = await argon.hash(password);
 
-      const user = await this.prisma.users.create({
-        data: {
-          email,
-          password: hashedPassword,
-        },
-      });
+    const { email, password } = dto;
+    const hashedPassword = await argon.hash(password);
 
-      return this.signToken(user.id, user.email, res);
-    } catch (err) {
-      if (err.code === 'P2002') {
-        throw new ForbiddenException(`${err.meta.target} already exists`);
-      }
-      throw err;
+    const findUser = await this.prisma.users.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (findUser) {
+      throw new ForbiddenException(`User already exists`);
+
     }
+
+    const user = await this.prisma.users.create({
+      data: {
+        email,
+        password: hashedPassword,
+      },
+    });
+
+    return this.signToken(user.id, user.email, res);
+
   }
 
   async login(dto: AuthLogin, res: Response) {
