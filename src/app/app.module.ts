@@ -14,6 +14,7 @@ import { LeasesModule } from 'src/models/agreements/leases/leases.module';
 import { DeedOfAssignmentsModule } from 'src/models/agreements/deed_of_assignments/deed_of_assignments.module';
 import { LoansModule } from 'src/models/loans/loans.module';
 import { SalesModule } from 'src/models/agreements/sales/sales.module';
+import { PowerOfAttorneysModule } from 'src/models/agreements/power_of_attorneys/power_of_attorneys.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { SalesModule } from 'src/models/agreements/sales/sales.module';
     DeedOfAssignmentsModule,
     LoansModule,
     SalesModule,
+    PowerOfAttorneysModule
   ],
   controllers: [AppController],
   providers: [
