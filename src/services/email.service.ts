@@ -34,9 +34,9 @@ export class EmailService {
       console.log('sending email=====================');
       const initSend = await this.resend.emails.send({
         from: 'onboarding@resend.dev',
-        to: `${email}`,
+        to: email,
         subject: 'OTP Verification',
-        html: `<p>This is your OTP code: <strong>${otp}</strong>!</p>`,
+        html: `<p>This is your OTP code: <strong>${otp}</strong></p>`,
       });
 
       console.log({initSend})

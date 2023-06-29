@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsNotEmpty, MinLength, IsNumber } from 'class-validator';
+import { IsEmail, IsString, IsNotEmpty, IsNumber, Length } from 'class-validator';
 
 export class AuthRegister {
   @IsEmail()
@@ -23,7 +23,7 @@ export class AuthVefifyOtp {
 
   @IsString()
   @IsNotEmpty()
-  @MinLength(4)
+  @Length(6)
   password: string;
 
   @IsNumber()
