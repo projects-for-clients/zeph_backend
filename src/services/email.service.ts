@@ -12,16 +12,16 @@ export class EmailService {
   //     private html: string,
   //   ) {}
 
-  async send() {
+  async send(email: string) {
     console.log('resend', this.resend);
 
     try {
       console.log('sending email=====================');
       const initSend = await this.resend.emails.send({
         from: 'onboarding@resend.dev',
-        to: 'zephchambersdev@gmail.com',
+        to: email,
         subject: 'Welcome to Zeph Chambers',
-        html: '<p>Congrats on sending your <strong>first email</strong>!</p>',
+        html: '<p>We are happy to have you here!</p>',
       });
     } catch (err) {
       console.log({ err });

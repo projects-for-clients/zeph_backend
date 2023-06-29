@@ -34,8 +34,10 @@ export class AuthService {
 
     if (findUser) {
       throw new ForbiddenException(`User already exists`);
-
     }
+
+    
+    this.EmailService.sendOTP(email)
 
     const user = await this.prisma.users.create({
       data: {
