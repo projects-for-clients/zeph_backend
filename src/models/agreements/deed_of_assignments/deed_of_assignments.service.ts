@@ -22,7 +22,7 @@ export class DeedOfAssignmentsService {
 
   async create(createDto: CreateDto, files: Array<Express.Multer.File>) {
 
-    console.log({files})
+    console.log({ files })
 
 
     const folderPath = path.join("uploads", DeedOfAssignmentsService.name);
@@ -102,10 +102,6 @@ export class DeedOfAssignmentsService {
   async findAll() {
     const all = await this.prisma.deed_of_assignments.findMany();
 
-    if (!all) {
-      throw new ForbiddenException("No deed_of_assignments found")
-    }
-
     return all
   }
 
@@ -118,7 +114,7 @@ export class DeedOfAssignmentsService {
 
     if (!one) {
 
-      throw new ForbiddenException("Tenant not found")
+      throw new ForbiddenException("Not found")
     }
 
     return one
@@ -133,7 +129,7 @@ export class DeedOfAssignmentsService {
     });
 
     if (!find) {
-      throw new ForbiddenException('Tenant not found');
+      throw new ForbiddenException('Not found');
     }
 
     const update = await this.prisma.deed_of_assignments.update({
