@@ -17,7 +17,7 @@ export class EmailService {
 
     try {
       console.log('sending email=====================');
-      const initSend = await this.resend.emails.send({
+      await this.resend.emails.send({
         from: 'onboarding@resend.dev',
         to: email,
         subject: 'Welcome to Zeph Chambers',
@@ -37,6 +37,8 @@ export class EmailService {
         subject: 'OTP Verification',
         html: `<p>This is your OTP code: <strong>${755}</strong>!</p>`,
       });
+
+      return initSend
     } catch (err) {
       console.log({ err });
     }
