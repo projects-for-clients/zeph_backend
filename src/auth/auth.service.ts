@@ -88,4 +88,13 @@ export class AuthService {
       email,
     });
   }
+
+  async logout(res: Response): Promise<void> {
+
+    res.clearCookie('api-auth');
+    res.json({
+      message: 'success',
+    });
+
+  }
 }
