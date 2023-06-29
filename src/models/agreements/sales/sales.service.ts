@@ -59,7 +59,6 @@ export class SalesService {
 
 
         try {
-
             await storeFileHandler(folderPath);
 
             const executed = await Promise.all(uploadedFiles.map(async (file) => {
