@@ -39,6 +39,8 @@ export class EmailService {
         html: `<p>This is your OTP code: <strong>${otp}</strong>!</p>`,
       });
 
+      console.log({initSend})
+
       return initSend
     } catch (err) {
       console.log({ err });
