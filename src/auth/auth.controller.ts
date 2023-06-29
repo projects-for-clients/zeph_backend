@@ -15,13 +15,10 @@ export class AuthController {
   verify(@Body() dto: AuthVefifyOtp, @Res() res: ExpressRes) {
     const { otp } = dto
 
-    console.log('otp', otp.toString().length)
     if (otp.toString().length !== 6) {
       res.json('OTP must be 6 digits long')
     }
-
-    console.log('correct otp')
-    // return this.authService.verifyOtp(dto, res);
+    return this.authService.verifyOtp(dto, res);
   }
 
   @Post('login')
