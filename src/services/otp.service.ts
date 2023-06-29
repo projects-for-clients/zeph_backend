@@ -34,6 +34,10 @@ export class OtpService {
   private async sendOtp(email: string, otp: number) {
     const send = await this.emailService.sendOTP(email, otp);
 
+    if (!send) {
+      await this.deleteOtp(email, otp);
+    }
+
     return send
   }
 }

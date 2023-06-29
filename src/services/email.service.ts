@@ -29,12 +29,12 @@ export class EmailService {
   }
 
   async sendOTP(email: string, otp: number) {
-    console.log({email, otp})
+    console.log({ email, otp })
     try {
       console.log('sending email=====================');
       const initSend = await this.resend.emails.send({
         from: 'onboarding@resend.dev',
-        to: email,
+        to: `${email}`,
         subject: 'OTP Verification',
         html: `<p>This is your OTP code: <strong>${otp}</strong>!</p>`,
       });
