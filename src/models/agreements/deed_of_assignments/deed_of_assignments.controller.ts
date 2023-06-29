@@ -8,7 +8,6 @@ import {
   Param,
   Delete,
   UseInterceptors,
-  UsePipes,
   UploadedFiles,
 } from "@nestjs/common";
 
