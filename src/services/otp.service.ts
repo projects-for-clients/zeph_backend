@@ -13,6 +13,7 @@ export class OtpService {
     this.otp = Math.floor(100000 + Math.random() * 900000);
     await this.redis.set(`otp-${email}-${this.otp}`, this.otp, 60 * 5);
     this.email = email;
+    
   }
 
   async deleteOtp() {
