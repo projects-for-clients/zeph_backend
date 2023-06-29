@@ -66,7 +66,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new ForbiddenException(`User not found`);
+      throw new ForbiddenException(`User already exists`);
     }
     
     return this.signToken(user.id, user.email, res);
