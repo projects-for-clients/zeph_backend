@@ -1,28 +1,31 @@
+import { EmailService } from 'src/services/email.service';
 import { Injectable } from '@nestjs/common';
 import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class OtpService {
   private otp: number;
+  private email: string;
 
-  constructor(private redis: RedisService) { }
+  constructor(private redis: RedisService, private emailService: EmailService) { }
 
-  generateOtp(email: string) {
+  async generateOtp(email: string) {
     this.otp = Math.floor(100000 + Math.random() * 900000);
-    this.redis.set(`otp-${email}-${this.otp}`, this.otp);
-    return this.otp;
+    await this.redis.set(`otp-${email}-${this.otp}`, this.otp);
+    this.email = email;
   }
 
-  deleteOtp(email: string) {
+  async deleteOtp() {
     this.otp = null;
-    this.redis.del(`otp-${email}-${this.otp}`);
+    return await this.redis.del(`otp-${this.email}-${this.otp}`);
   }
 
-  verifyOtp(email: string) {
-      this.redis.get(`otp-${email}-${this.otp}`)
+  async verifyOtp() {
+      return await this.redis.get(`otp-${this.email}-${this.otp}`)
   }
 
-  sendOtp() {
-    console.log('hellow o');
+  async sendOtp() {
+    await this.emailService.sendOTP(this.email, this.otp);
+    
   }
 }
