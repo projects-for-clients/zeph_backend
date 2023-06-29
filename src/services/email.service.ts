@@ -29,6 +29,7 @@ export class EmailService {
   }
 
   async sendOTP(email: string, otp: number) {
+    console.log({email, otp})
     try {
       console.log('sending email=====================');
       const initSend = await this.resend.emails.send({
