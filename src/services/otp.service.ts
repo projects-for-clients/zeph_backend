@@ -5,7 +5,7 @@ import { RedisService } from 'src/redis/redis.service';
 export class OtpService {
   private otp: number;
 
-  constructor(private redis: RedisService, private providedOtp) {}
+  constructor(private redis: RedisService) { }
 
   generateOtp(email: string) {
     this.otp = Math.floor(100000 + Math.random() * 900000);
