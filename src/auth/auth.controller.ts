@@ -13,6 +13,8 @@ export class AuthController {
   }
   @Post('verify')
   verify(@Body() dto: AuthVefifyOtp, @Res() res: ExpressRes) {
+    const { otp } = dto
+    if(otp)
     return this.authService.verifyOtp(dto, res);
   }
 
