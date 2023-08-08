@@ -5,6 +5,7 @@ import { UserRequestService } from 'src/services/userRequest.service';
 
 @Injectable({ scope: Scope.REQUEST })
 export class AuthMiddleware implements NestMiddleware {
+  
   private logger = new Logger(AuthMiddleware.name);
 
   constructor(private jwt: JwtService, private userRequest: UserRequestService) {}

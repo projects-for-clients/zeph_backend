@@ -7,7 +7,7 @@ import { AuthLogin, AuthRegister, AuthVefifyOtp } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { EmailService } from 'src/services/email.service';
+// import { EmailService } from 'src/services/email.service';
 import * as dayjs from 'dayjs';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class AuthService {
     private prisma: PrismaService,
     private OtpService: OtpService,
     private userRequestService: UserRequestService,
-    private EmailService: EmailService,
+    // private EmailService: EmailService,
   ) {
     this.secret = this.config.get('JWT_SECRET');
   }
@@ -34,13 +34,13 @@ export class AuthService {
     });
 
     if (findUser) {
-      throw new ForbiddenException(`User already exists`);
+      throw new ForbiddenException("User already exists");
     }
 
     const otp = await this.OtpService.generateOtp(email)
 
     if (!otp) {
-      throw new ForbiddenException(`Error sending OTP`);
+      throw new ForbiddenException("Error sending OTP");
     }
 
     return 'Otp sent'
@@ -52,7 +52,7 @@ export class AuthService {
     const isValid = await this.OtpService.verifyOtp(email, otp);
 
     if (!isValid) {
-      throw new ForbiddenException(`Invalid OTP`);
+      throw new ForbiddenException("Invalid OTP");
     }
 
     const hashedPassword = await argon.hash(password);
@@ -66,7 +66,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new ForbiddenException(`User already exists`);
+      throw new ForbiddenException("User already exists");
     }
     
     return this.signToken(user.id, user.email, res);
