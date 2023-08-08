@@ -1,11 +1,13 @@
+import { OtpService } from './../services/otp.service';
+import { UserRequestService } from './../services/userRequest.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import * as argon from 'argon2';
-import { AuthLogin, AuthRegister } from 'src/auth/dto';
+import { AuthLogin, AuthRegister, AuthVefifyOtp } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { EmailService } from 'src/services/email.service';
+// import { EmailService } from 'src/services/email.service';
 import * as dayjs from 'dayjs';
 
 @Injectable()
@@ -15,35 +17,66 @@ export class AuthService {
     private jwt: JwtService,
     private config: ConfigService,
     private prisma: PrismaService,
-    private EmailService: EmailService,
+    private OtpService: OtpService,
+    private userRequestService: UserRequestService,
+    // private EmailService: EmailService,
   ) {
     this.secret = this.config.get('JWT_SECRET');
   }
-  async register(dto: AuthRegister, res: Response) {
-    try {
-      const { email, password } = dto;
-      const hashedPassword = await argon.hash(password);
+  async register(dto: AuthRegister) {
 
-      const user = await this.prisma.users.create({
-        data: {
-          email,
-          password: hashedPassword,
-        },
-      });
+    const { email } = dto;
 
-      return this.signToken(user.id, user.email, res);
-    } catch (err) {
-      if (err.code === 'P2002') {
-        throw new ForbiddenException(`${err.meta.target} already exists`);
-      }
-      throw err;
+    const findUser = await this.prisma.users.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (findUser) {
+      throw new ForbiddenException("User already exists");
     }
+
+    const otp = await this.OtpService.generateOtp(email)
+
+    if (!otp) {
+      throw new ForbiddenException("Error sending OTP");
+    }
+
+    return 'Otp sent'
+
   }
+
+  async verifyOtp(dto: AuthVefifyOtp, res: Response) {
+    const {email, otp, password} = dto
+    const isValid = await this.OtpService.verifyOtp(email, otp);
+
+    if (!isValid) {
+      throw new ForbiddenException("Invalid OTP");
+    }
+
+    const hashedPassword = await argon.hash(password);
+
+
+    const user = await this.prisma.users.create({
+      data: {
+        email,
+        password: hashedPassword,
+      },
+    });
+
+    if (!user) {
+      throw new ForbiddenException("User already exists");
+    }
+    
+    return this.signToken(user.id, user.email, res);
+   
+   }
 
   async login(dto: AuthLogin, res: Response) {
     const { email, password } = dto;
 
-    const user = await this.prisma.users.findFirst({
+    const user = await this.prisma.users.findUnique({
       where: {
         email,
       },
@@ -54,8 +87,6 @@ export class AuthService {
     const isPasswordValid = await argon.verify(user.password, password);
 
     if (!isPasswordValid) throw new ForbiddenException('Invalid Password!');
-
-    await this.EmailService.send();
 
     return this.signToken(user.id, user.email, res);
   }
@@ -87,5 +118,15 @@ export class AuthService {
       message: 'success',
       email,
     });
+  }
+
+  async logout(res: Response): Promise<void> {
+
+    res.clearCookie('api-auth');
+    this.userRequestService.clearUser();
+    res.json({
+      message: 'success',
+    });
+
   }
 }

@@ -1,3 +1,4 @@
+
 import { UserRequestService } from 'src/services/userRequest.service';
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import { CreateDto, UpdateTdo } from "./dto";
@@ -8,8 +9,9 @@ import { UploadedFilesService } from "src/services/uploadFiles.service";
 
 
 @Injectable()
-export class SalesService {
+export class PowerOfAttorneysService {
     constructor(
+        // @Inject(CACHE_MANAGER) private readonly cache: Cache,
         private prisma: PrismaService,
         private uploadFiles: UploadedFilesService,
         private userRequest: UserRequestService
@@ -19,10 +21,12 @@ export class SalesService {
     private userId = this.userRequest.getUserId();
 
 
-    async create(createSaleDto: CreateDto, files: Array<Express.Multer.File>) {
+    async create(createDto: CreateDto, files: Array<Express.Multer.File>) {
+
+        console.log({ files })
 
 
-        const folderPath = path.join("uploads", SalesService.name);
+        const folderPath = path.join("uploads", PowerOfAttorneysService.name);
         const currDir = path.join(process.cwd(), folderPath);
 
         await fs.mkdir(folderPath, {
@@ -59,6 +63,7 @@ export class SalesService {
 
 
         try {
+
             await storeFileHandler(folderPath);
 
             const executed = await Promise.all(uploadedFiles.map(async (file) => {
@@ -73,9 +78,9 @@ export class SalesService {
             const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
 
 
-            const sale = await this.prisma.sales.create({
+            const powerOfAttorneys = await this.prisma.power_of_attorneys.create({
                 data: {
-                    ...createSaleDto,
+                    ...createDto,
                     relevant_documents,
                     userId: this.userId
                 },
@@ -83,9 +88,9 @@ export class SalesService {
 
 
 
-            if (!sale) throw new ForbiddenException('Unable to create lease');
+            if (!powerOfAttorneys) throw new ForbiddenException('Unable to create');
 
-            return sale;
+            return powerOfAttorneys;
         }
         catch (err) {
 
@@ -96,17 +101,13 @@ export class SalesService {
     }
 
     async findAll() {
-        const all = await this.prisma.sales.findMany();
-
-        if (!all) {
-            throw new ForbiddenException("No sales found")
-        }
+        const all = await this.prisma.power_of_attorneys.findMany();
 
         return all
     }
 
     async findOne(id: number) {
-        const one = await this.prisma.sales.findUnique({
+        const one = await this.prisma.power_of_attorneys.findUnique({
             where: {
                 id,
             },
@@ -114,31 +115,31 @@ export class SalesService {
 
         if (!one) {
 
-            throw new ForbiddenException("Sale not found")
+            throw new ForbiddenException("Not found")
         }
 
         return one
     }
 
-    async update(id: number, updateSaleDto: UpdateTdo) {
-
-        const find = await this.prisma.sales.findUnique({
+    async update(id: number, updateTenantDto: UpdateTdo) {
+        console.log({ id })
+        const find = await this.prisma.power_of_attorneys.findUnique({
             where: {
                 id,
             },
         });
 
         if (!find) {
-            throw new ForbiddenException('Sale not found');
+            throw new ForbiddenException('Tenant not found');
         }
 
-        const update = await this.prisma.sales.update({
+        const update = await this.prisma.power_of_attorneys.update({
             where: {
                 id,
             },
             data: {
                 ...find,
-                ...updateSaleDto,
+                ...updateTenantDto,
             },
         });
 
@@ -150,7 +151,7 @@ export class SalesService {
     }
 
     async delete(id: number) {
-        const remove = await this.prisma.sales.delete({
+        const remove = await this.prisma.power_of_attorneys.delete({
             where: {
                 id,
             },

@@ -5,6 +5,7 @@ import { UserRequestService } from 'src/services/userRequest.service';
 
 @Injectable({ scope: Scope.REQUEST })
 export class AuthMiddleware implements NestMiddleware {
+  
   private logger = new Logger(AuthMiddleware.name);
 
   constructor(private jwt: JwtService, private userRequest: UserRequestService) {}
@@ -20,7 +21,7 @@ export class AuthMiddleware implements NestMiddleware {
     const { baseUrl } = req;
 
     const urlWithoutVersion = baseUrl.replace(/\/v\d+/, '');
-    const allowedPaths = ['/auth/login', '/auth/register'];
+    const allowedPaths = ['/auth/login', '/auth/register', '/auth/verify'];
 
     //not authorized
     if (allowedPaths.includes(urlWithoutVersion)) {

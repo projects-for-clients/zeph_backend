@@ -11,6 +11,11 @@ export class UserRequestService {
     this.email = email;
   }
 
+  clearUser() {
+    this.userId = null;
+    this.email = null;
+  }
+
   getUserId() {
     return this.userId;
   }

@@ -12,31 +12,36 @@ export class EmailService {
   //     private html: string,
   //   ) {}
 
-  async send() {
+  async welcome(email: string) {
     console.log('resend', this.resend);
 
     try {
       console.log('sending email=====================');
-      const initSend = await this.resend.emails.send({
+      await this.resend.emails.send({
         from: 'onboarding@resend.dev',
-        to: 'zephchambersdev@gmail.com',
+        to: email,
         subject: 'Welcome to Zeph Chambers',
-        html: '<p>Congrats on sending your <strong>first email</strong>!</p>',
+        html: '<p>We are happy to have you here!</p>',
       });
     } catch (err) {
       console.log({ err });
     }
   }
 
-  async sendOTP() {
+  async sendOTP(email: string, otp: number) {
+    console.log({ email, otp })
     try {
       console.log('sending email=====================');
       const initSend = await this.resend.emails.send({
         from: 'onboarding@resend.dev',
-        to: 'zephchambersdev@gmail.com',
-        subject: 'Welcome to Zeph Chambers',
-        html: `<p>This is your OTP code: <strong>${755}</strong>!</p>`,
+        to: email,
+        subject: 'OTP Verification',
+        html: `<p>This is your OTP code: <strong>${otp}</strong></p>`,
       });
+
+      console.log({initSend})
+
+      return initSend
     } catch (err) {
       console.log({ err });
     }

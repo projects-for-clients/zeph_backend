@@ -15,12 +15,12 @@ import { CreateDto, UpdateTdo } from "./dto";
 import { FilesInterceptor } from "@nestjs/platform-express";
 
 import { FileSizeValidationPipe } from "src/pipes/fileSize.pipe";
-import { DeedOfAssignmentsService } from './deed_of_assignments.service';
+import { PowerOfAttorneysService } from './power_of_attorneys.service';
 
 
-@Controller("deed_of_assignments")
-export class DeedOfAssignmentsController {
-  constructor(private readonly DeedOfAssignment: DeedOfAssignmentsService) { }
+@Controller("power_of_attorneys")
+export class PowerOfAttorneysController {
+  constructor(private readonly powerOfAttorneys: PowerOfAttorneysService) { }
 
   @Post()
   @UseInterceptors(FilesInterceptor("relevant_documents"))
@@ -28,26 +28,26 @@ export class DeedOfAssignmentsController {
     @Body() create: CreateDto,
     @UploadedFiles(new FileSizeValidationPipe()) files: Array<Express.Multer.File>,
   ) {
-    return this.DeedOfAssignment.create(create, files);
+    return this.powerOfAttorneys.create(create, files);
   }
 
   @Get()
   findAll() {
-    return this.DeedOfAssignment.findAll();
+    return this.powerOfAttorneys.findAll();
   }
 
   @Get(":id")
   findOne(@Param('id') id: number) {
-    return this.DeedOfAssignment.findOne(+id);
+    return this.powerOfAttorneys.findOne(+id);
   }
 
   @Patch(":id")
   update(@Param('id') id: number, @Body() update: UpdateTdo) {
-    return this.DeedOfAssignment.update(+id, update);
+    return this.powerOfAttorneys.update(+id, update);
   }
 
   @Delete(":id")
   delete(@Param('id') id: number) {
-    return this.DeedOfAssignment.delete(+id);
+    return this.powerOfAttorneys.delete(+id);
   }
 }

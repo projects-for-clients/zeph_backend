@@ -4,6 +4,7 @@ import { AuthService } from "src/auth/auth.service";
 import { PrismaService } from "src/prisma/prisma.service";
 import { RedisService } from "src/redis/redis.service";
 import { EmailService } from "src/services/email.service";
+import { OtpService } from "src/services/otp.service";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
 import { UserRequestService } from "src/services/userRequest.service";
 
@@ -17,6 +18,7 @@ import { UserRequestService } from "src/services/userRequest.service";
 		PrismaService,
 		EmailService,
 		UploadedFilesService,
+		OtpService,
 	],
 	exports: [
 		UserRequestService,
@@ -26,6 +28,7 @@ import { UserRequestService } from "src/services/userRequest.service";
 		AuthService,
 		EmailService,
 		UploadedFilesService,
+		OtpService,
 	],
 })
 export class SharedModule { }
