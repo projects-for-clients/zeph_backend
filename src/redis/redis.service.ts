@@ -15,7 +15,7 @@ export class RedisService {
     });
   }
 
-  async set(key: string, value: any, expiryTime?: number): Promise<string> {
+  async set(key: string, value: unknown, expiryTime?: number): Promise<string> {
     console.log('set', key);
 
     const res = await this.redis.set(key, JSON.stringify(value), 'EX', expiryTime);
@@ -23,7 +23,7 @@ export class RedisService {
     return res;
   }
 
-  async append(key: string, value: any): Promise<any> {
+  async append(key: string, value: unknown): Promise<null | string> {
     const cached = await this.redis.get(key);
 
     if (!cached) {
@@ -48,7 +48,7 @@ export class RedisService {
     return jsonRes;
   }
 
-  async update(key: string, value: any): Promise<any> {
+  async update(key: string, value: unknown): Promise<string> {
     await this.redis.set(key, JSON.stringify(value));
 
     const get = await this.redis.get(key);
@@ -62,5 +62,11 @@ export class RedisService {
 
   async flushAll(): Promise<void> {
     await this.redis.flushall();
+  }
+
+  async scan(key: string) {
+    const results = await this.redis.scan(0, 'MATCH', key)
+    console.log({ results })
+    return results
   }
 }
