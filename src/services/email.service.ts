@@ -37,7 +37,7 @@ export class EmailService {
         from: this.from,
         to: email,
         subject: 'OTP Verification',
-        html: `<p>This is your OTP code: <strong>${otp}</strong></p>`,
+        html: `<p>This is your OTP code: <strong>${otp}</strong></p> </br> <p>Only Valid for 5 minutes</p>`,
       });
 
       console.log({initSend})

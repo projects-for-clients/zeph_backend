@@ -1,6 +1,7 @@
 import { EmailService } from 'src/services/email.service';
 import { Injectable } from '@nestjs/common';
 import { RedisService } from 'src/redis/redis.service';
+import { CreateEmailResponse } from 'resend/build/src/emails/interfaces';
 
 @Injectable()
 export class OtpService {
@@ -8,7 +9,19 @@ export class OtpService {
 
   constructor(private redis: RedisService, private emailService: EmailService) { }
 
-  async generateOtp(email: string) {
+  async generateOtp(email: string): Promise<CreateEmailResponse> {
+    const scan = await this.redis.scan(`otp-${email}-*`)
+
+    if(scan.length > 0){
+      const value = scan[0]
+
+      const regexPattern = /\d{6}$/
+      const otp = value.match(regexPattern)[0]
+
+      return this.sendOtp(email, Number(otp))
+    }
+
+
     const otp = Math.floor(100000 + Math.random() * 900000);
     await this.redis.set(`otp-${email}-${otp}`, otp, 60 * 5);
 
