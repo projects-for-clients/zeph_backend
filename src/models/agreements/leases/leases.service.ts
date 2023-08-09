@@ -2,11 +2,11 @@ import { UserRequestService } from 'src/services/userRequest.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { createDto, updateDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { RedisService } from 'src/redis/redis.service';
+
 
 @Injectable()
 export class LeasesService {
-  constructor(private redis: RedisService, private prisma: PrismaService, private userRequest: UserRequestService) { }
+  constructor(private prisma: PrismaService, private userRequest: UserRequestService) { }
 
   async create(createLeaseDto: createDto) {
     const userId = this.userRequest.getUserId();
@@ -20,23 +20,12 @@ export class LeasesService {
 
     if (!lease) throw new ForbiddenException('Unable to create lease');
 
-    await this.redis.set(`${LeasesService.name + lease.id}`, lease);
-
-    await this.redis.append(LeasesService.name, lease);
-
     return lease;
   }
 
   async findAll() {
-    const getAll = await this.redis.get(LeasesService.name);
-
-    if (getAll) {
-      return getAll;
-    }
 
     const allLeases = await this.prisma.leases.findMany();
-
-
     return allLeases;
   }
 
@@ -53,7 +42,6 @@ export class LeasesService {
       throw new ForbiddenException('Lease not found');
     }
 
-    await this.redis.update(`${LeasesService.name + id}`, lease);
 
     return lease;
   }
@@ -80,8 +68,6 @@ export class LeasesService {
     });
 
 
-    await this.redis.set(`${LeasesService.name + id}`, lease);
-
     return lease;
   }
 
@@ -96,8 +82,6 @@ export class LeasesService {
       throw new ForbiddenException("Lease not found")
 
     })
-
-    await this.redis.del(`${LeasesService.name + id}`);
 
     return lease;
   }
