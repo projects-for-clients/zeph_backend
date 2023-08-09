@@ -9,7 +9,7 @@ export class OtpService {
   constructor(private redis: RedisService, private emailService: EmailService) { }
 
   async generateOtp(email: string) {
-    const scan = await this.redis.scan(`otp-${email}-`)
+    const scan = await this.redis.scan(`otp-${email}-*`)
 
     console.log({scan})
 

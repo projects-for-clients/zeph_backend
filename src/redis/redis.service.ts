@@ -64,10 +64,9 @@ export class RedisService {
     await this.redis.flushall();
   }
 
-  async scan(key: string) {
+  async scan(key: string): Promise<string[]> {
     const results = await this.redis.scan(0, 'MATCH', key)
-    console.log({ results })
-    return results
+    return results[1]
   }
 
 }
