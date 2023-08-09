@@ -82,8 +82,10 @@ export class AuthService {
       },
     });
 
-    console.log({user})
+
     if (!user) throw new ForbiddenException('Invalid credentials');
+
+    console.log('first found user', {user})
 
     const isPasswordValid = await argon.verify(user.password, password);
 
