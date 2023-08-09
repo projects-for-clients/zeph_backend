@@ -12,10 +12,13 @@ export class OtpService {
   async generateOtp(email: string): Promise<CreateEmailResponse> {
     const scan = await this.redis.scan(`otp-${email}-*`)
 
-    console.log({scan})
-
     if(scan.length > 0){
+      const value = scan[0]
 
+      const regexPattern = /\d{6}$/
+      const otp = value.match(regexPattern)[0]
+
+      return this.sendOtp(email, Number(otp))
     }
 
 
