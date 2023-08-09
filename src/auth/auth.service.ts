@@ -82,11 +82,14 @@ export class AuthService {
       },
     });
 
+    console.log({user})
     if (!user) throw new ForbiddenException('Invalid credentials');
 
     const isPasswordValid = await argon.verify(user.password, password);
 
     if (!isPasswordValid) throw new ForbiddenException('Invalid Password!');
+
+    console.log({user})
 
     return this.signToken(user.id, user.email, res);
   }
