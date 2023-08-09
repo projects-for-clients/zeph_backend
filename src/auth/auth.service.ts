@@ -57,9 +57,6 @@ export class AuthService {
 
     const hashedPassword = await argon.hash(password);
 
-    return res.json({
-      message: 'Verified'
-    })
 
 
     const user = await this.prisma.users.create({
