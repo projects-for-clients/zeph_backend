@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { OtpService } from './../services/otp.service';
 import { UserRequestService } from './../services/userRequest.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';

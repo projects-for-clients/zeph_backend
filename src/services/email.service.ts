@@ -4,7 +4,7 @@ import { Resend } from 'resend';
 @Injectable()
 export class EmailService {
   private resend = new Resend(process.env.EMAIL_API_KEY);
-  private from = 'zephschambers.com'
+  private from = 'support@zephschambers.com'
 
   //   constructor(
   //     private to: string,
