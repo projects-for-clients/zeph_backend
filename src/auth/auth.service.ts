@@ -51,9 +51,9 @@ export class AuthService {
     const {email, otp, password} = dto
     const isValid = await this.OtpService.verifyOtp(email, otp);
 
-    if (!isValid) {
-      throw new ForbiddenException("Invalid OTP");
-    }
+    // if (!isValid) {
+    //   throw new ForbiddenException("Invalid OTP");
+    // }
 
     const hashedPassword = await argon.hash(password);
 
@@ -85,13 +85,12 @@ export class AuthService {
 
     if (!user) throw new ForbiddenException('Invalid credentials');
 
-    console.log('first found user', {user})
-
+    
     const isPasswordValid = await argon.verify(user.password, password);
+
 
     if (!isPasswordValid) throw new ForbiddenException('Invalid Password!');
 
-    console.log({user})
 
     return this.signToken(user.id, user.email, res);
   }
