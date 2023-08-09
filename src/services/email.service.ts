@@ -4,6 +4,7 @@ import { Resend } from 'resend';
 @Injectable()
 export class EmailService {
   private resend = new Resend(process.env.EMAIL_API_KEY);
+  private from = 'zephschambers.com'
 
   //   constructor(
   //     private to: string,
@@ -18,7 +19,7 @@ export class EmailService {
     try {
       console.log('sending email=====================');
       await this.resend.emails.send({
-        from: 'onboarding@resend.dev',
+        from: this.from,
         to: email,
         subject: 'Welcome to Zeph Chambers',
         html: '<p>We are happy to have you here!</p>',
@@ -33,7 +34,7 @@ export class EmailService {
     try {
       console.log('sending email=====================');
       const initSend = await this.resend.emails.send({
-        from: 'onboarding@resend.dev',
+        from: this.from,
         to: email,
         subject: 'OTP Verification',
         html: `<p>This is your OTP code: <strong>${otp}</strong></p>`,

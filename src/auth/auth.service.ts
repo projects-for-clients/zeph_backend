@@ -7,7 +7,6 @@ import { AuthLogin, AuthRegister, AuthVefifyOtp } from 'src/auth/dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
-// import { EmailService } from 'src/services/email.service';
 import * as dayjs from 'dayjs';
 
 @Injectable()
@@ -19,7 +18,7 @@ export class AuthService {
     private prisma: PrismaService,
     private OtpService: OtpService,
     private userRequestService: UserRequestService,
-    // private EmailService: EmailService,
+
   ) {
     this.secret = this.config.get('JWT_SECRET');
   }
@@ -51,9 +50,9 @@ export class AuthService {
     const {email, otp, password} = dto
     const isValid = await this.OtpService.verifyOtp(email, otp);
 
-    // if (!isValid) {
-    //   throw new ForbiddenException("Invalid OTP");
-    // }
+    if (!isValid) {
+      throw new ForbiddenException("Invalid OTP");
+    }
 
     const hashedPassword = await argon.hash(password);
 
