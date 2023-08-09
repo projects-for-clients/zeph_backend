@@ -44,7 +44,9 @@ export class EmailService {
 
       return initSend
     } catch (err) {
-      console.log({ err });
+      console.log(err.errors);
+      console.log('email errors', err.errors[0])
+      console.log({err})
     }
   }
 }
