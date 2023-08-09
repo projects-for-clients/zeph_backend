@@ -13,9 +13,6 @@ export class OtpService {
 
     console.log({scan})
 
-    const getAll = await this.redis.getAll()
-
-    console.log({getAll})
 
     const otp = Math.floor(100000 + Math.random() * 900000);
     await this.redis.set(`otp-${email}-${otp}`, otp, 60 * 5);
@@ -30,6 +27,8 @@ export class OtpService {
 
   async verifyOtp(email: string, otp: number) {
     const get: string = await this.redis.get(`otp-${email}-${otp}`)
+
+    console.log({get})
 
     if (Number(get) === otp) {
       await this.deleteOtp(email, otp);

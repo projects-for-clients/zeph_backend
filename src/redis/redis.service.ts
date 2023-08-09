@@ -70,9 +70,4 @@ export class RedisService {
     return results
   }
 
-  async getAll() {
-    const all = await this.redis.keys('otp')
-
-    return all
-  }
 }
