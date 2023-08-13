@@ -1,3 +1,4 @@
+import { EmailService } from 'src/services/email.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -19,6 +20,7 @@ export class AuthService {
     private config: ConfigService,
     private prisma: PrismaService,
     private OtpService: OtpService,
+    private EmailService: EmailService,
     private userRequestService: UserRequestService,
 
   ) {
@@ -107,6 +109,8 @@ export class AuthService {
         if (!account) {
           throw new ForbiddenException("Error creating account");
         }
+
+        this.EmailService.welcome(email)
 
 
         return user;
