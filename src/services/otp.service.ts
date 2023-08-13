@@ -23,7 +23,7 @@ export class OtpService {
 
 
     const otp = Math.floor(100000 + Math.random() * 900000);
-    await this.redis.set(`otp-${email}-${otp}`, otp, 60 * 5);
+    await this.redis.set(`otp-${email}-${otp}`, otp, 60 * 10);
 
     return this.sendOtp(email, otp)
   }
