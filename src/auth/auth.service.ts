@@ -1,4 +1,3 @@
-import { EmailService } from 'src/services/email.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -20,7 +19,6 @@ export class AuthService {
     private config: ConfigService,
     private prisma: PrismaService,
     private OtpService: OtpService,
-    private EmailService: EmailService,
     private userRequestService: UserRequestService,
 
   ) {
@@ -110,8 +108,6 @@ export class AuthService {
           throw new ForbiddenException("Error creating account");
         }
 
-        this.EmailService.welcome(email)
-
 
         return user;
       });
@@ -163,9 +159,11 @@ export class AuthService {
 
     const isProduction = this.config.get('NODE_ENV') === 'production';
 
+
     const expiryTime = isProduction
       ? dayjs().add(1, 'day').toDate()
-      : dayjs().add(1, 'day').toDate();
+      : dayjs().add(10, 'second').toDate();
+
 
 
     res.cookie('api-auth', token, {
