@@ -14,10 +14,9 @@ export class EmailService {
   //   ) {}
 
   async welcome(email: string) {
-    console.log('resend', this.resend);
 
     try {
-      console.log('sending email=====================');
+
       await this.resend.emails.send({
         from: this.from,
         to: email,
@@ -30,9 +29,8 @@ export class EmailService {
   }
 
   async sendOTP(email: string, otp: number) {
-    console.log({ email, otp })
+
     try {
-      console.log('sending email=====================');
       const initSend = await this.resend.emails.send({
         from: this.from,
         to: email,
@@ -40,12 +38,11 @@ export class EmailService {
         html: `<p>This is your OTP code: <strong>${otp}</strong></p> </br> <p>Only Valid for 5 minutes</p>`,
       });
 
-      console.log({initSend})
+
 
       return initSend
     } catch (err) {
-      console.log(err.errors);
-      console.log('email errors', err.errors[0])
+
       console.log({err})
     }
   }

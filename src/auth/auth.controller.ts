@@ -1,24 +1,32 @@
-import { AuthLogin, AuthRegister, AuthVefifyOtp } from './dto';
+import { AuthEmail, AuthLogin, AuthRegister, AuthOtp } from './dto';
 import { AuthService } from './auth.service';
-import { Body, Controller, Post, Res, Response } from '@nestjs/common';
+import { Body, Controller, Post, Response } from '@nestjs/common';
 import { Response as ExpressRes } from 'express';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) { }
 
-  @Post('register')
-  register(@Body() dto: AuthRegister) {
-    return this.authService.register(dto);
+  @Post('email')
+  authEmail(@Body() dto: AuthEmail) {
+    return this.authService.authEmail(dto);
   }
-  @Post('verify')
-  verify(@Body() dto: AuthVefifyOtp, @Res() res: ExpressRes) {
+
+
+  @Post('otp')
+  authOtp(@Body() dto: AuthOtp) {
     const { otp } = dto
 
     if (otp.toString().length !== 6) {
-      res.json('OTP must be 6 digits long')
+      return 'OTP must be 6 digits long'
     }
-    return this.authService.verifyOtp(dto, res);
+    return this.authService.authOtp(dto);
+  }
+
+  @Post('register')
+  authRegister( @Body() dto: AuthRegister, @Response() res: ExpressRes) {
+   
+    return this.authService.authRegister(dto, res);
   }
 
   @Post('login')

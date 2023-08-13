@@ -16,7 +16,6 @@ export class RedisService {
   }
 
   async set(key: string, value: unknown, expiryTime?: number): Promise<string> {
-    console.log('set', key);
 
     const res = await this.redis.set(key, JSON.stringify(value), 'EX', expiryTime);
 

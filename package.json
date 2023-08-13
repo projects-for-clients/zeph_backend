@@ -4,6 +4,7 @@
   "description": "",
   "engines": {
     "node": ">=20.5.1"
+
   },
   "author": "Collins Igboanugwo",
   "private": true,
