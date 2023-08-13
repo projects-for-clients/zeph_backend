@@ -162,7 +162,7 @@ export class AuthService {
 
     const expiryTime = isProduction
       ? dayjs().add(1, 'day').toDate()
-      : dayjs().add(10, 'second').toDate();
+      : dayjs().add(3, 'day').toDate();
 
 
 
