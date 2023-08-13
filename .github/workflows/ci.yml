@@ -1,0 +1,32 @@
+name: Auto Deploy to Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy_to_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.18.0
+
+      - name: Create release branch if not exists
+        run: |
+          git config --global user.name "ZephChambers"
+          git config --global user.email "Zephchambersdev@gmail.com"
+          git checkout -B release/v1.0 main
+          git push origin release/v1.0
+
+      - name: Merge changes into the release branch
+        run: |
+          git checkout release/v1.0
+          git merge --no-ff main
+          git push origin release/v1.0
