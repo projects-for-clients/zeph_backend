@@ -43,7 +43,6 @@ export class EmailService {
       return initSend
     } catch (err) {
 
-
       console.log({err})
     }
   }
