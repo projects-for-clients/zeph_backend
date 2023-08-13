@@ -10,7 +10,6 @@ import { UploadedFilesService } from "src/services/uploadFiles.service";
 @Injectable()
 export class DeedOfAssignmentsService {
   constructor(
-    // @Inject(CACHE_MANAGER) private readonly cache: Cache,
     private prisma: PrismaService,
     private uploadFiles: UploadedFilesService,
     private userRequest: UserRequestService
@@ -21,8 +20,6 @@ export class DeedOfAssignmentsService {
 
 
   async create(createDto: CreateDto, files: Array<Express.Multer.File>) {
-
-    console.log({ files })
 
 
     const folderPath = path.join("uploads", DeedOfAssignmentsService.name);

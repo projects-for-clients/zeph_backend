@@ -1,9 +1,21 @@
-import { IsEmail, IsString, IsNotEmpty, IsNumber, Length, MinLength, MaxLength } from 'class-validator';
+import { IsEmail, IsString, IsNotEmpty, IsNumber, MinLength } from 'class-validator';
 
-export class AuthRegister {
+export class AuthEmail {
   @IsEmail()
   @IsNotEmpty()
   email: string;
+}
+
+export class AuthOtp {
+
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  otp: number;
+
 }
 
 export class AuthLogin {
@@ -16,7 +28,16 @@ export class AuthLogin {
   password: string;
 }
 
-export class AuthVefifyOtp {
+export class AuthRegister {
+
+  @IsNotEmpty()
+  @IsString()
+  firstName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  lastName: string;
+
   @IsEmail()
   @IsNotEmpty()
   email: string;
@@ -26,7 +47,4 @@ export class AuthVefifyOtp {
   @MinLength(4)
   password: string;
 
-  @IsNumber()
-  @IsNotEmpty()
-  otp: number;
 }

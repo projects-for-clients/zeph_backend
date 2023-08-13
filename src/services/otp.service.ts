@@ -37,12 +37,29 @@ export class OtpService {
     const get: string = await this.redis.get(`otp-${email}-${otp}`)
 
     if (Number(get) === otp) {
-      await this.deleteOtp(email, otp);
       return true;
     }
 
     return false;
   }
+
+  async checkOtp(email: string) {
+    const scan = await this.redis.scan(`otp-${email}-*`)
+
+    if (scan.length > 0) {
+      const value = scan[0]
+
+      const regexPattern = /\d{6}$/
+      const otp = value.match(regexPattern)[0]
+
+      await this.deleteOtp(email, Number(otp))
+
+      return true
+    }
+
+    return false;
+  }
+
 
   private async sendOtp(email: string, otp: number) {
     const send = await this.emailService.sendOTP(email, otp);

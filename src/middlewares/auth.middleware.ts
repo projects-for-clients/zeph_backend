@@ -1,14 +1,14 @@
-import { Request, Response } from 'express';
-import { Injectable, NestMiddleware, Logger, Scope } from '@nestjs/common';
+import { Injectable, Logger, NestMiddleware, Scope } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Request, Response } from 'express';
 import { UserRequestService } from 'src/services/userRequest.service';
 
 @Injectable({ scope: Scope.REQUEST })
 export class AuthMiddleware implements NestMiddleware {
-  
+
   private logger = new Logger(AuthMiddleware.name);
 
-  constructor(private jwt: JwtService, private userRequest: UserRequestService) {}
+  constructor(private jwt: JwtService, private userRequest: UserRequestService) { }
 
   use(req: Request, res: Response, next: () => void) {
     interface Jwt {
@@ -21,10 +21,8 @@ export class AuthMiddleware implements NestMiddleware {
     const { baseUrl } = req;
 
     const urlWithoutVersion = baseUrl.replace(/\/v\d+/, '');
-    const allowedPaths = ['/auth/login', '/auth/register', '/auth/verify'];
 
-    //not authorized
-    if (allowedPaths.includes(urlWithoutVersion)) {
+    if (urlWithoutVersion.startsWith("/auth")) {
       return next();
     }
 
