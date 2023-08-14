@@ -170,7 +170,7 @@ export class AuthService {
       expires: expiryTime,
       secure: true,
       httpOnly: true,
-      sameSite: 'none'
+      sameSite: "lax",
     });
 
     res.json({
