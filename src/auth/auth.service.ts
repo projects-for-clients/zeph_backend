@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { users } from '@prisma/client';
 import * as argon from 'argon2';
 import * as dayjs from 'dayjs';
-import { Response } from 'express';
+import { CookieOptions, Response } from 'express';
 import { AuthEmail, AuthLogin, AuthOtp, AuthRegister } from 'src/auth/dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -165,13 +165,15 @@ export class AuthService {
 
 
 
-    res.setHeader('Set-Cookie', `api-auth=${token}; Path=/; Expires=${expiryTime}; Secure; HttpOnly; SameSite=None`);
-    res.cookie('api-auth', token, {
-      expires: expiryTime,
+    // res.setHeader('Set-Cookie', `api-auth=${token}; Path=/; Expires=${expiryTime}; Secure; HttpOnly; SameSite=None`);
+
+    const cookieOptions = {
+      // expires: expiryTime,
       secure: true,
       httpOnly: true,
       sameSite: "none",
-    });
+    } as CookieOptions
+    res.cookie('api-auth', token, cookieOptions);
 
     console.log({res})
 
@@ -181,6 +183,10 @@ export class AuthService {
     res.json({
       message: 'success',
       email,
+      cookie: {
+        token,
+        cookieOptions
+      }
     });
   }
 
