@@ -173,6 +173,11 @@ export class AuthService {
       sameSite: "lax",
     });
 
+    console.log({res})
+
+    // res.redirect(process.env.REDIRECT_URL)
+    // res.setHeader('Location', process.env.REDIRECT_URL)
+
     res.json({
       message: 'success',
       email,
