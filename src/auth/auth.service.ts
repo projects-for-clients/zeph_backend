@@ -169,7 +169,7 @@ export class AuthService {
     res.cookie('api-auth', token, {
       expires: expiryTime,
       secure: isProduction,
-      sameSite: 'strict',
+      // sameSite: 'strict',
     });
 
     res.json({
