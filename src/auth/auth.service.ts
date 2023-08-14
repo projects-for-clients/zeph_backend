@@ -162,14 +162,14 @@ export class AuthService {
 
     const expiryTime = isProduction
       ? dayjs().add(1, 'day').toDate()
-      : dayjs().add(10, 'second').toDate();
+      : dayjs().add(1, 'minute').toDate();
 
 
 
     res.cookie('api-auth', token, {
       expires: expiryTime,
       secure: true,
-      sameSite: 'none'
+      sameSite: 'strict'
     });
 
     res.json({
