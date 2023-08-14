@@ -168,8 +168,8 @@ export class AuthService {
 
     res.cookie('api-auth', token, {
       expires: expiryTime,
-      secure: isProduction,
-      sameSite: 'strict',
+      secure: true,
+      sameSite: 'none'
     });
 
     res.json({
