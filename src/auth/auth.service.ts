@@ -165,12 +165,12 @@ export class AuthService {
 
 
 
-
+    res.setHeader('Set-Cookie', `api-auth=${token}; Path=/; Expires=${expiryTime}; Secure; HttpOnly; SameSite=None`);
     res.cookie('api-auth', token, {
       expires: expiryTime,
       secure: true,
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: "none",
     });
 
     console.log({res})
