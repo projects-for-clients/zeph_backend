@@ -157,19 +157,19 @@ export class AuthService {
       secret: this.secret,
     });
 
-    const isProduction = this.config.get('NODE_ENV') === 'production';
+    // const isProduction = this.config.get('NODE_ENV') === 'production';
 
 
-    const expiryTime = isProduction
-      ? dayjs().add(1, 'day').toDate()
-      : dayjs().add(1, 'minute').toDate();
+    const expiryTime = 
+      dayjs().add(1, 'day').toDate()
+
 
 
 
     res.cookie('api-auth', token, {
       expires: expiryTime,
       secure: true,
-      sameSite: 'strict'
+      sameSite: 'none'
     });
 
     res.json({
