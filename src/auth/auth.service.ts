@@ -157,15 +157,9 @@ export class AuthService {
       secret: this.secret,
     });
 
-    // const isProduction = this.config.get('NODE_ENV') === 'production';
-
-
     const expiryTime = 
       dayjs().add(1, 'day').toDate()
 
-
-
-    // res.setHeader('Set-Cookie', `api-auth=${token}; Path=/; Expires=${expiryTime}; Secure; HttpOnly; SameSite=None`);
 
     const cookieOptions = {
       expires: expiryTime,
@@ -175,11 +169,6 @@ export class AuthService {
     } as CookieOptions
     res.cookie('api-auth', token, cookieOptions);
 
-    console.log({cookieOptions})
-
-
-    // res.redirect(process.env.REDIRECT_URL)
-    // res.setHeader('Location', process.env.REDIRECT_URL)
 
     res.json({
       message: 'success',
