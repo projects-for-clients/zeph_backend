@@ -175,6 +175,8 @@ export class AuthService {
     } as CookieOptions
     res.cookie('api-auth', token, cookieOptions);
 
+    console.log({cookieOptions})
+
 
     // res.redirect(process.env.REDIRECT_URL)
     // res.setHeader('Location', process.env.REDIRECT_URL)
