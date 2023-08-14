@@ -168,14 +168,13 @@ export class AuthService {
     // res.setHeader('Set-Cookie', `api-auth=${token}; Path=/; Expires=${expiryTime}; Secure; HttpOnly; SameSite=None`);
 
     const cookieOptions = {
-      // expires: expiryTime,
+      expires: expiryTime,
       secure: true,
       httpOnly: true,
-      sameSite: "none",
+      sameSite: "strict",
     } as CookieOptions
     res.cookie('api-auth', token, cookieOptions);
 
-    console.log({res})
 
     // res.redirect(process.env.REDIRECT_URL)
     // res.setHeader('Location', process.env.REDIRECT_URL)
@@ -185,7 +184,7 @@ export class AuthService {
       email,
       cookie: {
         token,
-        cookieOptions
+        expires: cookieOptions.expires
       }
     });
   }
