@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { users } from '@prisma/client';
+import { user } from '@prisma/client';
 import * as argon from 'argon2';
 import * as dayjs from 'dayjs';
 import { CookieOptions, Response } from 'express';
@@ -29,7 +29,7 @@ export class AuthService {
 
     const { email } = dto;
 
-    const findUser = await this.prisma.users.findUnique({
+    const findUser = await this.prisma.user.findUnique({
       where: {
         email,
       },
@@ -75,9 +75,9 @@ export class AuthService {
     const hashedPassword = await argon.hash(password);
 
 
-    const createUserAccount = async (): Promise<users> => {
+    const createUserAccount = async (): Promise<user> => {
       return this.prisma.$transaction(async (tx) => {
-        const findUser = await tx.users.findUnique({
+        const findUser = await tx.user.findUnique({
           where: {
             email,
           },
@@ -88,7 +88,7 @@ export class AuthService {
         }
 
 
-        const user = await tx.users.create({
+        const user = await tx.user.create({
           data: {
             email,
             firstName,
@@ -97,7 +97,7 @@ export class AuthService {
           },
         });
 
-        const account = await tx.accounts.create({
+        const account = await tx.account.create({
           data: {
             type: "credentials",
             userId: user.id,
@@ -123,7 +123,7 @@ export class AuthService {
   async login(dto: AuthLogin, res: Response) {
     const { email, password } = dto;
 
-    const user = await this.prisma.users.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: {
         email,
       },

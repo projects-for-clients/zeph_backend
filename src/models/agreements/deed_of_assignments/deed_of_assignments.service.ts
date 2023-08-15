@@ -1,10 +1,10 @@
-import { UserRequestService } from 'src/services/userRequest.service';
-import { ForbiddenException, Injectable } from "@nestjs/common";
-import { CreateDto, UpdateTdo } from "./dto";
-import { PrismaService } from "src/prisma/prisma.service";
-import * as fs from "fs/promises";
 import * as path from "path";
+import { ForbiddenException, Injectable } from "@nestjs/common";
+import * as fs from "fs/promises";
+import { PrismaService } from "src/prisma/prisma.service";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
+import { UserRequestService } from 'src/services/userRequest.service';
+import { CreateDto, UpdateTdo } from "./dto";
 
 
 @Injectable()
@@ -74,7 +74,7 @@ export class DeedOfAssignmentsService {
       const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
 
 
-      const deedOfAssignment = await this.prisma.deed_of_assignments.create({
+      const deedOfAssignment = await this.prisma.deed_of_assignment.create({
         data: {
           ...createDto,
           relevant_documents,
@@ -97,13 +97,13 @@ export class DeedOfAssignmentsService {
   }
 
   async findAll() {
-    const all = await this.prisma.deed_of_assignments.findMany();
+    const all = await this.prisma.deed_of_assignment.findMany();
 
     return all
   }
 
   async findOne(id: number) {
-    const one = await this.prisma.deed_of_assignments.findUnique({
+    const one = await this.prisma.deed_of_assignment.findUnique({
       where: {
         id,
       },
@@ -119,7 +119,7 @@ export class DeedOfAssignmentsService {
 
   async update(id: number, updateTenantDto: UpdateTdo) {
 
-    const find = await this.prisma.deed_of_assignments.findUnique({
+    const find = await this.prisma.deed_of_assignment.findUnique({
       where: {
         id,
       },
@@ -129,7 +129,7 @@ export class DeedOfAssignmentsService {
       throw new ForbiddenException('Not found');
     }
 
-    const update = await this.prisma.deed_of_assignments.update({
+    const update = await this.prisma.deed_of_assignment.update({
       where: {
         id,
       },
@@ -147,7 +147,7 @@ export class DeedOfAssignmentsService {
   }
 
   async delete(id: number) {
-    const remove = await this.prisma.deed_of_assignments.delete({
+    const remove = await this.prisma.deed_of_assignment.delete({
       where: {
         id,
       },

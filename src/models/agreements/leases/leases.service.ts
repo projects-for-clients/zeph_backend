@@ -1,7 +1,7 @@
-import { UserRequestService } from 'src/services/userRequest.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { createDto, updateDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UserRequestService } from 'src/services/userRequest.service';
+import { createDto, updateDto } from './dto';
 
 
 @Injectable()
@@ -11,7 +11,7 @@ export class LeasesService {
   async create(createLeaseDto: createDto) {
     const userId = this.userRequest.getUserId();
 
-    const lease = await this.prisma.leases.create({
+    const lease = await this.prisma.lease.create({
       data: {
         ...createLeaseDto,
         userId,
@@ -25,14 +25,14 @@ export class LeasesService {
 
   async findAll() {
 
-    const allLeases = await this.prisma.leases.findMany();
+    const allLeases = await this.prisma.lease.findMany();
     return allLeases;
   }
 
   async findOne(id: number) {
 
 
-    const lease = await this.prisma.leases.findUnique({
+    const lease = await this.prisma.lease.findUnique({
       where: {
         id,
       },
@@ -47,7 +47,7 @@ export class LeasesService {
   }
 
   async update(id: number, updateLeaseDto: updateDto) {
-    const find = await this.prisma.leases.findUnique({
+    const find = await this.prisma.lease.findUnique({
       where: {
         id,
       },
@@ -57,7 +57,7 @@ export class LeasesService {
       throw new ForbiddenException('Lease not found');
     }
 
-    const lease = await this.prisma.leases.update({
+    const lease = await this.prisma.lease.update({
       where: {
         id,
       },
@@ -73,7 +73,7 @@ export class LeasesService {
 
   async delete(id: number) {
 
-    const lease = await this.prisma.leases.delete({
+    const lease = await this.prisma.lease.delete({
       where: {
         id,
       },
