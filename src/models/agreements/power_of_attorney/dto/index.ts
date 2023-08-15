@@ -1,0 +1,1 @@
+export * from './power_of_attorney.dto'

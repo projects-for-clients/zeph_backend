@@ -1,4 +1,4 @@
-import { UsersModule } from 'src/models/users/users.module';
+import { UsersModule } from 'src/models/user/user.module';
 import { MiddlewareConsumer, Module, NestModule, Scope } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
@@ -7,14 +7,14 @@ import { AuthMiddleware } from 'src/middlewares/auth.middleware';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { LogInterceptor } from 'src/interceptors/app.interceptor';
 import { SharedModule } from 'src/shared/shared.module';
-import { TenantsModule } from 'src/models/agreements/tenants/tenants.module';
+import { TenantsModule } from 'src/models/agreements/tenancy/tenancy.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { RedisCacheModule } from 'src/redis/redis.module';
-import { LeasesModule } from 'src/models/agreements/leases/leases.module';
-import { DeedOfAssignmentsModule } from 'src/models/agreements/deed_of_assignments/deed_of_assignments.module';
-import { LoansModule } from 'src/models/loans/loans.module';
-import { SalesModule } from 'src/models/agreements/sales/sales.module';
-import { PowerOfAttorneysModule } from 'src/models/agreements/power_of_attorneys/power_of_attorneys.module';
+import { LeasesModule } from 'src/models/agreements/lease/lease.module';
+import { DeedOfAssignmentsModule } from 'src/models/agreements/deed_of_assignment/deed_of_assignment.module';
+import { LoansModule } from 'src/models/loans/loan.module';
+import { SalesModule } from 'src/models/agreements/sale/sale.module';
+import { PowerOfAttorneysModule } from 'src/models/agreements/power_of_attorney/power_of_attorney.module';
 
 @Module({
   imports: [
