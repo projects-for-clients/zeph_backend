@@ -7,7 +7,7 @@ import { AuthMiddleware } from 'src/middlewares/auth.middleware';
 import { DeedOfAssignmentModule } from 'src/models/agreements/deed_of_assignment/deed_of_assignment.module';
 import { LeaseModule } from 'src/models/agreements/lease/lease.module';
 import { LoanModule } from 'src/models/agreements/loan/loan.module';
-import { PowerOfAttorneysModule } from 'src/models/agreements/power_of_attorney/power_of_attorney.module';
+import { PowerOfAttorneyModule } from 'src/models/agreements/power_of_attorney/power_of_attorney.module';
 import { SaleModule } from 'src/models/agreements/sale/sale.module';
 import { TenancyModule } from 'src/models/agreements/tenancy/tenancy.module';
 import { UsersModule } from 'src/models/user/user.module';
@@ -30,7 +30,7 @@ import { AppService } from './app.service';
     DeedOfAssignmentModule,
     LoanModule,
     SaleModule,
-    PowerOfAttorneysModule
+    PowerOfAttorneyModule
   ],
   controllers: [AppController],
   providers: [
