@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { PowerOfAttorneysController } from './power_of_attorney.controller';
-import { PowerOfAttorneysService } from './power_of_attorney.service';
+import { PowerOfAttorneyController } from './power_of_attorney.controller';
+import { PowerOfAttorneyService } from './power_of_attorney.service';
 
 @Module({
-  controllers: [PowerOfAttorneysController],
-  providers: [PowerOfAttorneysService]
+  controllers: [PowerOfAttorneyController],
+  providers: [PowerOfAttorneyService]
 })
-export class PowerOfAttorneysModule { }
+export class PowerOfAttorneyModule { }
