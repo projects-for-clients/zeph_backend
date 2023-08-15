@@ -1,6 +1,6 @@
-import { UserRequestService } from '../../services/userRequest.service';
+import { Injectable, Logger, Scope } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Logger, Injectable, Scope } from '@nestjs/common';
+import { UserRequestService } from '../../services/userRequest.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -12,8 +12,8 @@ export class UsersService {
   constructor(private prisma: PrismaService) { }
 
   async findAll() {
-    const allUsers = await this.prisma.users.findMany();
-    
+    const allUsers = await this.prisma.user.findMany();
+
     return allUsers;
   }
 
@@ -26,7 +26,7 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    const user = await this.prisma.users.delete({
+    const user = await this.prisma.user.delete({
       where: {
         id,
       },

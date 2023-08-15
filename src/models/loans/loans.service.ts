@@ -1,7 +1,7 @@
-import { UserRequestService } from 'src/services/userRequest.service';
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { createDto, updateDto } from './dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UserRequestService } from 'src/services/userRequest.service';
+import { createDto, updateDto } from './dto';
 
 @Injectable()
 export class LoansService {
@@ -10,7 +10,7 @@ export class LoansService {
     async create(createLoanDto: createDto) {
         const userId = this.userRequest.getUserId();
 
-        const loan = await this.prisma.loans.create({
+        const loan = await this.prisma.loan.create({
             data: {
                 ...createLoanDto,
                 userId,
@@ -21,13 +21,13 @@ export class LoansService {
     }
 
     async findAll() {
-        const allLoans = await this.prisma.loans.findMany();
+        const allLoans = await this.prisma.loan.findMany();
 
         return allLoans;
     }
 
     async findOne(id: number) {
-        const loan = await this.prisma.loans.findUnique({
+        const loan = await this.prisma.loan.findUnique({
             where: {
                 id,
             },
@@ -42,7 +42,7 @@ export class LoansService {
     }
 
     async update(id: number, updateLoanDto: updateDto) {
-        const find = await this.prisma.loans.findUnique({
+        const find = await this.prisma.loan.findUnique({
             where: {
                 id,
             },
@@ -52,7 +52,7 @@ export class LoansService {
             throw new ForbiddenException('Loan not found');
         }
 
-        const loan = await this.prisma.loans.update({
+        const loan = await this.prisma.loan.update({
             where: {
                 id,
             },
@@ -69,7 +69,7 @@ export class LoansService {
 
     async delete(id: number) {
 
-        const loan = await this.prisma.loans.delete({
+        const loan = await this.prisma.loan.delete({
             where: {
                 id,
             },

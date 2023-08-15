@@ -1,11 +1,11 @@
 
-import { UserRequestService } from 'src/services/userRequest.service';
-import { ForbiddenException, Injectable } from "@nestjs/common";
-import { CreateDto, UpdateTdo } from "./dto";
-import { PrismaService } from "src/prisma/prisma.service";
-import * as fs from "fs/promises";
 import * as path from "path";
+import { ForbiddenException, Injectable } from "@nestjs/common";
+import * as fs from "fs/promises";
+import { PrismaService } from "src/prisma/prisma.service";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
+import { UserRequestService } from 'src/services/userRequest.service';
+import { CreateDto, UpdateTdo } from "./dto";
 
 
 @Injectable()
@@ -78,7 +78,7 @@ export class PowerOfAttorneysService {
             const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
 
 
-            const powerOfAttorneys = await this.prisma.power_of_attorneys.create({
+            const powerOfAttorneys = await this.prisma.power_of_attorney.create({
                 data: {
                     ...createDto,
                     relevant_documents,
@@ -101,13 +101,13 @@ export class PowerOfAttorneysService {
     }
 
     async findAll() {
-        const all = await this.prisma.power_of_attorneys.findMany();
+        const all = await this.prisma.power_of_attorney.findMany();
 
         return all
     }
 
     async findOne(id: number) {
-        const one = await this.prisma.power_of_attorneys.findUnique({
+        const one = await this.prisma.power_of_attorney.findUnique({
             where: {
                 id,
             },
@@ -123,7 +123,7 @@ export class PowerOfAttorneysService {
 
     async update(id: number, updateTenantDto: UpdateTdo) {
         console.log({ id })
-        const find = await this.prisma.power_of_attorneys.findUnique({
+        const find = await this.prisma.power_of_attorney.findUnique({
             where: {
                 id,
             },
@@ -133,7 +133,7 @@ export class PowerOfAttorneysService {
             throw new ForbiddenException('Tenant not found');
         }
 
-        const update = await this.prisma.power_of_attorneys.update({
+        const update = await this.prisma.power_of_attorney.update({
             where: {
                 id,
             },
@@ -151,7 +151,7 @@ export class PowerOfAttorneysService {
     }
 
     async delete(id: number) {
-        const remove = await this.prisma.power_of_attorneys.delete({
+        const remove = await this.prisma.power_of_attorney.delete({
             where: {
                 id,
             },

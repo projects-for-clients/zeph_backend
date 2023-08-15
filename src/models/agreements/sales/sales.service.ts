@@ -1,10 +1,10 @@
-import { UserRequestService } from 'src/services/userRequest.service';
-import { ForbiddenException, Injectable } from "@nestjs/common";
-import { CreateDto, UpdateTdo } from "./dto";
-import { PrismaService } from "src/prisma/prisma.service";
-import * as fs from "fs/promises";
 import * as path from "path";
+import { ForbiddenException, Injectable } from "@nestjs/common";
+import * as fs from "fs/promises";
+import { PrismaService } from "src/prisma/prisma.service";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
+import { UserRequestService } from 'src/services/userRequest.service';
+import { CreateDto, UpdateTdo } from "./dto";
 
 
 @Injectable()
@@ -73,7 +73,7 @@ export class SalesService {
             const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
 
 
-            const sale = await this.prisma.sales.create({
+            const sale = await this.prisma.sale.create({
                 data: {
                     ...createSaleDto,
                     relevant_documents,
@@ -96,7 +96,7 @@ export class SalesService {
     }
 
     async findAll() {
-        const all = await this.prisma.sales.findMany();
+        const all = await this.prisma.sale.findMany();
 
         if (!all) {
             throw new ForbiddenException("No sales found")
@@ -106,7 +106,7 @@ export class SalesService {
     }
 
     async findOne(id: number) {
-        const one = await this.prisma.sales.findUnique({
+        const one = await this.prisma.sale.findUnique({
             where: {
                 id,
             },
@@ -122,7 +122,7 @@ export class SalesService {
 
     async update(id: number, updateSaleDto: UpdateTdo) {
 
-        const find = await this.prisma.sales.findUnique({
+        const find = await this.prisma.sale.findUnique({
             where: {
                 id,
             },
@@ -132,7 +132,7 @@ export class SalesService {
             throw new ForbiddenException('Sale not found');
         }
 
-        const update = await this.prisma.sales.update({
+        const update = await this.prisma.sale.update({
             where: {
                 id,
             },
@@ -150,7 +150,7 @@ export class SalesService {
     }
 
     async delete(id: number) {
-        const remove = await this.prisma.sales.delete({
+        const remove = await this.prisma.sale.delete({
             where: {
                 id,
             },

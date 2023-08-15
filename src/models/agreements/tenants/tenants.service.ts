@@ -1,11 +1,11 @@
-import { UserRequestService } from 'src/services/userRequest.service';
+import * as path from "path";
 import { ForbiddenException, Injectable } from "@nestjs/common";
-import { CreateDto, UpdateTdo } from "./dto";
+import * as fs from "fs/promises";
 import { PrismaService } from "src/prisma/prisma.service";
 import { RedisService } from "src/redis/redis.service";
-import * as fs from "fs/promises";
-import * as path from "path";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
+import { UserRequestService } from 'src/services/userRequest.service';
+import { CreateDto, UpdateTdo } from "./dto";
 
 
 @Injectable()
@@ -76,7 +76,7 @@ export class TenantsService {
 			const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
 
 
-			const tenant = await this.prisma.tenants.create({
+			const tenant = await this.prisma.tenancy.create({
 				data: {
 					...createTenantDto,
 					relevant_documents,
@@ -99,7 +99,7 @@ export class TenantsService {
 	}
 
 	async findAll() {
-		const all = await this.prisma.tenants.findMany();
+		const all = await this.prisma.tenancy.findMany();
 
 		if (!all) {
 			throw new ForbiddenException("No tenants found")
@@ -109,7 +109,7 @@ export class TenantsService {
 	}
 
 	async findOne(id: number) {
-		const one = await this.prisma.tenants.findUnique({
+		const one = await this.prisma.tenancy.findUnique({
 			where: {
 				id,
 			},
@@ -125,7 +125,7 @@ export class TenantsService {
 
 	async update(id: number, updateTenantDto: UpdateTdo) {
 		console.log({ id })
-		const find = await this.prisma.tenants.findUnique({
+		const find = await this.prisma.tenancy.findUnique({
 			where: {
 				id,
 			},
@@ -135,7 +135,7 @@ export class TenantsService {
 			throw new ForbiddenException('Tenant not found');
 		}
 
-		const update = await this.prisma.tenants.update({
+		const update = await this.prisma.tenancy.update({
 			where: {
 				id,
 			},
@@ -153,7 +153,7 @@ export class TenantsService {
 	}
 
 	async delete(id: number) {
-		const remove = await this.prisma.tenants.delete({
+		const remove = await this.prisma.tenancy.delete({
 			where: {
 				id,
 			},
