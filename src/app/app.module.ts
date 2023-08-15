@@ -10,7 +10,7 @@ import { LoanModule } from 'src/models/agreements/loan/loan.module';
 import { PowerOfAttorneyModule } from 'src/models/agreements/power_of_attorney/power_of_attorney.module';
 import { SaleModule } from 'src/models/agreements/sale/sale.module';
 import { TenancyModule } from 'src/models/agreements/tenancy/tenancy.module';
-import { UsersModule } from 'src/models/user/user.module';
+import { UserModule } from 'src/models/user/user.module';
 import { RedisCacheModule } from 'src/redis/redis.module';
 import { SharedModule } from 'src/shared/shared.module';
 import { AppController } from './app.controller';
@@ -22,7 +22,7 @@ import { AppService } from './app.service';
       isGlobal: true,
     }),
     RedisCacheModule,
-    UsersModule,
+    UserModule,
     AuthModule,
     SharedModule,
     TenancyModule,
