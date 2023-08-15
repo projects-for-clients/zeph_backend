@@ -6,15 +6,15 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 
 @Injectable({ scope: Scope.REQUEST })
-export class UsersService {
-  private readonly logger = new Logger(UsersService.name);
+export class UserService {
+  private readonly logger = new Logger(UserService.name);
 
   constructor(private prisma: PrismaService) { }
 
   async findAll() {
-    const allUsers = await this.prisma.user.findMany();
+    const allUser = await this.prisma.user.findMany();
 
-    return allUsers;
+    return allUser;
   }
 
   findOne(id: number) {
