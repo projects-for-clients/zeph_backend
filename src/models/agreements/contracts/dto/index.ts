@@ -1,1 +1,1 @@
-export * from './contracts.dto';
+export * from './contract.dto';

@@ -4,7 +4,7 @@ import { UserRequestService } from 'src/services/userRequest.service';
 import { createDto, updateDto } from './dto';
 
 @Injectable()
-export class LoansService {
+export class LoanService {
     constructor(private prisma: PrismaService, private userRequest: UserRequestService) { }
 
     async create(createLoanDto: createDto) {
@@ -21,9 +21,9 @@ export class LoansService {
     }
 
     async findAll() {
-        const allLoans = await this.prisma.loan.findMany();
+        const allLoan = await this.prisma.loan.findMany();
 
-        return allLoans;
+        return allLoan;
     }
 
     async findOne(id: number) {

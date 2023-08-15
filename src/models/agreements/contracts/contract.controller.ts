@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 
-@Controller('contracts')
-export class ContractsController {
+@Controller('contract')
+export class ContractController {
   @Get()
   findAll(@Body() body: any) {
-    return 'This action returns all contracts';
+    return 'This action returns all contract';
   }
 
   @Get(':id')

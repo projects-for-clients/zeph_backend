@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class ContractsService {
-  private contracts: any[] = [
+export class ContractService {
+  private contract: any[] = [
     {
       id: 1,
       name: 'Contract 1',
@@ -18,19 +18,19 @@ export class ContractsService {
   ];
 
   findAll() {
-    return this.contracts;
+    return this.contract;
   }
 
   findOne(id: number) {
-    return this.contracts.find((contract) => contract.id === id);
+    return this.contract.find((contract) => contract.id === id);
   }
 
   create(contract: any) {
-    this.contracts.push(contract);
+    this.contract.push(contract);
   }
 
   update(id: number, contract: any) {
-    const index = this.contracts.findIndex((contract) => contract.id === id);
-    this.contracts[index] = contract;
+    const index = this.contract.findIndex((contract) => contract.id === id);
+    this.contract[index] = contract;
   }
 }

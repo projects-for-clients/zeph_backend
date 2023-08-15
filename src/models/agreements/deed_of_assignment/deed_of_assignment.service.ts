@@ -8,7 +8,7 @@ import { CreateDto, UpdateTdo } from "./dto";
 
 
 @Injectable()
-export class DeedOfAssignmentsService {
+export class DeedOfAssignmentService {
   constructor(
     private prisma: PrismaService,
     private uploadFiles: UploadedFilesService,
@@ -19,10 +19,10 @@ export class DeedOfAssignmentsService {
   private userId = this.userRequest.getUserId();
 
 
-  async create(createDto: CreateDto, files: Array<Express.Multer.File>) {
+  async create(createDto: CreateDto, files: Express.Multer.File[]) {
 
 
-    const folderPath = path.join("uploads", DeedOfAssignmentsService.name);
+    const folderPath = path.join("uploads", DeedOfAssignmentService.name);
     const currDir = path.join(process.cwd(), folderPath);
 
     await fs.mkdir(folderPath, {
@@ -84,7 +84,7 @@ export class DeedOfAssignmentsService {
 
 
 
-      if (!deedOfAssignment) throw new ForbiddenException('Unable to create deed of assignment');
+      if (!deedOfAssignment) { throw new ForbiddenException('Unable to create deed of assignment'); }
 
       return deedOfAssignment;
     }

@@ -8,34 +8,34 @@ import {
   Post,
 } from '@nestjs/common';
 import { createDto, updateDto } from './dto';
-import { LoansService } from './loan.service';
+import { LoanService } from './loan.service';
 
-@Controller('loans')
-export class LoansController {
-  constructor(private readonly loansService: LoansService) { }
+@Controller('loan')
+export class LoanController {
+  constructor(private readonly loanService: LoanService) { }
 
   @Post()
   create(@Body() createLeaseDto: createDto) {
-    return this.loansService.create(createLeaseDto);
+    return this.loanService.create(createLeaseDto);
   }
 
   @Get()
   findAll() {
-    return this.loansService.findAll();
+    return this.loanService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: number) {
-    return this.loansService.findOne(+id);
+    return this.loanService.findOne(+id);
   }
 
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateLeaseDto: updateDto) {
-    return this.loansService.update(+id, updateLeaseDto);
+    return this.loanService.update(+id, updateLeaseDto);
   }
 
   @Delete(':id')
   delete(@Param('id') id: number) {
-    return this.loansService.delete(+id);
+    return this.loanService.delete(+id);
   }
 }
