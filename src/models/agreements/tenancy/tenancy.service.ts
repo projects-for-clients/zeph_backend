@@ -1,13 +1,13 @@
 import * as path from "path";
 import { ForbiddenException, Injectable } from "@nestjs/common";
+import { Request } from "express";
 import * as fs from "fs/promises";
 import { PrismaService } from "src/prisma/prisma.service";
 import { RedisService } from "src/redis/redis.service";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
 import { UserRequestService } from 'src/services/userRequest.service';
-import { CreateDto, UpdateTdo } from "./dto";
-import { Request } from "express";
 import { IQuery } from "types/Query";
+import { CreateDto, UpdateTdo } from "./dto";
 
 
 @Injectable()
@@ -101,36 +101,39 @@ export class TenancyService {
 	}
 
 	async findAll(query: IQuery) {
+
+		console.log({ query })
+
+		const { from, to } = query
+
+		const _from = from ? new Date(from) : new Date(0)
+		const _to = to ? new Date(to) : new Date()
+
+		if (from || to) {
+			console.log('from', from, to)
+			const tenancies = await this.prisma.tenancy.findMany({
+				where: {
+					created_at: {
+						gte: _from,
+						lte: _to
+					}
+				}
+			})
+
+			console.log({ tenancies })
+
+			return tenancies
+		}
+
 		const all = await this.prisma.tenancy.findMany();
-
-		// const from = req.query.from ?? '';
-		// const to = req.query.to ?? '';
-
-		console.log({query})
-
-		const {from, to} = query
 
 		if (!all) {
 			throw new ForbiddenException("No tenancys found")
 		}
 
-		if(from || to){
-			console.log('from', from, to)
-			const tenancies = await this.prisma.tenancy.findMany({
-				where: {
-					created_at: {
-						gte: from,
-						lte: to
-					}
-				}
-			})
 
-			console.log({tenancies})
-
-			return tenancies
-		}
-
-		return all
+		return "hello"
+		// return all
 	}
 
 	async findOne(id: number) {
