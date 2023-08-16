@@ -6,6 +6,8 @@ import { RedisService } from "src/redis/redis.service";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
 import { UserRequestService } from 'src/services/userRequest.service';
 import { CreateDto, UpdateTdo } from "./dto";
+import { Request } from "express";
+import { IQuery } from "types/Query";
 
 
 @Injectable()
@@ -98,11 +100,34 @@ export class TenancyService {
 
 	}
 
-	async findAll() {
+	async findAll(query: IQuery) {
 		const all = await this.prisma.tenancy.findMany();
+
+		// const from = req.query.from ?? '';
+		// const to = req.query.to ?? '';
+
+		console.log({query})
+
+		const {from, to} = query
 
 		if (!all) {
 			throw new ForbiddenException("No tenancys found")
+		}
+
+		if(from || to){
+			console.log('from', from, to)
+			const tenancies = await this.prisma.tenancy.findMany({
+				where: {
+					created_at: {
+						gte: from,
+						lte: to
+					}
+				}
+			})
+
+			console.log({tenancies})
+
+			return tenancies
 		}
 
 		return all

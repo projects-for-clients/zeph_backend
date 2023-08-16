@@ -6,6 +6,8 @@ import {
 	Param,
 	Patch,
 	Post,
+	Query,
+	Req,
 	UploadedFiles,
 	UseInterceptors,
 	UsePipes,
@@ -18,6 +20,7 @@ import { TenancyService } from "./tenancy.service";
 
 import { ConvertTypePipe } from "src/pipes/convertType.pipe";
 import { FileSizeValidationPipe } from "src/pipes/fileSize.pipe";
+import { Request } from "express";
 
 @UsePipes(
 	new ConvertTypePipe([
@@ -42,8 +45,8 @@ export class TenancyController {
 	}
 
 	@Get()
-	findAll() {
-		return this.tenancyService.findAll();
+	findAll(@Query() query: any) {
+		return this.tenancyService.findAll(query);
 	}
 
 	@Get(":id")
