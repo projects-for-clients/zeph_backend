@@ -111,7 +111,7 @@ export class TenancyService {
 
 		if (from || to) {
 
-			const tenancies = await this.prisma.tenancy.findMany({
+			const tenancies = this.prisma.tenancy.findMany({
 				where: {
 					created_at: {
 						gte: _from,
@@ -126,7 +126,7 @@ export class TenancyService {
 		if (key && value) {
 
 			//TODO: Catch this error in the general error handler
-			const tenancies = await this.prisma.tenancy.findMany({
+			const tenancies = this.prisma.tenancy.findMany({
 				where: {
 					[key]: {
 						contains: value
@@ -142,44 +142,55 @@ export class TenancyService {
 		const _page = Number(page) ?? 1
 		const _limit = Number(limit) ?? 10
 
-		const dataWithCount = async (): Promise<{ all: tenancy, count: number }> => {
-			return this.prisma.$transaction(async (tx) => {
-				const all = await tx.tenancy.findMany({
-					skip: (_page - 1) * _limit,
-					take: _limit,
+		// const dataWithCount = async (): Promise<{ tenancy: any[], count: number }> => {
+		// 	return this.prisma.$transaction(async (tx) => {
+		// 		const tenancy = await tx.tenancy.findMany({
+		// 			skip: (_page - 1) * _limit,
+		// 			take: _limit,
 
-					include: {
-						user: true,
-					},
-
-
-				}
-				);
-
-				if (!all) {
-					throw new ForbiddenException("No tenancys found")
-				}
+		// 			include: {
+		// 				user: true,
+		// 			},
 
 
+		// 		}
+		// 		);
+
+		// 		if (!tenancy) {
+		// 			throw new ForbiddenException("No tenancys found")
+		// 		}
+
+		// 		const count = await tx.tenancy.count();
+
+		// 		return {
+		// 			tenancy,
+		// 			count,
+		// 		};
+
+		// 	});
+
+		// }
+
+		// const all = await dataWithCount();
+
+		// const all = this.prisma.tenancy.findMany({
+		// 	skip: (_page - 1) * _limit,
+		// 	take: _limit,
+		// 	include: {
+		// 		user: true,
+		// 	},
+		// })
 
 
-				const count = await tx.tenancy.count();
+		const all = await this.prisma.tenancy.findMany()
+		const count = await this.prisma.tenancy.count()
 
-				return {
-					all,
-					count,
-				};
 
-			});
 
+		return {
+			all,
+			count
 		}
-
-		const all = await dataWithCount();
-
-
-		console.log({ all })
-
-		return all
 	}
 
 	async findOne(id: number) {
