@@ -146,7 +146,7 @@ export class AuthService {
     return this.signToken(user.id, user.email, user.role, res);
   }
 
-  async signToken(userId: number, email: string, res: Response): Promise<void> {
+  async signToken(userId: number, email: string, role: string, res: Response): Promise<void> {
     console.log({ userId, email }, 'sign token')
     const payload = {
       id: userId,
@@ -173,6 +173,7 @@ export class AuthService {
     res.json({
       message: 'success',
       email,
+      role,
       cookie: {
         token,
         expires: cookieOptions.expires
