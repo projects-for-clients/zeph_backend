@@ -115,9 +115,9 @@ export class AuthService {
 
     }
 
-    const users = await createUserAccount();
+    const user = await createUserAccount();
 
-    return this.signToken(users.id, users.email, users.role, res);
+    return this.signToken(user.id, user.email, user.role, res);
 
   }
 
