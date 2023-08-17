@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { OTP_TIME } from 'constants';
 import { Resend } from 'resend';
+import { OTP_TIME } from 'src/constants';
 
 @Injectable()
 export class EmailService {
@@ -44,7 +44,7 @@ export class EmailService {
       return initSend
     } catch (err) {
 
-      console.log({err})
+      console.log({ err })
     }
   }
 }
