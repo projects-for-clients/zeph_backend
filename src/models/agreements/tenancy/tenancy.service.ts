@@ -1,5 +1,6 @@
 import * as path from "path";
 import { ForbiddenException, Injectable } from "@nestjs/common";
+import { tenancy } from "@prisma/client";
 import { Request } from "express";
 import * as fs from "fs/promises";
 import { PrismaService } from "src/prisma/prisma.service";
@@ -7,7 +8,7 @@ import { RedisService } from "src/redis/redis.service";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
 import { UserRequestService } from 'src/services/userRequest.service';
 import { IQuery } from "types/Query";
-import { CreateDto, UpdateTdo } from "./dto";
+import { CreateDto, UpdateTenancyTdo } from "./dto";
 
 
 @Injectable()
@@ -102,15 +103,14 @@ export class TenancyService {
 
 	async findAll(query: IQuery) {
 
-		console.log({ query })
 
-		const { from, to } = query
+		const { from, to, key, value, page, limit } = query
 
 		const _from = from ? new Date(from) : new Date(0)
 		const _to = to ? new Date(to) : new Date()
 
 		if (from || to) {
-			console.log('from', from, to)
+
 			const tenancies = await this.prisma.tenancy.findMany({
 				where: {
 					created_at: {
@@ -120,20 +120,66 @@ export class TenancyService {
 				}
 			})
 
+			return tenancies
+		}
+
+		if (key && value) {
+
+			//TODO: Catch this error in the general error handler
+			const tenancies = await this.prisma.tenancy.findMany({
+				where: {
+					[key]: {
+						contains: value
+					}
+				}
+			})
+
 			console.log({ tenancies })
 
 			return tenancies
 		}
 
-		const all = await this.prisma.tenancy.findMany();
+		const _page = Number(page) ?? 1
+		const _limit = Number(limit) ?? 10
 
-		if (!all) {
-			throw new ForbiddenException("No tenancys found")
+		const dataWithCount = async (): Promise<{ all: tenancy, count: number }> => {
+			return this.prisma.$transaction(async (tx) => {
+				const all = await tx.tenancy.findMany({
+					skip: (_page - 1) * _limit,
+					take: _limit,
+
+					include: {
+						user: true,
+					},
+
+
+				}
+				);
+
+				if (!all) {
+					throw new ForbiddenException("No tenancys found")
+				}
+
+
+
+
+				const count = await tx.tenancy.count();
+
+				return {
+					all,
+					count,
+				};
+
+			});
+
 		}
 
+		const all = await dataWithCount();
 
-		return "hello"
-		// return all
+
+		console.log({ all })
+
+		return all
 	}
 
 	async findOne(id: number) {
@@ -151,7 +197,7 @@ export class TenancyService {
 		return one
 	}
 
-	async update(id: number, updateTenancyDto: UpdateTdo) {
+	async update(id: number, updateTenancyDto: UpdateTenancyTdo) {
 		console.log({ id })
 		const find = await this.prisma.tenancy.findUnique({
 			where: {

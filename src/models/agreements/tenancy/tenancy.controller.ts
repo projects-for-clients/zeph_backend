@@ -15,7 +15,7 @@ import {
 } from "@nestjs/common";
 
 import { FilesInterceptor } from "@nestjs/platform-express";
-import { CreateDto, UpdateTdo } from "./dto";
+import { CreateDto, UpdateTenancyTdo } from "./dto";
 import { TenancyService } from "./tenancy.service";
 
 import { ConvertTypePipe } from "src/pipes/convertType.pipe";
@@ -55,7 +55,7 @@ export class TenancyController {
 	}
 
 	@Patch(":id")
-	update(@Param('id') id: number, @Body() updatetenancyDto: UpdateTdo) {
+	update(@Param('id') id: number, @Body() updatetenancyDto: UpdateTenancyTdo) {
 		return this.tenancyService.update(+id, updatetenancyDto);
 	}
 

@@ -34,7 +34,7 @@ export class CreateDto {
 }
 
 
-export class UpdateTdo {
+export class UpdateTenancyTdo {
 
   @IsOptional()
   @IsString()
