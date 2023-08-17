@@ -182,13 +182,13 @@ export class TenancyService {
 		// })
 
 
-		const all = await this.prisma.tenancy.findMany()
+		const data = await this.prisma.tenancy.findMany()
 		const count = await this.prisma.tenancy.count()
 
 
 
 		return {
-			all,
+			data,
 			count
 		}
 	}
