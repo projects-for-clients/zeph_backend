@@ -10,3 +10,9 @@ export interface IQuery {
 }
 
 export type Role = "superAdmin" | "customer" 
+
+export interface JwtPayload {
+    id: number;
+    email: string;
+    role: Role;
+}
