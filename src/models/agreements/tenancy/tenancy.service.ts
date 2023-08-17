@@ -182,7 +182,10 @@ export class TenancyService {
 		// })
 
 
-		const data = await this.prisma.tenancy.findMany()
+		const data = await this.prisma.tenancy.findMany({
+			skip: (_page - 1) * _limit,
+			take: _limit,
+		})
 		const count = await this.prisma.tenancy.count()
 
 
