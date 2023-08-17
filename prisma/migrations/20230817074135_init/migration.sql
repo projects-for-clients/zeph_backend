@@ -1,8 +1,12 @@
+-- CreateEnum
+CREATE TYPE "Status" AS ENUM ('PENDING', 'APPROVED');
+
 -- CreateTable
 CREATE TABLE "contract" (
     "id" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
+    "status" "Status" NOT NULL DEFAULT 'PENDING',
 
     CONSTRAINT "contract_pkey" PRIMARY KEY ("id")
 );
@@ -15,6 +19,7 @@ CREATE TABLE "deed_of_assignment" (
     "donee_name" VARCHAR(100) NOT NULL,
     "donee_address" VARCHAR(100) NOT NULL,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
+    "status" "Status" NOT NULL DEFAULT 'PENDING',
     "property_description" TEXT,
     "relevant_documents" TEXT[],
     "created_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -30,6 +35,7 @@ CREATE TABLE "lease" (
     "leasor_name" VARCHAR(100) NOT NULL,
     "leasee_name" VARCHAR(100) NOT NULL,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
+    "status" "Status" NOT NULL DEFAULT 'PENDING',
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "lease_pkey" PRIMARY KEY ("id")
@@ -41,6 +47,7 @@ CREATE TABLE "loan" (
     "borrower_name" VARCHAR(100) NOT NULL,
     "lender_name" VARCHAR(100) NOT NULL,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
+    "status" "Status" NOT NULL DEFAULT 'PENDING',
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "loan_pkey" PRIMARY KEY ("id")
@@ -58,6 +65,7 @@ CREATE TABLE "power_of_attorney" (
     "created_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
+    "status" "Status" NOT NULL DEFAULT 'PENDING',
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "power_of_attorney_pkey" PRIMARY KEY ("id")
@@ -71,6 +79,7 @@ CREATE TABLE "sale" (
     "property_description" TEXT,
     "amount" DECIMAL(10,2),
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
+    "status" "Status" NOT NULL DEFAULT 'PENDING',
     "relevant_documents" TEXT[],
     "created_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
@@ -88,6 +97,7 @@ CREATE TABLE "tenancy" (
     "tenant_address" VARCHAR(100) NOT NULL,
     "property_description" TEXT,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
+    "status" "Status" NOT NULL DEFAULT 'PENDING',
     "amount" DECIMAL(10,2) NOT NULL,
     "duration" VARCHAR(100) NOT NULL,
     "relevant_documents" TEXT[],
