@@ -143,7 +143,7 @@ export class AuthService {
     }
 
 
-    return this.signToken(user.id, user.email, res);
+    return this.signToken(user.id, user.email, user.role, res);
   }
 
   async signToken(userId: number, email: string, res: Response): Promise<void> {
