@@ -11,6 +11,7 @@ import {
   SetMetadata,
   UseInterceptors,
 } from '@nestjs/common';
+import { Roles } from 'src/decorators/roles.decorator';
 import { AuthPipe } from 'src/pipes/auth.pipe';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -21,9 +22,7 @@ export class UserController {
   constructor(private readonly userService: UserService) { }
 
   @Get()
-  @SetMetadata(
-    'roles', ['superAdmin']
-  )
+  @Roles('superAdmin')
   findAll() {
     return this.userService.findAll();
   }

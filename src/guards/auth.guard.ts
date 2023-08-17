@@ -26,9 +26,12 @@ export class AuthGuard implements CanActivate {
 
 
 
-    const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    const roles: string[] = this.reflector.get<string[]>('roles', context.getHandler());
 
-    console.log({ roles })
+    if (!roles) {
+      return true
+    }
+
 
     const apiAuthCookie = cookies['api-auth'];
 
@@ -38,9 +41,11 @@ export class AuthGuard implements CanActivate {
     });
 
 
+    const { role } = jwt
 
-    console.log({ jwt })
-
+    if (roles.indexOf(role) === -1) {
+      return false
+    }
 
 
     this.logger.log('AuthGuard', AuthGuard.name);
