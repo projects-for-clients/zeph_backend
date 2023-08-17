@@ -7,10 +7,10 @@ import * as dayjs from 'dayjs';
 import { CookieOptions, Response } from 'express';
 import { AuthEmail, AuthLogin, AuthOtp, AuthRegister } from 'src/auth/dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Role } from 'types/Query';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { OtpService } from './../services/otp.service';
 import { UserRequestService } from './../services/userRequest.service';
-import { Roles } from 'types/Query';
 
 @Injectable()
 export class AuthService {
@@ -117,7 +117,7 @@ export class AuthService {
 
     const users = await createUserAccount();
 
-    return this.signToken(users.id, users.email, user.role,  res);
+    return this.signToken(users.id, users.email, users.role, res);
 
   }
 
@@ -147,7 +147,7 @@ export class AuthService {
     return this.signToken(user.id, user.email, user.role, res);
   }
 
-  async signToken(userId: number, email: string, role: Roles, res: Response): Promise<void> {
+  async signToken(userId: number, email: string, role: Role, res: Response): Promise<void> {
     console.log({ userId, email }, 'sign token')
     const payload = {
       id: userId,
@@ -158,7 +158,7 @@ export class AuthService {
       secret: this.secret,
     });
 
-    const expiryTime = 
+    const expiryTime =
       dayjs().add(1, 'day').toDate()
 
 
