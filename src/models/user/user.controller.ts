@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  SetMetadata,
   UseInterceptors,
 } from '@nestjs/common';
 import { AuthPipe } from 'src/pipes/auth.pipe';
@@ -20,6 +21,9 @@ export class UserController {
   constructor(private readonly userService: UserService) { }
 
   @Get()
+  @SetMetadata(
+    'roles', ['superAdmin']
+  )
   findAll() {
     return this.userService.findAll();
   }

@@ -34,11 +34,16 @@ export class AuthMiddleware implements NestMiddleware {
     //decrypt jwt
     const jwt: JwtPayload = this.jwt.verify(cookie, {
       secret: process.env.JWT_SECRET,
-    });
+    })
+
+
 
     if (!jwt) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
+    
+    console.log({jwt});
+
 
     this.userRequest.setUser(jwt.id, jwt.email, jwt.role);
     next();
