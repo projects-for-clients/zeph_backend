@@ -103,7 +103,7 @@ CREATE TABLE "tenancy" (
     "relevant_documents" TEXT[],
     "created_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "userId" INTEGER,
 
     CONSTRAINT "tenancy_pkey" PRIMARY KEY ("id")
 );
@@ -164,9 +164,6 @@ ALTER TABLE "power_of_attorney" ADD CONSTRAINT "power_of_attorney_userId_fkey" F
 
 -- AddForeignKey
 ALTER TABLE "sale" ADD CONSTRAINT "sale_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "tenancy" ADD CONSTRAINT "tenancy_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "account" ADD CONSTRAINT "account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
