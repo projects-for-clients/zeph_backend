@@ -4,7 +4,7 @@ export interface IQuery {
     perPage: number;
     to: string;
     page: number,
-    limit: number,
+    take: number,
     key: string
     value: string
 }

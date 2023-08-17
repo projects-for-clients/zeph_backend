@@ -104,7 +104,7 @@ export class TenancyService {
 	async findAll(query: IQuery) {
 
 
-		const { from, to, key, value, page, limit, perPage } = query
+		const { from, to, key, value, page, take, perPage } = query
 
 		const _from = from ? new Date(from) : new Date(0)
 		const _to = to ? new Date(to) : new Date()
@@ -140,14 +140,14 @@ export class TenancyService {
 		}
 
 		const _page = Number(page) || 1
-		const _limit = Number(limit) || 10
+		const _take = Number(take) || 10
 		const _perPage = Number(perPage) || 10
 
 		// const dataWithCount = async (): Promise<{ tenancy: any[], count: number }> => {
 		// 	return this.prisma.$transaction(async (tx) => {
 		// 		const tenancy = await tx.tenancy.findMany({
-		// 			skip: (_page - 1) * _limit,
-		// 			take: _limit,
+		// 			skip: (_page - 1) * _take,
+		// 			take: _take,
 
 		// 			include: {
 		// 				user: true,
@@ -175,8 +175,8 @@ export class TenancyService {
 		// const all = await dataWithCount();
 
 		// const all = this.prisma.tenancy.findMany({
-		// 	skip: (_page - 1) * _limit,
-		// 	take: _limit,
+		// 	skip: (_page - 1) * _take,
+		// 	take: _take,
 		// 	include: {
 		// 		user: true,
 		// 	},
@@ -184,11 +184,11 @@ export class TenancyService {
 
 
 
-		console.log({ _page, _limit, _perPage })
+		console.log({ _page, _take, _perPage })
 
 		const data = await this.prisma.tenancy.findMany({
 			skip: (_page - 1) * _perPage,
-			take: _limit,
+			take: _take,
 		})
 
 		const count = await this.prisma.tenancy.count()
@@ -196,7 +196,10 @@ export class TenancyService {
 
 		return {
 			data,
-			count
+			count,
+			page: _page,
+			take: _take,
+			perPage: _perPage
 		}
 
 	}
