@@ -1,11 +1,12 @@
-import { UpdateTenancyTdo } from "src/models/agreements/tenancy/dto";
-
 
 export interface IQuery {
     from: string;
+    perPage: number;
     to: string;
     page: number,
-    limit: number,
+    take: number,
     key: string
     value: string
 }
+
+export type Role = "superAdmin" | "customer" 

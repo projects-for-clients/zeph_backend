@@ -10,6 +10,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { OtpService } from './../services/otp.service';
 import { UserRequestService } from './../services/userRequest.service';
+import { Roles } from 'types/Query';
 
 @Injectable()
 export class AuthService {
@@ -146,7 +147,7 @@ export class AuthService {
     return this.signToken(user.id, user.email, user.role, res);
   }
 
-  async signToken(userId: number, email: string, role: string, res: Response): Promise<void> {
+  async signToken(userId: number, email: string, role: Roles, res: Response): Promise<void> {
     console.log({ userId, email }, 'sign token')
     const payload = {
       id: userId,

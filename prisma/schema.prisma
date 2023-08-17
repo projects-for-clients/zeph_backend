@@ -8,11 +8,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Status {
+  pending
+  approved
+}
+
+enum Role {
+  superAdmin
+  customer
+}
+
 model contract {
   id     Int    @id
   userId Int
   type   String @default("agreement") @db.VarChar(100)
-  status Status @default(PENDING)
+  status Status @default(pending)
   user   user   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -28,7 +38,7 @@ model deed_of_assignment {
   created_at           DateTime @default(now()) @db.Timestamp(6)
   updated_at           DateTime @updatedAt
   userId               Int
-  status               Status   @default(PENDING)
+  status               Status   @default(pending)
   user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -38,7 +48,7 @@ model lease {
   leasee_name String @db.VarChar(100)
   type        String @default("agreement") @db.VarChar(100)
   userId      Int
-  status      Status @default(PENDING)
+  status      Status @default(pending)
   user        user   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -48,7 +58,7 @@ model loan {
   lender_name   String @db.VarChar(100)
   type          String @default("agreement") @db.VarChar(100)
   userId        Int
-  status        Status @default(PENDING)
+  status        Status @default(pending)
   user          user   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -64,7 +74,7 @@ model power_of_attorney {
   updated_at           DateTime @updatedAt
   type                 String   @default("agreement") @db.VarChar(100)
   userId               Int
-  status               Status   @default(PENDING)
+  status               Status   @default(pending)
   user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -79,7 +89,7 @@ model sale {
   created_at           DateTime @default(now()) @db.Timestamp(6)
   updated_at           DateTime @updatedAt
   userId               Int
-  status               Status   @default(PENDING)
+  status               Status   @default(pending)
   user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -97,7 +107,7 @@ model tenancy {
   created_at           DateTime @default(now()) @db.Timestamp(6)
   updated_at           DateTime @updatedAt
   userId               Int
-  status               Status   @default(PENDING)
+  status               Status   @default(pending)
   user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -109,7 +119,7 @@ model user {
   lastName           String               @db.VarChar(200)
   created_at         DateTime             @default(now()) @db.Timestamp(6)
   updated_at         DateTime             @updatedAt
-  role               String?              @default("customer")
+  role               Role                 @default(customer)
   account            account[]
   contract           contract[]
   deed_of_assignment deed_of_assignment[]
@@ -138,9 +148,4 @@ model account {
   user           user     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([provider, providerUserId])
-}
-
-enum Status {
-  PENDING
-  APPROVED
 }
