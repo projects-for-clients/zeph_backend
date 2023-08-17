@@ -109,9 +109,15 @@ export class TenancyService {
 		const _from = from ? new Date(from) : new Date(0)
 		const _to = to ? new Date(to) : new Date()
 
+		const _page = Number(page) || 1
+		const _take = Number(take) || 10
+		const _perPage = Number(perPage) || 10
+
 		if (from || to) {
 
 			const tenancies = this.prisma.tenancy.findMany({
+				skip: (_page - 1) * _perPage,
+				take: _take,
 				where: {
 					created_at: {
 						gte: _from,
@@ -125,8 +131,9 @@ export class TenancyService {
 
 		if (key && value) {
 
-			//TODO: Catch this error in the general error handler
 			const tenancies = this.prisma.tenancy.findMany({
+				skip: (_page - 1) * _perPage,
+				take: _take,
 				where: {
 					[key]: {
 						contains: value
@@ -134,57 +141,13 @@ export class TenancyService {
 				}
 			})
 
-			console.log({ tenancies })
-
 			return tenancies
 		}
 
-		const _page = Number(page) || 1
-		const _take = Number(take) || 10
-		const _perPage = Number(perPage) || 10
-
-		// const dataWithCount = async (): Promise<{ tenancy: any[], count: number }> => {
-		// 	return this.prisma.$transaction(async (tx) => {
-		// 		const tenancy = await tx.tenancy.findMany({
-		// 			skip: (_page - 1) * _take,
-		// 			take: _take,
-
-		// 			include: {
-		// 				user: true,
-		// 			},
-
-
-		// 		}
-		// 		);
-
-		// 		if (!tenancy) {
-		// 			throw new ForbiddenException("No tenancys found")
-		// 		}
-
-		// 		const count = await tx.tenancy.count();
-
-		// 		return {
-		// 			tenancy,
-		// 			count,
-		// 		};
-
-		// 	});
-
-		// }
-
-		// const all = await dataWithCount();
-
-		// const all = this.prisma.tenancy.findMany({
-		// 	skip: (_page - 1) * _take,
-		// 	take: _take,
-		// 	include: {
-		// 		user: true,
-		// 	},
-		// })
 
 
 
-		console.log({ _page, _take, _perPage })
+
 
 		const data = await this.prisma.tenancy.findMany({
 			skip: (_page - 1) * _perPage,
@@ -220,7 +183,6 @@ export class TenancyService {
 	}
 
 	async update(id: number, updateTenancyDto: UpdateTenancyTdo) {
-		console.log({ id })
 		const find = await this.prisma.tenancy.findUnique({
 			where: {
 				id,

@@ -105,8 +105,9 @@ model tenancy {
   relevant_documents   String[]
   created_at           DateTime @default(now()) @db.Timestamp(6)
   updated_at           DateTime @updatedAt
-  userId               Int?
 
+  userId Int?
+  user   user? @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model user {
@@ -125,6 +126,7 @@ model user {
   lease              lease[]
   loan               loan[]
   account            account[]
+  tenancy            tenancy[]
 }
 
 model account {

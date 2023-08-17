@@ -42,19 +42,19 @@ export class MockController {
         const seedDb = async () => {
             const computed = []
 
-            for (let i = 0; i < 1000; i++) {
+            // for (let i = 0; i < 1000; i++) {
 
-                const data = createFakeTenancy()
+            const data = createFakeTenancy()
 
-                const res = await prisma.tenancy.create({
-                    data: {
-                        ...data,
-                        relevant_documents: ['']
-                    }
-                })
+            const res = await prisma.tenancy.create({
+                data: {
+                    ...data,
+                    relevant_documents: ['']
+                }
+            })
 
-                computed.push(res)
-            }
+            computed.push(res)
+            // }
 
             return computed;
 
