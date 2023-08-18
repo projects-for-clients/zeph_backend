@@ -7,6 +7,7 @@ import * as dayjs from 'dayjs';
 import { CookieOptions, Response } from 'express';
 import { AuthEmail, AuthLogin, AuthOtp, AuthRegister } from 'src/auth/dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Role } from 'types/types';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { OtpService } from './../services/otp.service';
 import { UserRequestService } from './../services/userRequest.service';
@@ -37,6 +38,7 @@ export class AuthService {
 
     if (findUser) {
       throw new ForbiddenException("User already exists");
+
     }
 
     const otp = await this.OtpService.generateOtp(email)
@@ -114,9 +116,9 @@ export class AuthService {
 
     }
 
-    const users = await createUserAccount();
+    const user = await createUserAccount();
 
-    return this.signToken(users.id, users.email, res);
+    return this.signToken(user.id, user.email, user.role, res);
 
   }
 
@@ -143,21 +145,22 @@ export class AuthService {
     }
 
 
-    return this.signToken(user.id, user.email, res);
+    return this.signToken(user.id, user.email, user.role, res);
   }
 
-  async signToken(userId: number, email: string, res: Response): Promise<void> {
-    console.log({ userId, email }, 'sign token')
+  async signToken(userId: number, email: string, role: Role, res: Response): Promise<void> {
+
     const payload = {
-      id: userId,
+      userId,
       email,
-    };
+      role,
+    } as const
 
     const token = this.jwt.sign(payload, {
       secret: this.secret,
     });
 
-    const expiryTime = 
+    const expiryTime =
       dayjs().add(1, 'day').toDate()
 
 
@@ -173,6 +176,7 @@ export class AuthService {
     res.json({
       message: 'success',
       email,
+      role,
       cookie: {
         token,
         expires: cookieOptions.expires
