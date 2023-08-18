@@ -1,20 +1,19 @@
 import { Injectable, Scope } from "@nestjs/common";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient, user } from "@prisma/client";
 import { DefaultArgs } from "@prisma/client/runtime/library";
 import { PrismaService } from "src/prisma/prisma.service";
 
 @Injectable()
 // PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>.account: Prisma.accountDelegate<DefaultArgs>
-export class CrudService<T extends Prisma.ModelName> {
+export class CrudService {
 
-    constructor(private prisma: PrismaService, private readonly model: T) { }
+    constructor(private prisma: PrismaService) { }
 
-    async findMany() {
-        const many = this.prisma[this.model].findMany
+    async findMany(model: string) {
 
-        console.log({ many })
+        this.prisma[model].findMany();
 
-        return many
+        
 
     }
 
