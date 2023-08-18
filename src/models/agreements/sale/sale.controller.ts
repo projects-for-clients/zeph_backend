@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UploadedFiles,
   UseInterceptors,
   UsePipes,
@@ -43,8 +44,8 @@ export class SaleController {
   }
 
   @Get()
-  findAll() {
-    return this.saleService.findAll();
+  findAll(@Query() query: any) {
+    return this.saleService.findAll(query);
   }
 
   @Get(":id")

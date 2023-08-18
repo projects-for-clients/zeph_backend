@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { createDto, updateDto } from './dto';
 import { LeaseService } from './lease.service';
@@ -20,8 +21,8 @@ export class LeaseController {
   }
 
   @Get()
-  findAll() {
-    return this.leaseService.findAll();
+  findAll(@Query() query: any) {
+    return this.leaseService.findAll(query);
   }
 
   @Get(':id')

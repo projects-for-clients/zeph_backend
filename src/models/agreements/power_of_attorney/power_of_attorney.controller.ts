@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UploadedFiles,
   UseInterceptors,
 } from "@nestjs/common";
@@ -32,8 +33,8 @@ export class PowerOfAttorneyController {
   }
 
   @Get()
-  findAll() {
-    return this.powerOfAttorney.findAll();
+  findAll(@Query() query: any) {
+    return this.powerOfAttorney.findAll(query);
   }
 
   @Get(":id")

@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { createDto, updateDto } from './dto';
 import { LoanService } from './loan.service';
@@ -20,8 +21,8 @@ export class LoanController {
   }
 
   @Get()
-  findAll() {
-    return this.loanService.findAll();
+  findAll(@Query() query: any) {
+    return this.loanService.findAll(query);
   }
 
   @Get(':id')

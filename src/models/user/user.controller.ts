@@ -1,20 +1,15 @@
 
 import {
-  Body,
-  CacheInterceptor,
+
   Controller,
-  Delete,
   Get,
-  Param,
-  Patch,
-  Post,
-  SetMetadata,
-  UseInterceptors,
+  Query,
+
 } from '@nestjs/common';
 import { Roles } from 'src/decorators/roles.decorator';
-import { AuthPipe } from 'src/pipes/auth.pipe';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+
+// import { CreateUserDto } from './dto/create-user.dto';
+// import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -23,8 +18,8 @@ export class UserController {
 
   @Get()
   @Roles('superAdmin')
-  findAll() {
-    return this.userService.findAll();
+  findAll(@Query() query: any) {
+    return this.userService.findAll(query);
   }
 
   // @Get(':id')

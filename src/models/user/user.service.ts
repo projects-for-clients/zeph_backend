@@ -11,14 +11,15 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserService {
   private readonly logger = new Logger(UserService.name);
 
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService, private CrudService: CrudService) { }
 
-  async findAll() {
-    const allUser = await this.prisma.user.findMany();
+  async findAll(query) {
 
     // return exclude(allUser, ['hashedPassword', 'updated_at', 'role']);
 
-    return allUser
+    return this.CrudService.findMany('user', query)
+
+
   }
 
   findOne(id: number) {

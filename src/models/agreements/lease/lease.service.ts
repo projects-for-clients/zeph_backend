@@ -1,12 +1,15 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserRequestService } from 'src/services/userRequest.service';
+import { CrudService } from 'src/services/crud.service';
+
 import { createDto, updateDto } from './dto';
+import { IQuery } from 'types/types';
 
 
 @Injectable()
 export class LeaseService {
-  constructor(private prisma: PrismaService, private userRequest: UserRequestService) { }
+  constructor(private prisma: PrismaService, private userRequest: UserRequestService, private CrudService: CrudService) { }
 
   async create(createLeaseDto: createDto) {
     const userId = this.userRequest.getUserId();
@@ -23,66 +26,23 @@ export class LeaseService {
     return lease;
   }
 
-  async findAll() {
-
-    const allLease = await this.prisma.lease.findMany();
-    return allLease;
+  async findAll(query: IQuery) {
+    return this.CrudService.findMany('lease', query)
   }
 
   async findOne(id: number) {
+    return this.CrudService.findOne('lease', id)
 
-
-    const lease = await this.prisma.lease.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!lease) {
-      throw new ForbiddenException('Lease not found');
-    }
-
-
-    return lease;
   }
 
-  async update(id: number, updateLeaseDto: updateDto) {
-    const find = await this.prisma.lease.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!find) {
-      throw new ForbiddenException('Lease not found');
-    }
-
-    const lease = await this.prisma.lease.update({
-      where: {
-        id,
-      },
-      data: {
-        ...find,
-        ...updateLeaseDto,
-      },
-    });
+  async update(id: number, updateData: updateDto) {
+    return this.CrudService.update('lease', id, updateData as any)
 
 
-    return lease;
   }
 
   async delete(id: number) {
+    return this.CrudService.delete('lease', id)
 
-    const lease = await this.prisma.lease.delete({
-      where: {
-        id,
-      },
-    }).catch(() => {
-
-      throw new ForbiddenException("Lease not found")
-
-    })
-
-    return lease;
   }
 }

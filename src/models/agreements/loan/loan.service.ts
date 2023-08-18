@@ -1,11 +1,13 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CrudService } from 'src/services/crud.service';
 import { UserRequestService } from 'src/services/userRequest.service';
+import { IQuery } from 'types/types';
 import { createDto, updateDto } from './dto';
 
 @Injectable()
 export class LoanService {
-    constructor(private prisma: PrismaService, private userRequest: UserRequestService) { }
+    constructor(private prisma: PrismaService, private userRequest: UserRequestService, private CrudService: CrudService) { }
 
     async create(createLoanDto: createDto) {
         const userId = this.userRequest.getUserId();
@@ -20,63 +22,23 @@ export class LoanService {
         return loan;
     }
 
-    async findAll() {
-        const allLoan = await this.prisma.loan.findMany();
-
-        return allLoan;
+    async findAll(query: IQuery) {
+        return this.CrudService.findMany('loan', query)
     }
 
     async findOne(id: number) {
-        const loan = await this.prisma.loan.findUnique({
-            where: {
-                id,
-            },
-        });
+        return this.CrudService.findOne('loan', id)
 
-        if (!loan) {
-            throw new ForbiddenException('Loan not found');
-        }
-
-
-        return loan;
     }
 
-    async update(id: number, updateLoanDto: updateDto) {
-        const find = await this.prisma.loan.findUnique({
-            where: {
-                id,
-            },
-        });
-
-        if (!find) {
-            throw new ForbiddenException('Loan not found');
-        }
-
-        const loan = await this.prisma.loan.update({
-            where: {
-                id,
-            },
-            data: {
-                ...find,
-                ...updateLoanDto,
-            },
-        });
+    async update(id: number, updateData: updateDto) {
+        return this.CrudService.update('loan', id, updateData as any)
 
 
-
-        return loan;
     }
 
     async delete(id: number) {
+        return this.CrudService.delete('loan', id)
 
-        const loan = await this.prisma.loan.delete({
-            where: {
-                id,
-            },
-        }).catch(() => {
-            throw new ForbiddenException("Loan not found")
-        })
-
-        return loan;
     }
 }

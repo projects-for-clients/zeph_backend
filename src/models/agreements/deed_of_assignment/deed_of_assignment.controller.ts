@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UploadedFiles,
   UseInterceptors,
 } from "@nestjs/common";
@@ -20,7 +21,7 @@ import { DeedOfAssignmentService } from './deed_of_assignment.service';
 
 @Controller("deed_of_assignment")
 export class DeedOfAssignmentController {
-  constructor(private readonly DeedOfAssignment: DeedOfAssignmentService) { }
+  constructor(private readonly deedOfAssignment: DeedOfAssignmentService) { }
 
   @Post()
   @UseInterceptors(FilesInterceptor("relevant_documents"))
@@ -28,26 +29,26 @@ export class DeedOfAssignmentController {
     @Body() create: CreateDto,
     @UploadedFiles(new FileSizeValidationPipe()) files: Express.Multer.File[],
   ) {
-    return this.DeedOfAssignment.create(create, files);
+    return this.deedOfAssignment.create(create, files);
   }
 
   @Get()
-  findAll() {
-    return this.DeedOfAssignment.findAll();
+  findAll(@Query() query: any) {
+    return this.deedOfAssignment.findAll(query);
   }
 
   @Get(":id")
   findOne(@Param('id') id: number) {
-    return this.DeedOfAssignment.findOne(+id);
+    return this.deedOfAssignment.findOne(+id);
   }
 
   @Patch(":id")
   update(@Param('id') id: number, @Body() update: UpdateTdo) {
-    return this.DeedOfAssignment.update(+id, update);
+    return this.deedOfAssignment.update(+id, update);
   }
 
   @Delete(":id")
   delete(@Param('id') id: number) {
-    return this.DeedOfAssignment.delete(+id);
+    return this.deedOfAssignment.delete(+id);
   }
 }
