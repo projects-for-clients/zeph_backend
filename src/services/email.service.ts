@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Resend } from 'resend';
+import { OTP_TIME } from 'src/constants';
 
 @Injectable()
 export class EmailService {
@@ -35,7 +36,7 @@ export class EmailService {
         from: this.from,
         to: email,
         subject: 'OTP Verification',
-        html: `<p>This is your OTP code: <strong>${otp}</strong></p> </br> <p>Only Valid for 10 minutes</p>`,
+        html: `<p>This is your OTP code: <strong>${otp}</strong></p> </br> <p>Only Valid for ${OTP_TIME} minutes</p>`,
       });
 
 
@@ -43,7 +44,7 @@ export class EmailService {
       return initSend
     } catch (err) {
 
-      console.log({err})
+      console.log({ err })
     }
   }
 }

@@ -3,38 +3,52 @@ generator client {
 }
 
 datasource db {
+<<<<<<< HEAD
   provider = "postgresql"
   url      = env("TEST_DATABASE_URL")
+=======
+  provider          = "postgresql"
+  url               = env("PROD_DATABASE_URL")
+>>>>>>> bddf17575d141d0c9d41236c0b4f62385659c3f6
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 enum Status {
-  PENDING
-  APPROVED
+  pending
+  approved
+}
+
+enum Role {
+  superAdmin
+  customer
 }
 
 model contract {
   id     Int    @id
   userId Int
   type   String @default("agreement") @db.VarChar(100)
+<<<<<<< HEAD
   status Status @default(PENDING)
   user   user?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+=======
+  status Status @default(pending)
+  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade)
+>>>>>>> bddf17575d141d0c9d41236c0b4f62385659c3f6
 }
 
 model deed_of_assignment {
-  id            Int    @id @default(autoincrement())
-  donor_name    String @db.VarChar(100)
-  donor_address String @db.VarChar(100)
-  donee_name    String @db.VarChar(100)
-  donee_address String @db.VarChar(100)
-
+  id                   Int      @id @default(autoincrement())
+  donor_name           String   @db.VarChar(100)
+  donor_address        String   @db.VarChar(100)
+  donee_name           String   @db.VarChar(100)
+  donee_address        String   @db.VarChar(100)
   type                 String   @default("agreement") @db.VarChar(100)
-  status               Status   @default(PENDING)
   property_description String?
   relevant_documents   String[]
   created_at           DateTime @default(now()) @db.Timestamp(6)
   updated_at           DateTime @updatedAt
   userId               Int
+  status               Status   @default(pending)
   user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -43,8 +57,8 @@ model lease {
   leasor_name String @db.VarChar(100)
   leasee_name String @db.VarChar(100)
   type        String @default("agreement") @db.VarChar(100)
-  status      Status @default(PENDING)
   userId      Int
+  status      Status @default(pending)
   user        user   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -53,8 +67,8 @@ model loan {
   borrower_name String @db.VarChar(100)
   lender_name   String @db.VarChar(100)
   type          String @default("agreement") @db.VarChar(100)
-  status        Status @default(PENDING)
   userId        Int
+  status        Status @default(pending)
   user          user   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -69,10 +83,9 @@ model power_of_attorney {
   created_at           DateTime @default(now()) @db.Timestamp(6)
   updated_at           DateTime @updatedAt
   type                 String   @default("agreement") @db.VarChar(100)
-  status               Status   @default(PENDING)
-
-  userId Int
-  user   user @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               Int
+  status               Status   @default(pending)
+  user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model sale {
@@ -82,13 +95,12 @@ model sale {
   property_description String?
   amount               Decimal? @db.Decimal(10, 2)
   type                 String   @default("agreement") @db.VarChar(100)
-  status               Status   @default(PENDING)
-
-  relevant_documents String[]
-  created_at         DateTime @default(now()) @db.Timestamp(6)
-  updated_at         DateTime @updatedAt
-  userId             Int
-  user               user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  relevant_documents   String[]
+  created_at           DateTime @default(now()) @db.Timestamp(6)
+  updated_at           DateTime @updatedAt
+  userId               Int
+  status               Status   @default(pending)
+  user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model tenancy {
@@ -99,15 +111,20 @@ model tenancy {
   tenant_address       String   @db.VarChar(100)
   property_description String?
   type                 String   @default("agreement") @db.VarChar(100)
-  status               Status   @default(PENDING)
   amount               Decimal  @db.Decimal(10, 2)
   duration             String   @db.VarChar(100)
   relevant_documents   String[]
   created_at           DateTime @default(now()) @db.Timestamp(6)
   updated_at           DateTime @updatedAt
+<<<<<<< HEAD
 
   userId Int?
   user   user? @relation(fields: [userId], references: [id], onDelete: Cascade)
+=======
+  userId               Int
+  status               Status   @default(pending)
+  user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+>>>>>>> bddf17575d141d0c9d41236c0b4f62385659c3f6
 }
 
 model user {
@@ -116,16 +133,23 @@ model user {
   hashedPassword     String?              @db.VarChar(200)
   firstName          String               @db.VarChar(200)
   lastName           String               @db.VarChar(200)
+  role               Role                 @default(customer)
   created_at         DateTime             @default(now()) @db.Timestamp(6)
   updated_at         DateTime             @updatedAt
+  account            account[]
   contract           contract[]
   deed_of_assignment deed_of_assignment[]
+  lease              lease[]
+  loan               loan[]
   power_of_attorney  power_of_attorney[]
   sale               sale[]
+<<<<<<< HEAD
   // tenancy            tenancy[]
   lease              lease[]
   loan               loan[]
   account            account[]
+=======
+>>>>>>> bddf17575d141d0c9d41236c0b4f62385659c3f6
   tenancy            tenancy[]
 }
 
@@ -144,8 +168,7 @@ model account {
   session_state  String?
   created_at     DateTime @default(now()) @db.Timestamp(6)
   updated_at     DateTime @updatedAt
-
-  user user @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user           user     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([provider, providerUserId])
 }

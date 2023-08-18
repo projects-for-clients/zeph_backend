@@ -7,7 +7,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { RedisService } from "src/redis/redis.service";
 import { UploadedFilesService } from "src/services/uploadFiles.service";
 import { UserRequestService } from 'src/services/userRequest.service';
-import { IQuery } from "types/Query";
+import { IQuery } from "types/types";
 import { CreateDto, UpdateTenancyTdo } from "./dto";
 
 
@@ -156,7 +156,7 @@ export class TenancyService {
 
 		const count = await this.prisma.tenancy.count()
 
-		console.log({data})
+		console.log({ data })
 
 
 		return {

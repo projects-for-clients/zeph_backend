@@ -2,6 +2,7 @@ import { Injectable, Logger, NestMiddleware, Scope } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
 import { UserRequestService } from 'src/services/userRequest.service';
+import { JwtPayload } from 'types/types';
 
 @Injectable({ scope: Scope.REQUEST })
 export class AuthMiddleware implements NestMiddleware {
@@ -11,10 +12,7 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(private jwt: JwtService, private userRequest: UserRequestService) { }
 
   use(req: Request, res: Response, next: () => void) {
-    interface Jwt {
-      id: number;
-      email: string;
-    }
+
 
     this.logger.log(AuthMiddleware.name);
 
@@ -36,9 +34,11 @@ export class AuthMiddleware implements NestMiddleware {
     }
 
     //decrypt jwt
-    const jwt: Jwt = this.jwt.verify(cookie, {
+    const jwt: JwtPayload = this.jwt.verify(cookie, {
       secret: process.env.JWT_SECRET,
-    });
+    })
+
+
 
     console.log({jwt})
 
@@ -46,7 +46,9 @@ export class AuthMiddleware implements NestMiddleware {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    this.userRequest.setUser(jwt.id, jwt.email);
+
+
+    this.userRequest.setUser(jwt.id, jwt.email, jwt.role);
     next();
   }
 }

@@ -2,6 +2,7 @@ import { EmailService } from 'src/services/email.service';
 import { Injectable } from '@nestjs/common';
 import { RedisService } from 'src/redis/redis.service';
 import { CreateEmailResponse } from 'resend/build/src/emails/interfaces';
+import { OTP_TIME } from 'src/constants';
 
 @Injectable()
 export class OtpService {
@@ -23,7 +24,7 @@ export class OtpService {
 
 
     const otp = Math.floor(100000 + Math.random() * 900000);
-    await this.redis.set(`otp-${email}-${otp}`, otp, 60 * 10);
+    await this.redis.set(`otp-${email}-${otp}`, otp, 60 * OTP_TIME);
 
     return this.sendOtp(email, otp)
   }

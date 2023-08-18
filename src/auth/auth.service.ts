@@ -38,7 +38,6 @@ export class AuthService {
 
     if (findUser) {
       throw new ForbiddenException("User already exists");
-
     }
 
     const otp = await this.OtpService.generateOtp(email)
