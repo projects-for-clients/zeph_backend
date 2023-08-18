@@ -13,7 +13,7 @@ export class CrudService {
 
         this.prisma[model].findMany();
 
-        
+
 
     }
 

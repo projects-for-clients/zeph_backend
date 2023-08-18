@@ -1,10 +1,9 @@
+import { CrudService } from 'src/services/crud.service';
 import * as path from "path";
 import { ForbiddenException, Injectable } from "@nestjs/common";
-import { tenancy } from "@prisma/client";
-import { Request } from "express";
 import * as fs from "fs/promises";
 import { PrismaService } from "src/prisma/prisma.service";
-import { RedisService } from "src/redis/redis.service";
+
 import { UploadedFilesService } from "src/services/uploadFiles.service";
 import { UserRequestService } from 'src/services/userRequest.service';
 import { IQuery } from "types/types";
@@ -17,7 +16,8 @@ export class TenancyService {
 		// @Inject(CACHE_MANAGER) private readonly cache: Cache,
 		private prisma: PrismaService,
 		private uploadFiles: UploadedFilesService,
-		private userRequest: UserRequestService
+		private userRequest: UserRequestService,
+		private CrudService: CrudService
 
 	) { }
 
@@ -26,9 +26,6 @@ export class TenancyService {
 
 
 	async create(createTenancyDto: CreateDto, files: Express.Multer.File[], req: any) {
-		console.log('create userId', this.userId)
-		console.log('req session', req.user)
-
 
 
 		const folderPath = path.join("uploads", TenancyService.name);
@@ -108,7 +105,6 @@ export class TenancyService {
 
 	async findAll(query: IQuery) {
 
-		console.log('fetch userId', this.userId)
 
 		const { from, to, key, value, page, take, perPage } = query
 
@@ -155,14 +151,16 @@ export class TenancyService {
 
 
 
-		const data = await this.prisma.tenancy.findMany({
-			skip: (_page - 1) * _perPage,
-			take: _take,
-		})
+		// const data = await this.prisma.tenancy.findMany({
+		// 	skip: (_page - 1) * _perPage,
+		// 	take: _take,
+		// })
+
+		const data = await this.CrudService.findMany('tenancy')
 
 		const count = await this.prisma.tenancy.count()
 
-		console.log({ data })
+		console.log("data from crud", data)
 
 
 		return {

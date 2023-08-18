@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("TEST_DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("PROD_DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -23,7 +23,7 @@ model contract {
   userId Int
   type   String @default("agreement") @db.VarChar(100)
   status Status @default(pending)
-  user   user?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model deed_of_assignment {
@@ -106,9 +106,9 @@ model tenancy {
   relevant_documents   String[]
   created_at           DateTime @default(now()) @db.Timestamp(6)
   updated_at           DateTime @updatedAt
-
-  userId Int?
-  user   user? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               Int
+  status               Status   @default(pending)
+  user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model user {
@@ -127,7 +127,6 @@ model user {
   loan               loan[]
   power_of_attorney  power_of_attorney[]
   sale               sale[]
-  // tenancy            tenancy[]
   tenancy            tenancy[]
 }
 

@@ -1,23 +1,15 @@
--- CreateEnum
-<<<<<<<< HEAD:prisma/migrations/20230817122348_test_tenancy/migration.sql
-CREATE TYPE "Status" AS ENUM ('PENDING', 'APPROVED');
-========
+
 CREATE TYPE "Status" AS ENUM ('pending', 'approved');
 
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('superAdmin', 'customer');
->>>>>>>> bddf17575d141d0c9d41236c0b4f62385659c3f6:prisma/migrations/20230817172444_init/migration.sql
 
 -- CreateTable
 CREATE TABLE "contract" (
     "id" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
-<<<<<<<< HEAD:prisma/migrations/20230817122348_test_tenancy/migration.sql
-    "status" "Status" NOT NULL DEFAULT 'PENDING',
-========
     "status" "Status" NOT NULL DEFAULT 'pending',
->>>>>>>> bddf17575d141d0c9d41236c0b4f62385659c3f6:prisma/migrations/20230817172444_init/migration.sql
 
     CONSTRAINT "contract_pkey" PRIMARY KEY ("id")
 );
@@ -113,18 +105,16 @@ CREATE TABLE "tenancy" (
     "tenant_address" VARCHAR(100) NOT NULL,
     "property_description" TEXT,
     "type" VARCHAR(100) NOT NULL DEFAULT 'agreement',
-    "status" "Status" NOT NULL DEFAULT 'PENDING',
+
     "amount" DECIMAL(10,2) NOT NULL,
     "duration" VARCHAR(100) NOT NULL,
     "relevant_documents" TEXT[],
     "created_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
-<<<<<<<< HEAD:prisma/migrations/20230817122348_test_tenancy/migration.sql
-    "userId" INTEGER,
-========
+  
+
     "userId" INTEGER NOT NULL,
     "status" "Status" NOT NULL DEFAULT 'pending',
->>>>>>>> bddf17575d141d0c9d41236c0b4f62385659c3f6:prisma/migrations/20230817172444_init/migration.sql
 
     CONSTRAINT "tenancy_pkey" PRIMARY KEY ("id")
 );
