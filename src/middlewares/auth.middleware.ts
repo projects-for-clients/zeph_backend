@@ -42,18 +42,21 @@ export class AuthMiddleware implements NestMiddleware {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    console.log({ jwt })
+
+    const { userId, email, role } = jwt;
 
 
+    this.userRequest.setUser({
+      userId,
+      email,
+      role
+    });
 
-    this.userRequest.setUser(jwt.userId, jwt.email, jwt.role);
-
-    req.user ={
+    req.user = {
       id: jwt.userId,
       email: jwt.email,
       role: jwt.role
     }
-
 
 
     next();
