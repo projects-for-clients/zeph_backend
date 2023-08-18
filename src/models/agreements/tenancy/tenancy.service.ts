@@ -67,24 +67,29 @@ export class TenancyService {
 
 		try {
 
-			// await storeFileHandler(folderPath);
+			await storeFileHandler(folderPath);
 
-			// const executed = await Promise.all(uploadedFiles.map(async (file) => {
-			// 	return (await file)()
-			// }));
+			const executed = await Promise.all(uploadedFiles.map(async (file) => {
+				return (await file)()
+			}));
 
-			// cleanUpPaths.map(async (writeTo) => {
-			// 	await fs.unlink(writeTo)
-			// })
+			cleanUpPaths.map(async (writeTo) => {
+				await fs.unlink(writeTo)
+			})
 
 
-			// const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
+			const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
+
+			console.log({
+				relevant_documents,
+				userId: this.userId
+			})
 
 
 			const tenancy = await this.prisma.tenancy.create({
 				data: {
 					...createTenancyDto,
-					relevant_documents: [''],
+					relevant_documents,
 					userId: this.userId
 				},
 			});
