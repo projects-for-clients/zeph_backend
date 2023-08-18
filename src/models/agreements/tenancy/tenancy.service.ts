@@ -82,10 +82,6 @@ export class TenancyService {
 
 			const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
 
-			console.log({
-				relevant_documents,
-				userId: this.userId
-			})
 
 
 			const tenancy = await this.prisma.tenancy.create({
