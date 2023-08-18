@@ -26,7 +26,7 @@ export class TenancyService {
 
 
 	async create(createTenancyDto: CreateDto, files: Express.Multer.File[]) {
-		console.log('userId', this.userId)
+		console.log('create userId', this.userId)
 
 
 		const folderPath = path.join("uploads", TenancyService.name);
@@ -110,6 +110,7 @@ export class TenancyService {
 
 	async findAll(query: IQuery) {
 
+		console.log('fetch userId', this.userId)
 
 		const { from, to, key, value, page, take, perPage } = query
 

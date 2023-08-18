@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
 
     // this.logger.log('AuthGuard', AuthGuard.name);
-    // const _context = context.switchToHttp().getRequest();
+    context.switchToHttp().getRequest();
 
     // const cookies = _context.res.req.cookies
 

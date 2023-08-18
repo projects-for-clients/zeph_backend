@@ -28,7 +28,7 @@ export class AuthMiddleware implements NestMiddleware {
     const cookie = req.cookies['api-auth'];
 
     if (!cookie) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      return res.status(401).json({ message: 'Forbidden Cookie Exception' });
     }
 
     //decrypt jwt
@@ -42,9 +42,14 @@ export class AuthMiddleware implements NestMiddleware {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
+    console.log({ jwt })
+
 
 
     this.userRequest.setUser(jwt.id, jwt.email, jwt.role);
+
+
     next();
+
   }
 }

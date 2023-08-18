@@ -6,7 +6,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { exclude } from 'src/utils/exclude';
 
 
-@Injectable({ scope: Scope.REQUEST })
+@Injectable()
 export class UserService {
   private readonly logger = new Logger(UserService.name);
 
