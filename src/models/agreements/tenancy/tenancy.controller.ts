@@ -18,9 +18,9 @@ import { FilesInterceptor } from "@nestjs/platform-express";
 import { CreateDto, UpdateTenancyTdo } from "./dto";
 import { TenancyService } from "./tenancy.service";
 
+import { Request } from "express";
 import { ConvertTypePipe } from "src/pipes/convertType.pipe";
 import { FileSizeValidationPipe } from "src/pipes/fileSize.pipe";
-import { Request } from "express";
 
 @UsePipes(
 	new ConvertTypePipe([
@@ -40,8 +40,8 @@ export class TenancyController {
 	create(
 		@Body() tenancyDto: CreateDto,
 		@UploadedFiles(new FileSizeValidationPipe()) files: Express.Multer.File[],
-	) {
-		return this.tenancyService.create(tenancyDto, files);
+		@Req() req: Request) {
+		return this.tenancyService.create(tenancyDto, files, req);
 	}
 
 	@Get()

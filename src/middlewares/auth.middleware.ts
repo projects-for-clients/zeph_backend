@@ -46,7 +46,14 @@ export class AuthMiddleware implements NestMiddleware {
 
 
 
-    this.userRequest.setUser(jwt.id, jwt.email, jwt.role);
+    this.userRequest.setUser(jwt.userId, jwt.email, jwt.role);
+
+    req.user ={
+      id: jwt.userId,
+      email: jwt.email,
+      role: jwt.role
+    }
+
 
 
     next();

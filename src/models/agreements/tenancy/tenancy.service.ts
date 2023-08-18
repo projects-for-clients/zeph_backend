@@ -25,8 +25,10 @@ export class TenancyService {
 
 
 
-	async create(createTenancyDto: CreateDto, files: Express.Multer.File[]) {
+	async create(createTenancyDto: CreateDto, files: Express.Multer.File[], req: any) {
 		console.log('create userId', this.userId)
+		console.log('req session', req.user)
+
 
 
 		const folderPath = path.join("uploads", TenancyService.name);

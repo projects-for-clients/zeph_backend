@@ -7,7 +7,7 @@ import * as dayjs from 'dayjs';
 import { CookieOptions, Response } from 'express';
 import { AuthEmail, AuthLogin, AuthOtp, AuthRegister } from 'src/auth/dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Role } from 'types/types';
+import { JwtPayload, Role } from 'types/types';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { OtpService } from './../services/otp.service';
 import { UserRequestService } from './../services/userRequest.service';
@@ -150,11 +150,11 @@ export class AuthService {
 
   async signToken(userId: number, email: string, role: Role, res: Response): Promise<void> {
 
-    const payload = {
+    const payload: JwtPayload = {
       userId,
       email,
       role,
-    } as const
+    }
 
     const token = this.jwt.sign(payload, {
       secret: this.secret,
