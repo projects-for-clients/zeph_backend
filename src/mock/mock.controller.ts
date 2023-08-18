@@ -44,16 +44,16 @@ export class MockController {
 
             // for (let i = 0; i < 1000; i++) {
 
-            const data = createFakeTenancy()
+            // const data = createFakeTenancy()
 
-            const res = await prisma.tenancy.create({
-                data: {
-                    ...data,
-                    relevant_documents: ['']
-                }
-            })
+            // const res = await prisma.tenancy.create({
+            //     data: {
+            //         ...data,
+            //         relevant_documents: ['']
+            //     }
+            // })
 
-            computed.push(res)
+            // computed.push(res)
             // }
 
             return computed;
