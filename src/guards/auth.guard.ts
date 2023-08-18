@@ -3,18 +3,22 @@ import {
   ExecutionContext,
   Injectable,
   Logger,
+  Scope,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
+import { UserRequestService } from 'src/services/userRequest.service';
 import { JwtPayload } from 'types/types';
 
 
-@Injectable()
+@Injectable({
+  scope: Scope.REQUEST
+})
 export class AuthGuard implements CanActivate {
   private readonly logger = new Logger(AuthGuard.name);
 
-  constructor(private reflector: Reflector, private jwt: JwtService) { }
+  constructor(private reflector: Reflector, private jwt: JwtService, private userRequest: UserRequestService) { }
 
 
 
@@ -22,7 +26,7 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext
   ): boolean | Promise<boolean> | Observable<boolean> {
 
-    this.logger.log('AuthGuard', AuthGuard.name);
+    // this.logger.log('AuthGuard', AuthGuard.name);
     const _context = context.switchToHttp().getRequest();
 
     const cookies = _context.res.req.cookies
@@ -44,7 +48,12 @@ export class AuthGuard implements CanActivate {
     });
 
 
+
+
     const { role } = jwt
+
+    this.userRequest.setUser(jwt.id, jwt.email, jwt.role);
+
 
     if (roles.indexOf(role) === -1) {
       return false
