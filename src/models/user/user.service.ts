@@ -15,7 +15,7 @@ export class UserService {
   async findAll() {
     const allUser = await this.prisma.user.findMany();
 
-    return exclude(allUser, ['hashedPassword', 'updated_at']);
+    return exclude(allUser, ['hashedPassword', 'updated_at', 'role']);
   }
 
   findOne(id: number) {
