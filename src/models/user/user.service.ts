@@ -11,12 +11,12 @@ import { user } from '@prisma/client';
 export class UserService {
   private readonly logger = new Logger(UserService.name);
 
-  constructor(private prisma: PrismaService, private crud: CrudService<user>) { }
+  constructor(private prisma: PrismaService) { }
 
   async findAll() {
     const allUser = await this.prisma.user.findMany();
 
-    this.crud.findMany()
+    // this.crud.findMany()
 
     return allUser;
   }
