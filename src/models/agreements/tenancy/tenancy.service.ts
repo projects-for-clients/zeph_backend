@@ -162,6 +162,8 @@ export class TenancyService {
 
 		const count = await this.prisma.tenancy.count()
 
+		console.log({ data })
+
 
 		return {
 			data,

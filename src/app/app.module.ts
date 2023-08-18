@@ -15,6 +15,7 @@ import { RedisCacheModule } from 'src/redis/redis.module';
 import { SharedModule } from 'src/shared/shared.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { MockController } from 'src/mock/mock.controller';
 
 @Module({
   imports: [
@@ -32,7 +33,7 @@ import { AppService } from './app.service';
     SaleModule,
     PowerOfAttorneyModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, MockController],
   providers: [
     AppService,
 

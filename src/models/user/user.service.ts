@@ -1,9 +1,10 @@
 import { Injectable, Logger, Scope } from '@nestjs/common';
+import { user } from '@prisma/client';
+import { CrudService } from 'src/services/crud.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserRequestService } from '../../services/userRequest.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { exclude } from 'src/utils/exclude';
 
 
 @Injectable()
@@ -15,7 +16,9 @@ export class UserService {
   async findAll() {
     const allUser = await this.prisma.user.findMany();
 
-    return exclude(allUser, ['hashedPassword', 'updated_at', 'role']);
+    // return exclude(allUser, ['hashedPassword', 'updated_at', 'role']);
+
+    return allUser
   }
 
   findOne(id: number) {

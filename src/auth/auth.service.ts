@@ -38,7 +38,6 @@ export class AuthService {
 
     if (findUser) {
       throw new ForbiddenException("User already exists");
-  
     }
 
     const otp = await this.OtpService.generateOtp(email)
@@ -68,11 +67,11 @@ export class AuthService {
   async authRegister(dto: AuthRegister, res: Response) {
     const { email, password, firstName, lastName } = dto
 
-    const stillCheckOtp = await this.OtpService.checkOtp(email)
+    // const stillCheckOtp = await this.OtpService.checkOtp(email)
 
-    if (!stillCheckOtp) {
-      throw new ForbiddenException("OTP Error");
-    }
+    // if (!stillCheckOtp) {
+    //   throw new ForbiddenException("OTP Error");
+    // }
 
     const hashedPassword = await argon.hash(password);
 
