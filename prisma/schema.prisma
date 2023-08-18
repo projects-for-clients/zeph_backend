@@ -3,13 +3,8 @@ generator client {
 }
 
 datasource db {
-<<<<<<< HEAD
   provider = "postgresql"
   url      = env("TEST_DATABASE_URL")
-=======
-  provider          = "postgresql"
-  url               = env("PROD_DATABASE_URL")
->>>>>>> bddf17575d141d0c9d41236c0b4f62385659c3f6
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -27,13 +22,8 @@ model contract {
   id     Int    @id
   userId Int
   type   String @default("agreement") @db.VarChar(100)
-<<<<<<< HEAD
-  status Status @default(PENDING)
-  user   user?  @relation(fields: [userId], references: [id], onDelete: Cascade)
-=======
   status Status @default(pending)
-  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade)
->>>>>>> bddf17575d141d0c9d41236c0b4f62385659c3f6
+  user   user?  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model deed_of_assignment {
@@ -116,15 +106,9 @@ model tenancy {
   relevant_documents   String[]
   created_at           DateTime @default(now()) @db.Timestamp(6)
   updated_at           DateTime @updatedAt
-<<<<<<< HEAD
 
   userId Int?
   user   user? @relation(fields: [userId], references: [id], onDelete: Cascade)
-=======
-  userId               Int
-  status               Status   @default(pending)
-  user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
->>>>>>> bddf17575d141d0c9d41236c0b4f62385659c3f6
 }
 
 model user {
@@ -143,13 +127,7 @@ model user {
   loan               loan[]
   power_of_attorney  power_of_attorney[]
   sale               sale[]
-<<<<<<< HEAD
   // tenancy            tenancy[]
-  lease              lease[]
-  loan               loan[]
-  account            account[]
-=======
->>>>>>> bddf17575d141d0c9d41236c0b4f62385659c3f6
   tenancy            tenancy[]
 }
 
