@@ -32,7 +32,7 @@ export class AuthMiddleware implements NestMiddleware {
     console.log('cookies', req.cookies)
 
     if (!cookie) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      return res.status(401).json({ message: 'Forbidden Cookie Exception' });
     }
 
     //decrypt jwt
