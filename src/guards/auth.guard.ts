@@ -17,9 +17,12 @@ export class AuthGuard implements CanActivate {
   constructor(private reflector: Reflector, private jwt: JwtService) { }
 
 
+
   canActivate(
     context: ExecutionContext
   ): boolean | Promise<boolean> | Observable<boolean> {
+
+    this.logger.log('AuthGuard', AuthGuard.name);
     const _context = context.switchToHttp().getRequest();
 
     const cookies = _context.res.req.cookies
@@ -48,7 +51,6 @@ export class AuthGuard implements CanActivate {
     }
 
 
-    this.logger.log('AuthGuard', AuthGuard.name);
 
     return true;
   }

@@ -3,6 +3,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { UserRequestService } from '../../services/userRequest.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { exclude } from 'src/utils/exclude';
 
 
 @Injectable({ scope: Scope.REQUEST })
@@ -14,7 +15,7 @@ export class UserService {
   async findAll() {
     const allUser = await this.prisma.user.findMany();
 
-    return allUser;
+    return exclude(allUser, ['hashedPassword']);
   }
 
   findOne(id: number) {
