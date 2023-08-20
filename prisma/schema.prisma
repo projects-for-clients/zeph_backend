@@ -18,7 +18,6 @@ enum Role {
   customer
 }
 
-
 model contract {
   id     Int    @id
   userId Int
@@ -44,25 +43,27 @@ model deed_of_assignment {
 }
 
 model lease {
-  id          Int    @id @default(autoincrement())
-  leasor_name String @db.VarChar(100)
-  leasee_name String @db.VarChar(100)
-  type        String @default("agreement") @db.VarChar(100)
-  userId      Int
-  status      Status @default(pending)
-  user        user   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           Int      @id @default(autoincrement())
+  leasor_name  String   @db.VarChar(100)
+  leasee_name  String   @db.VarChar(100)
+  type         String   @default("agreement") @db.VarChar(100)
+  amount       Decimal?
+  interestRate Int?     @default(1)
+  userId       Int
+  status       Status   @default(pending)
+  user         user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model loan {
-  id            Int    @id @default(autoincrement())
-  borrower_name String @db.VarChar(100)
-  lender_name   String @db.VarChar(100)
-  type          String @default("agreement") @db.VarChar(100)
+  id            Int      @id @default(autoincrement())
+  borrower_name String   @db.VarChar(100)
+  lender_name   String   @db.VarChar(100)
+  type          String   @default("agreement") @db.VarChar(100)
   userId        Int
-  amount        Decimal
-  interestRate  Int    @default(1)
-  status        Status @default(pending)
-  user          user   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount        Decimal?
+  interestRate  Int?     @default(1)
+  status        Status   @default(pending)
+  user          user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model power_of_attorney {
