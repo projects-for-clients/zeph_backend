@@ -167,6 +167,7 @@ export class AuthService {
     const cookieOptions = {
       expires: expiryTime,
       secure: true,
+
       httpOnly: true,
       sameSite: "none",
     } as CookieOptions

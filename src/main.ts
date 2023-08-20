@@ -9,7 +9,10 @@ async function bootstrap() {
 
     cors: {
 
-      origin: [process.env.PROD_CLIENT_URL, process.env.DEV_CLIENT_URL, 'http://localhost:3000/dashboard'],
+      // origin: process.env.NODE_ENV === 'production' ? process.env.CLIENT_URL : 'http://localhost:3000',
+
+      origin: [process.env.CLIENT_URL, 'http://localhost:3000'],
+
       credentials: true,
     },
   });
