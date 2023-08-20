@@ -18,6 +18,7 @@ enum Role {
   customer
 }
 
+
 model contract {
   id     Int    @id
   userId Int
