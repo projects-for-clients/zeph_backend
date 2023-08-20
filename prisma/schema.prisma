@@ -58,6 +58,8 @@ model loan {
   lender_name   String @db.VarChar(100)
   type          String @default("agreement") @db.VarChar(100)
   userId        Int
+  amount        Decimal
+  interestRate  Int    @default(1)
   status        Status @default(pending)
   user          user   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
