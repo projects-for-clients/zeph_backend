@@ -31,8 +31,19 @@ export class CrudService {
 
         const { from, to, key, value, page, take, perPage } = query
 
-        const _from = from ? new Date(from) : new Date(0)
-        const _to = to ? new Date(to) : new Date()
+        console.log({from})
+
+        if(from){
+            console.log('valid',from, new Date(from))
+        }else{
+            console.log('not valid', from)
+        }
+
+        const _from =  new Date(from) ?? new Date()
+
+        console.log({_from})
+
+        const _to =  new Date(to || '') 
 
         const _page = Number(page) || 1
         const _take = Number(take) || 10
