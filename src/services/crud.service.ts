@@ -102,6 +102,7 @@ export class CrudService {
             count,
             page: _page,
             take: _take,
+            totalPages: Math.ceil(count / _perPage),
             perPage: _perPage
         }
 
