@@ -27,31 +27,25 @@ export class CrudService {
         const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
 
 
-
-
         const { from, to, key, value, page, take, perPage } = query
 
-        console.log({from})
+        const _from = new Date(from) ?? new Date()
 
-        if(from){
-            console.log('valid',from, new Date(from))
-        }else{
-            console.log('not valid', from)
-        }
-
-        const _from =  new Date(from) ?? new Date()
-
-        console.log({_from})
-
-        const _to =  new Date(to || '') 
+        const _to = new Date(to || '')
 
         const _page = Number(page) || 1
         const _take = Number(take) || 10
         const _perPage = Number(perPage) || 10
 
+        const { role } = this.userSession
+
+
+        let found;
+
+
         if (from || to) {
 
-            const found = _prisma.findMany({
+            found = await _prisma.findMany({
                 skip: (_page - 1) * _perPage,
                 take: _take,
                 where: {
@@ -62,12 +56,11 @@ export class CrudService {
                 }
             })
 
-            return found
         }
 
         if (key && value) {
 
-            const found = _prisma.findMany({
+            found = await _prisma.findMany({
                 skip: (_page - 1) * _perPage,
                 take: _take,
                 where: {
@@ -77,26 +70,25 @@ export class CrudService {
                 }
             })
 
-            return found
+
         }
+        else {
 
 
-        const {role} = this.userSession
-
-        const data = await _prisma.findMany({
-            skip: (_page - 1) * _perPage,
-            take: _take,
-            include: {
-                user: role === 'superAdmin' 
-            }
-        }) as any
+            found = await _prisma.findMany({
+                skip: (_page - 1) * _perPage,
+                take: _take,
+                include: {
+                    user: role === 'superAdmin'
+                }
+            })
+        }
 
 
         const count = await _prisma.count()
 
-        const _data = modelName === 'user' ? exclude(data, ['hashedPassword']) : excludeNested(data, ["hashedPassword"])
+        const _data = modelName === 'user' ? exclude(found, ['hashedPassword']) : excludeNested(found, ["hashedPassword"])
 
-        console.log({ _data })
         return {
             data: _data,
             count,
