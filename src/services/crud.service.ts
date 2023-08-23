@@ -75,11 +75,12 @@ export class CrudService {
         else {
 
 
+
             found = await _prisma.findMany({
                 skip: (_page - 1) * _perPage,
                 take: _take,
                 include: {
-                    user: role === 'superAdmin'
+                    user: modelName !== 'user' && role === 'superAdmin'
                 }
             })
         }
