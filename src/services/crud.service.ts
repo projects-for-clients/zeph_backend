@@ -74,7 +74,7 @@ export class CrudService {
         }
         else {
 
-
+            
             found = await _prisma.findMany({
                 skip: (_page - 1) * _perPage,
                 take: _take,
@@ -87,7 +87,11 @@ export class CrudService {
 
         const count = await _prisma.count()
 
+        console.log({ found })
+
         const _data = modelName === 'user' ? exclude(found, ['hashedPassword']) : excludeNested(found, ["hashedPassword"])
+
+
 
         return {
             data: _data,

@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("TEST_DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("TEST_DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -43,23 +43,31 @@ model deed_of_assignment {
 }
 
 model lease {
-  id          Int    @id @default(autoincrement())
-  leasor_name String @db.VarChar(100)
-  leasee_name String @db.VarChar(100)
-  type        String @default("agreement") @db.VarChar(100)
-  userId      Int
-  status      Status @default(pending)
-  user        user   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                   Int      @id @default(autoincrement())
+  leasor_name          String?  @db.VarChar(100)
+  leasor_address       String?  @db.VarChar(100)
+  leasee_name          String?  @db.VarChar(100)
+  leasee_address       String?  @db.VarChar(100)
+  property_description String?
+  amount               Decimal?  @db.Decimal(10, 2)
+  duration             String?   @db.VarChar(100)
+  relevant_documents   String[]
+  type                 String   @default("agreement") @db.VarChar(100)
+  userId               Int
+  status               Status   @default(pending)
+  user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model loan {
-  id            Int    @id @default(autoincrement())
-  borrower_name String @db.VarChar(100)
-  lender_name   String @db.VarChar(100)
-  type          String @default("agreement") @db.VarChar(100)
+  id            Int      @id @default(autoincrement())
+  borrower_name String   @db.VarChar(100)
+  lender_name   String   @db.VarChar(100)
+  type          String   @default("agreement") @db.VarChar(100)
+  interestRate  Int?
+  amount        Decimal?
   userId        Int
-  status        Status @default(pending)
-  user          user   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status        Status   @default(pending)
+  user          user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model power_of_attorney {
