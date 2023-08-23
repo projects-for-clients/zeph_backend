@@ -59,7 +59,7 @@ export class CrudService {
         }
 
         if (key && value) {
-
+            console.log({ key, value })
             found = await _prisma.findMany({
                 skip: (_page - 1) * _perPage,
                 take: _take,
@@ -70,6 +70,7 @@ export class CrudService {
                 }
             })
 
+            console.log({found})
 
         }
         else {
