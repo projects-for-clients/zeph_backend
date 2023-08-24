@@ -42,7 +42,16 @@ export class CrudService {
         const { role } = this.userSession
 
 
+        let where = {}
 
+        if (key) {
+            where = {
+                [key]: {
+                    contains: value,
+                    mode: 'insensitive'
+                },
+            }
+        }
 
 
         try {
@@ -51,10 +60,7 @@ export class CrudService {
                 skip: (_page - 1) * _perPage,
                 take: _take,
                 where: {
-                    // [key]: {
-                    //     contains: value,
-                    //     mode: 'insensitive'
-                    // },
+                    ...where,
 
                     amount: {
                         gte: Number(value) || 0,
@@ -72,10 +78,7 @@ export class CrudService {
 
             const count = await _prisma.count({
                 where: {
-                    // [key]: {
-                    //     contains: value,
-                    //     mode: 'insensitive'
-                    // },
+                    ...where,
 
                     amount: {
                         gte: Number(value) || 0,
@@ -102,7 +105,7 @@ export class CrudService {
             }
         }
         catch (e) {
-            console.log({e})
+            console.log({ e })
             throw new ForbiddenException("Invalid Query, Check the key");
 
 
