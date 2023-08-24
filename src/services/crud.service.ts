@@ -24,14 +24,16 @@ export class CrudService {
 
     async findMany(modelName: string, query: IQuery) {
 
+
         const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
 
 
         const { from, to, key, value, page, take, perPage } = query
 
-        const _from = new Date(from) ?? new Date()
 
-        const _to = new Date(to || '')
+        const _from = from ? new Date(from) : new Date(0)
+
+        const _to = to ? new Date(to) : new Date()
 
         const _page = Number(page) || 1
         const _take = Number(take) || 10
@@ -40,69 +42,75 @@ export class CrudService {
         const { role } = this.userSession
 
 
-        let found;
 
 
-        if (from || to) {
 
-            found = await _prisma.findMany({
+        try {
+
+            const found = await _prisma.findMany({
                 skip: (_page - 1) * _perPage,
                 take: _take,
                 where: {
+                    // [key]: {
+                    //     contains: value,
+                    //     mode: 'insensitive'
+                    // },
+
+                    amount: {
+                        gte: Number(value) || 0,
+                    },
+
                     created_at: {
                         gte: _from,
                         lte: _to
                     }
-                }
-            })
-
-        }
-
-        if (key && value) {
-            console.log({ key, value })
-            found = await _prisma.findMany({
-                skip: (_page - 1) * _perPage,
-                take: _take,
-                where: {
-                    [key]: {
-                        contains: value
-                    }
-                }
-            })
-
-            console.log({found})
-
-        }
-        else {
-
-
-
-            found = await _prisma.findMany({
-                skip: (_page - 1) * _perPage,
-                take: _take,
+                },
                 include: {
                     user: modelName !== 'user' && role === 'superAdmin'
                 }
             })
+
+            const count = await _prisma.count({
+                where: {
+                    // [key]: {
+                    //     contains: value,
+                    //     mode: 'insensitive'
+                    // },
+
+                    amount: {
+                        gte: Number(value) || 0,
+                    },
+
+                    created_at: {
+                        gte: _from,
+                        lte: _to
+                    }
+                },
+            })
+
+            const _data = modelName === 'user' ? exclude(found as any, ['hashedPassword']) : excludeNested(found, ["hashedPassword"])
+
+
+
+            return {
+                data: _data,
+                count,
+                page: _page,
+                take: _take,
+                totalPages: Math.ceil(count / _perPage),
+                perPage: _perPage
+            }
+        }
+        catch (e) {
+            console.log({e})
+            throw new ForbiddenException("Invalid Query, Check the key");
+
+
         }
 
 
-        const count = await _prisma.count()
-
-        console.log({ found })
-
-        const _data = modelName === 'user' ? exclude(found, ['hashedPassword']) : excludeNested(found, ["hashedPassword"])
 
 
-
-        return {
-            data: _data,
-            count,
-            page: _page,
-            take: _take,
-            totalPages: Math.ceil(count / _perPage),
-            perPage: _perPage
-        }
 
     }
 
