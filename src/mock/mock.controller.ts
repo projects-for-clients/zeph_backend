@@ -76,7 +76,7 @@ export class MockController {
                     max: 200000
                 }),
                 userId: userIds[Math.floor(Math.random() * userIds.length)],
-               
+
                 created_at: faker.date.past().toISOString(),
                 updated_at: faker.date.recent().toISOString(),
                 relevant_documents: ['https://res.cloudinary.com/durzzjrom/raw/upload/v1692373112/uploads/TenancyService/users/2/SESA_prayers3_m8trkx.docx']
@@ -102,7 +102,7 @@ export class MockController {
                     max: 200000
                 }),
                 userId: userIds[Math.floor(Math.random() * userIds.length)],
-            
+
                 created_at: faker.date.past().toISOString(),
                 updated_at: faker.date.recent().toISOString(),
                 relevant_documents: ['https://res.cloudinary.com/durzzjrom/raw/upload/v1692373112/uploads/TenancyService/users/2/SESA_prayers3_m8trkx.docx']
@@ -155,7 +155,7 @@ export class MockController {
                     max: 200000
                 }),
                 userId: userIds[Math.floor(Math.random() * userIds.length)],
-              
+
                 created_at: faker.date.past().toISOString(),
                 updated_at: faker.date.recent().toISOString(),
                 relevant_documents: ['https://res.cloudinary.com/durzzjrom/raw/upload/v1692373112/uploads/TenancyService/users/2/SESA_prayers3_m8trkx.docx']
@@ -245,6 +245,16 @@ export class MockController {
                 })
 
                 console.log({ payment })
+
+                await tx[model].update({
+                    where: {
+                        id
+                    },
+                    data: {
+                        paymentRefId: payment.paymentRefId
+                    }
+
+                })
 
                 return {
                     create
