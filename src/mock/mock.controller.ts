@@ -36,7 +36,7 @@ export class MockController {
 
         }
 
-        
+
 
         const loan = () => {
 
@@ -45,7 +45,6 @@ export class MockController {
                 borrower_name: faker.person.fullName(),
                 lender_name: faker.person.fullName(),
                 isPaid: Math.random() * 3 > 1.5 ? true : false,
-                paymentRefId: Math.random() * 3000 + 1000,
                 status: Math.random() * 3 > 1.5 ? Status.pending : Status.approved,
                 amount: faker.finance.amount({
                     min: 500,
@@ -55,7 +54,7 @@ export class MockController {
                 userId: userIds[Math.floor(Math.random() * userIds.length)],
                 created_at: faker.date.past().toISOString(),
                 updated_at: faker.date.recent().toISOString(),
-                
+
 
 
             }
@@ -70,7 +69,6 @@ export class MockController {
                     length: 20
                 }),
                 isPaid: Math.random() * 3 > 1.5 ? true : false,
-                paymentRefId: Math.random() * 3000 + 1000,
                 status: Math.random() * 3 > 1.5 ? Status.pending : Status.approved,
                 amount: faker.finance.amount({
                     min: 500,
@@ -97,7 +95,6 @@ export class MockController {
                     length: 20
                 }),
                 isPaid: Math.random() * 3 > 1.5 ? true : false,
-                paymentRefId: Math.random() * 3000 + 1000,
                 status: Math.random() * 3 > 1.5 ? Status.pending : Status.approved,
                 amount: faker.finance.amount({
                     min: 500,
@@ -124,7 +121,6 @@ export class MockController {
                     length: 20
                 }),
                 isPaid: Math.random() * 3 > 1.5 ? true : false,
-                paymentRefId: Math.random() * 3000 + 1000,
                 status: Math.random() * 3 > 1.5 ? Status.pending : Status.approved,
                 amount: faker.finance.amount({
                     min: 500,
@@ -152,7 +148,6 @@ export class MockController {
                     length: 20
                 }),
                 isPaid: Math.random() * 3 > 1.5 ? true : false,
-                paymentRefId: Math.random() * 3000 + 1000,
                 status: Math.random() * 3 > 1.5 ? Status.pending : Status.approved,
                 amount: faker.finance.amount({
                     min: 500,
@@ -183,6 +178,8 @@ export class MockController {
                     min: 500,
                     max: 200000
                 }),
+                isPaid: Math.random() * 3 > 1.5 ? true : false,
+
                 userId: userIds[Math.floor(Math.random() * userIds.length)],
                 duration: `${Math.floor(Math.random() * (12 - 1) + 1)} Month`,
                 created_at: faker.date.past().toISOString(),
@@ -195,7 +192,7 @@ export class MockController {
 
 
 
-    
+
         // const powerOfAttorney = () => {
 
 
@@ -228,13 +225,13 @@ export class MockController {
 
             return await prisma.$transaction(async (tx) => {
 
-                const _tenancy = await tx[model].create({
+                const create = await tx[model].create({
                     data: {
                         ...data
                     }
                 })
 
-                const { id } = _tenancy
+                const { id } = create
 
 
                 const payment = await tx.payment.create({
@@ -249,7 +246,7 @@ export class MockController {
                 console.log({ payment })
 
                 return {
-                    _tenancy
+                    create
                 }
 
             })
@@ -262,10 +259,50 @@ export class MockController {
 
         }
 
+        if (id === 'lease') {
+            const data = lease()
 
+            return await transaction('lease', data)
 
+        }
 
+        if (id === 'power_of_attorney') {
+            const data = power_of_attorney()
 
+            return await transaction('power_of_attorney', data)
+
+        }
+
+        if (id === 'deed_of_assignment') {
+            const data = deed_of_assignment()
+
+            return await transaction('deed_of_assignment', data)
+
+        }
+
+        if (id === 'loan') {
+            const data = loan()
+
+            return await transaction('loan', data)
+        }
+
+        if (id === 'sale') {
+            const data = sale()
+
+            return await transaction('sale', data)
+        }
+
+        // if(id === 'contract'){
+        //     const data = contract()
+
+        //     return await transaction('contract', data)
+
+        // }
     }
+
+
+
+
+
 
 }

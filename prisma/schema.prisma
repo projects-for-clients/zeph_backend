@@ -127,7 +127,7 @@ model sale {
   purchaser_name       String   @db.VarChar(100)
   property_description String?
   isPaid               Boolean?
-  amount               Decimal?
+  amount               Decimal? @default(0)
   paymentRefId         Int?
   type                 String   @default("agreement") @db.VarChar(100)
   relevant_documents   String[]
@@ -148,7 +148,7 @@ model tenancy {
   status               Status   @default(pending)
   type                 String   @default("agreement") @db.VarChar(100)
   isPaid               Boolean?
-  amount               Decimal?
+  amount               Decimal? @default(0)
   paymentRefId         Int?
   duration             String   @db.VarChar(100)
   relevant_documents   String[]
