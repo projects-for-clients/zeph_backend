@@ -36,7 +36,7 @@ model payment {
   amount       Decimal
   userId       Int
   user         user      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  created_at   DateTime  @default(now()) @db.Timestamp(6)
+  created_at   DateTime  @default(now()) 
   updated_at   DateTime  @updatedAt
 }
 
@@ -63,7 +63,7 @@ model deed_of_assignment {
   paymentRefId         Int?
   property_description String?
   relevant_documents   String[]
-  created_at           DateTime @default(now()) @db.Timestamp(6)
+  created_at           DateTime @default(now())
   updated_at           DateTime @updatedAt
   userId               Int
   status               Status   @default(pending)
@@ -84,6 +84,8 @@ model lease {
   relevant_documents   String[]
   type                 String   @default("agreement") @db.VarChar(100)
   userId               Int
+  created_at           DateTime @default(now())
+  updated_at           DateTime @updatedAt
   status               Status   @default(pending)
   user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -97,7 +99,10 @@ model loan {
   paymentRefId  Int?
   type          String   @default("agreement") @db.VarChar(100)
   interestRate  Int
+  duration      String?
   userId        Int
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
   status        Status   @default(pending)
   user          user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -113,7 +118,7 @@ model power_of_attorney {
   isPaid               Boolean?
   amount               Decimal?
   paymentRefId         Int?
-  created_at           DateTime @default(now()) @db.Timestamp(6)
+  created_at           DateTime @default(now())
   updated_at           DateTime @updatedAt
   type                 String   @default("agreement") @db.VarChar(100)
   userId               Int
@@ -131,7 +136,7 @@ model sale {
   paymentRefId         Int?
   type                 String   @default("agreement") @db.VarChar(100)
   relevant_documents   String[]
-  created_at           DateTime @default(now()) @db.Timestamp(6)
+  created_at           DateTime @default(now())
   updated_at           DateTime @updatedAt
   userId               Int
   status               Status   @default(pending)
@@ -152,7 +157,7 @@ model tenancy {
   paymentRefId         Int?
   duration             String   @db.VarChar(100)
   relevant_documents   String[]
-  created_at           DateTime @default(now()) @db.Timestamp(6)
+  created_at           DateTime @default(now())
   updated_at           DateTime @updatedAt
 
   userId Int?
@@ -192,7 +197,7 @@ model account {
   scope          String?
   id_token       String?
   session_state  String?
-  created_at     DateTime @default(now()) @db.Timestamp(6)
+  created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
   user           user     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 

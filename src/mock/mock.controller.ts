@@ -50,6 +50,7 @@ export class MockController {
                     min: 500,
                     max: 200000
                 }),
+                duration: `${Math.floor(Math.random() * (12 - 1) + 1)} Month`,
                 interestRate: Math.random() * 100 + 1,
                 userId: userIds[Math.floor(Math.random() * userIds.length)],
                 created_at: faker.date.past().toISOString(),
@@ -75,7 +76,7 @@ export class MockController {
                     max: 200000
                 }),
                 userId: userIds[Math.floor(Math.random() * userIds.length)],
-                duration: `${Math.floor(Math.random() * (12 - 1) + 1)} Month`,
+               
                 created_at: faker.date.past().toISOString(),
                 updated_at: faker.date.recent().toISOString(),
                 relevant_documents: ['https://res.cloudinary.com/durzzjrom/raw/upload/v1692373112/uploads/TenancyService/users/2/SESA_prayers3_m8trkx.docx']
@@ -101,7 +102,7 @@ export class MockController {
                     max: 200000
                 }),
                 userId: userIds[Math.floor(Math.random() * userIds.length)],
-                duration: `${Math.floor(Math.random() * (12 - 1) + 1)} Month`,
+            
                 created_at: faker.date.past().toISOString(),
                 updated_at: faker.date.recent().toISOString(),
                 relevant_documents: ['https://res.cloudinary.com/durzzjrom/raw/upload/v1692373112/uploads/TenancyService/users/2/SESA_prayers3_m8trkx.docx']
@@ -154,7 +155,7 @@ export class MockController {
                     max: 200000
                 }),
                 userId: userIds[Math.floor(Math.random() * userIds.length)],
-                duration: `${Math.floor(Math.random() * (12 - 1) + 1)} Month`,
+              
                 created_at: faker.date.past().toISOString(),
                 updated_at: faker.date.recent().toISOString(),
                 relevant_documents: ['https://res.cloudinary.com/durzzjrom/raw/upload/v1692373112/uploads/TenancyService/users/2/SESA_prayers3_m8trkx.docx']
