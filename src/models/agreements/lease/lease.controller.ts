@@ -7,17 +7,25 @@ import {
   Patch,
   Post,
   Query,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { createDto, updateDto } from './dto';
 import { LeaseService } from './lease.service';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileSizeValidationPipe } from 'src/pipes/fileSize.pipe';
 
 @Controller('lease')
 export class LeaseController {
   constructor(private readonly leaseService: LeaseService) { }
 
   @Post()
-  create(@Body() createLeaseDto: createDto) {
-    return this.leaseService.create(createLeaseDto);
+  @UseInterceptors(FilesInterceptor("relevant_documents"))
+  create(
+    @Body() create: createDto,
+    @UploadedFiles(new FileSizeValidationPipe()) files: Express.Multer.File[],
+  ) {
+    return this.leaseService.create(create, files);
   }
 
   @Get()
