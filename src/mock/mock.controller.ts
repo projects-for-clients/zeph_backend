@@ -11,19 +11,164 @@ export class MockController {
         const prisma = new PrismaClient()
         const userIds = [1, 2]
 
-        
-        const payment = () => {
-
-            
+        enum Status {
+            pending = 'pending',
+            approved = 'approved'
         }
 
+        const payment = () => {
+            enum ModelType {
+                contract = 'contract',
+                deed_of_assignment = 'deed_of_assignment',
+                lease = 'lease',
+                power_of_attorney = 'power_of_attorney',
+                loan = 'loan',
+                sale = 'sale',
+                tenancy = 'tenancy'
+            }
 
+            const modelType = [ModelType.contract, ModelType.deed_of_assignment, ModelType.lease, ModelType.loan, ModelType.power_of_attorney, ModelType.sale, ModelType.tenancy]
+
+            return {
+                model: ModelType[modelType[Math.floor(Math.random() * modelType.length)]],
+                userId: userIds[Math.floor(Math.random() * userIds.length)],
+            }
+
+        }
+
+        
+
+        const loan = () => {
+
+
+            return {
+                borrower_name: faker.person.fullName(),
+                lender_name: faker.person.fullName(),
+                isPaid: Math.random() * 3 > 1.5 ? true : false,
+                paymentRefId: Math.random() * 3000 + 1000,
+                status: Math.random() * 3 > 1.5 ? Status.pending : Status.approved,
+                amount: faker.finance.amount({
+                    min: 500,
+                    max: 200000
+                }),
+                interestRate: Math.random() * 100 + 1,
+                userId: userIds[Math.floor(Math.random() * userIds.length)],
+                created_at: faker.date.past().toISOString(),
+                updated_at: faker.date.recent().toISOString(),
+                
+
+
+            }
+        }
+        const sale = () => {
+
+
+            return {
+                vendor_name: faker.person.fullName(),
+                purchaser_name: faker.person.fullName(),
+                property_description: faker.word.sample({
+                    length: 20
+                }),
+                isPaid: Math.random() * 3 > 1.5 ? true : false,
+                paymentRefId: Math.random() * 3000 + 1000,
+                status: Math.random() * 3 > 1.5 ? Status.pending : Status.approved,
+                amount: faker.finance.amount({
+                    min: 500,
+                    max: 200000
+                }),
+                userId: userIds[Math.floor(Math.random() * userIds.length)],
+                duration: `${Math.floor(Math.random() * (12 - 1) + 1)} Month`,
+                created_at: faker.date.past().toISOString(),
+                updated_at: faker.date.recent().toISOString(),
+                relevant_documents: ['https://res.cloudinary.com/durzzjrom/raw/upload/v1692373112/uploads/TenancyService/users/2/SESA_prayers3_m8trkx.docx']
+
+
+            }
+        }
+        const power_of_attorney = () => {
+
+
+            return {
+                assignor_name: faker.person.fullName(),
+                assignor_address: faker.location.streetAddress(),
+                assignee_name: faker.person.fullName(),
+                assignee_address: faker.location.streetAddress(),
+                property_description: faker.word.sample({
+                    length: 20
+                }),
+                isPaid: Math.random() * 3 > 1.5 ? true : false,
+                paymentRefId: Math.random() * 3000 + 1000,
+                status: Math.random() * 3 > 1.5 ? Status.pending : Status.approved,
+                amount: faker.finance.amount({
+                    min: 500,
+                    max: 200000
+                }),
+                userId: userIds[Math.floor(Math.random() * userIds.length)],
+                duration: `${Math.floor(Math.random() * (12 - 1) + 1)} Month`,
+                created_at: faker.date.past().toISOString(),
+                updated_at: faker.date.recent().toISOString(),
+                relevant_documents: ['https://res.cloudinary.com/durzzjrom/raw/upload/v1692373112/uploads/TenancyService/users/2/SESA_prayers3_m8trkx.docx']
+
+
+            }
+        }
+        const lease = () => {
+
+
+            return {
+                leasor_name: faker.person.fullName(),
+                leasor_address: faker.location.streetAddress(),
+                leasee_name: faker.person.fullName(),
+                leasee_address: faker.location.streetAddress(),
+                property_description: faker.word.sample({
+                    length: 20
+                }),
+                isPaid: Math.random() * 3 > 1.5 ? true : false,
+                paymentRefId: Math.random() * 3000 + 1000,
+                status: Math.random() * 3 > 1.5 ? Status.pending : Status.approved,
+                amount: faker.finance.amount({
+                    min: 500,
+                    max: 200000
+                }),
+                userId: userIds[Math.floor(Math.random() * userIds.length)],
+                duration: `${Math.floor(Math.random() * (12 - 1) + 1)} Month`,
+                created_at: faker.date.past().toISOString(),
+                updated_at: faker.date.recent().toISOString(),
+                relevant_documents: ['https://res.cloudinary.com/durzzjrom/raw/upload/v1692373112/uploads/TenancyService/users/2/SESA_prayers3_m8trkx.docx']
+
+
+            }
+        }
+
+        const deed_of_assignment = () => {
+
+
+            return {
+                donor_name: faker.person.fullName(),
+                donor_address: faker.location.streetAddress(),
+                donee_name: faker.person.fullName(),
+                donee_address: faker.location.streetAddress(),
+                property_description: faker.word.sample({
+                    length: 20
+                }),
+                isPaid: Math.random() * 3 > 1.5 ? true : false,
+                paymentRefId: Math.random() * 3000 + 1000,
+                status: Math.random() * 3 > 1.5 ? Status.pending : Status.approved,
+                amount: faker.finance.amount({
+                    min: 500,
+                    max: 200000
+                }),
+                userId: userIds[Math.floor(Math.random() * userIds.length)],
+                duration: `${Math.floor(Math.random() * (12 - 1) + 1)} Month`,
+                created_at: faker.date.past().toISOString(),
+                updated_at: faker.date.recent().toISOString(),
+                relevant_documents: ['https://res.cloudinary.com/durzzjrom/raw/upload/v1692373112/uploads/TenancyService/users/2/SESA_prayers3_m8trkx.docx']
+
+
+            }
+        }
         const tenancy = () => {
 
-            enum Status {
-                pending = 'pending',
-                approved = 'approved'
-            }
 
             return {
                 landlord_name: faker.person.fullName(),
@@ -50,34 +195,9 @@ export class MockController {
 
 
 
-        const powerOfAttorney = () => {
+    
+        // const powerOfAttorney = () => {
 
-            enum Status {
-                pending = 'pending',
-                approved = 'approved'
-            }
-
-            return {
-                landlord_name: faker.person.fullName(),
-                landlord_address: faker.location.streetAddress(),
-                tenant_name: faker.person.fullName(),
-                tenant_address: faker.location.streetAddress(),
-                property_description: faker.word.sample({
-                    length: 20
-                }),
-                status: Math.random() * 3 > 1.5 ? Status.pending : Status.approved,
-                amount: faker.finance.amount({
-                    min: 500,
-                    max: 200000
-                }),
-                userId: userIds[Math.floor(Math.random() * userIds.length)],
-                duration: `${Math.floor(Math.random() * (12 - 1) + 1)} Month`,
-                created_at: faker.date.past().toISOString(),
-                updated_at: faker.date.recent().toISOString(),
-                relevant_documents: ['https://res.cloudinary.com/durzzjrom/raw/upload/v1692373112/uploads/TenancyService/users/2/SESA_prayers3_m8trkx.docx']
-
-            }
-        }
 
         //Build this in golang, 
         // it took 4m,35seconds in nestjs
@@ -100,36 +220,50 @@ export class MockController {
         //     return computed;
 
         // }
-        
-       
 
 
-        switch (id) {
-            case 'tenancy': 
+        const paymentData = payment()
 
-                 async() => {
-                    const data = tenancy()
-                    const _tenancy =  await prisma.tenancy.create({
-                        data: {
-                            ...data
-                        }
-                    })
-                    
-                    const {id} = _tenancy
+        const transaction = async (model: string, data: any) => {
+
+            return await prisma.$transaction(async (tx) => {
+
+                const _tenancy = await tx[model].create({
+                    data: {
+                        ...data
+                    }
+                })
+
+                const { id } = _tenancy
 
 
-                    const payment = await prisma.payment.create({
-                        data: {
+                const payment = await tx.payment.create({
+                    data: {
+                        ...paymentData,
+                        modelId: id,
+                        amount: data.amount,
+                        paymentRefId: Math.random() * 100
+                    }
+                })
 
-                        }
-                    })
+                console.log({ payment })
 
+                return {
+                    _tenancy
                 }
-            
-          
-            default:
-                return tenancy()
+
+            })
         }
+
+        if (id === 'tenancy') {
+            const data = tenancy()
+
+            return await transaction('tenancy', data)
+
+        }
+
+
+
 
 
     }

@@ -29,22 +29,26 @@ enum modelType {
 }
 
 model payment {
-  id         Int       @id @default(autoincrement())
-  model      modelType
-  modelId    String
-  userId     Int
-  user       user      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  created_at DateTime  @default(now()) @db.Timestamp(6)
-  updated_at DateTime  @updatedAt
+  id           String    @id @default(cuid())
+  model        modelType
+  modelId      Int
+  paymentRefId Int
+  amount       Decimal
+  userId       Int
+  user         user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  created_at   DateTime  @default(now()) @db.Timestamp(6)
+  updated_at   DateTime  @updatedAt
 }
 
 model contract {
-  id     Int     @id
-  userId Int
-  type   String  @default("agreement") @db.VarChar(100)
-  status Status  @default(pending)
-  amount Decimal
-  user   user?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           Int      @id
+  userId       Int
+  type         String   @default("agreement") @db.VarChar(100)
+  status       Status   @default(pending)
+  isPaid       Boolean?
+  amount       Decimal?
+  paymentRefId Int?
+  user         user?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model deed_of_assignment {
@@ -54,6 +58,9 @@ model deed_of_assignment {
   donee_name           String   @db.VarChar(100)
   donee_address        String   @db.VarChar(100)
   type                 String   @default("agreement") @db.VarChar(100)
+  isPaid               Boolean?
+  amount               Decimal?
+  paymentRefId         Int?
   property_description String?
   relevant_documents   String[]
   created_at           DateTime @default(now()) @db.Timestamp(6)
@@ -70,7 +77,9 @@ model lease {
   leasee_name          String   @db.VarChar(100)
   leasee_address       String   @db.VarChar(100)
   property_description String
-  amount               Decimal  @db.Decimal(10, 2)
+  isPaid               Boolean?
+  amount               Decimal?
+  paymentRefId         Int?
   duration             String   @db.VarChar(100)
   relevant_documents   String[]
   type                 String   @default("agreement") @db.VarChar(100)
@@ -80,15 +89,17 @@ model lease {
 }
 
 model loan {
-  id            Int     @id @default(autoincrement())
-  borrower_name String  @db.VarChar(100)
-  lender_name   String  @db.VarChar(100)
-  type          String  @default("agreement") @db.VarChar(100)
+  id            Int      @id @default(autoincrement())
+  borrower_name String   @db.VarChar(100)
+  lender_name   String   @db.VarChar(100)
+  isPaid        Boolean?
+  amount        Decimal?
+  paymentRefId  Int?
+  type          String   @default("agreement") @db.VarChar(100)
   interestRate  Int
-  amount        Decimal
   userId        Int
-  status        Status  @default(pending)
-  user          user    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status        Status   @default(pending)
+  user          user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model power_of_attorney {
@@ -99,6 +110,9 @@ model power_of_attorney {
   assignee_address     String   @db.VarChar(100)
   property_description String?
   relevant_documents   String[]
+  isPaid               Boolean?
+  amount               Decimal?
+  paymentRefId         Int?
   created_at           DateTime @default(now()) @db.Timestamp(6)
   updated_at           DateTime @updatedAt
   type                 String   @default("agreement") @db.VarChar(100)
@@ -112,7 +126,9 @@ model sale {
   vendor_name          String   @db.VarChar(100)
   purchaser_name       String   @db.VarChar(100)
   property_description String?
-  amount               Decimal? @db.Decimal(10, 2)
+  isPaid               Boolean?
+  amount               Decimal?
+  paymentRefId         Int?
   type                 String   @default("agreement") @db.VarChar(100)
   relevant_documents   String[]
   created_at           DateTime @default(now()) @db.Timestamp(6)
@@ -131,7 +147,9 @@ model tenancy {
   property_description String?
   status               Status   @default(pending)
   type                 String   @default("agreement") @db.VarChar(100)
-  amount               Decimal  @db.Decimal(10, 2)
+  isPaid               Boolean?
+  amount               Decimal?
+  paymentRefId         Int?
   duration             String   @db.VarChar(100)
   relevant_documents   String[]
   created_at           DateTime @default(now()) @db.Timestamp(6)
@@ -157,7 +175,6 @@ model user {
   loan               loan[]
   power_of_attorney  power_of_attorney[]
   sale               sale[]
-  // tenancy            tenancy[]
   tenancy            tenancy[]
   payment            payment[]
 }
