@@ -1,29 +1,21 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { UserRequestService } from 'src/services/userRequest.service';
 import { CrudService } from 'src/services/crud.service';
+import { UserRequestService } from 'src/services/userRequest.service';
 
-import { createDto, updateDto } from './dto';
 import { IQuery } from 'types/types';
+import { createDto, updateDto } from './dto';
 
 
 @Injectable()
 export class LeaseService {
-  constructor(private prisma: PrismaService, private userRequest: UserRequestService, private CrudService: CrudService) { }
+  constructor(private CrudService: CrudService) { }
 
-  async create(createLeaseDto: createDto) {
-    const userId = this.userRequest.getUserId();
+  async create(createDto: createDto, files: Express.Multer.File[]) {
 
-    const lease = await this.prisma.lease.create({
-      data: {
-        ...createLeaseDto,
-        userId,
-      },
-    });
+    return this.CrudService.create('lease', createDto as any, files)
 
-    if (!lease) { throw new ForbiddenException('Unable to create lease'); }
 
-    return lease;
   }
 
   async findAll(query: IQuery) {
