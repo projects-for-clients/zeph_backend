@@ -18,12 +18,33 @@ enum Role {
   customer
 }
 
+enum modelType {
+  contract
+  deed_of_assignment
+  lease
+  power_of_attorney
+  loan
+  sale
+  tenancy
+}
+
+model payment {
+  id         Int       @id @default(autoincrement())
+  model      modelType
+  modelId    String
+  userId     Int
+  user       user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  created_at DateTime  @default(now()) @db.Timestamp(6)
+  updated_at DateTime  @updatedAt
+}
+
 model contract {
-  id     Int    @id
+  id     Int     @id
   userId Int
-  type   String @default("agreement") @db.VarChar(100)
-  status Status @default(pending)
-  user   user?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type   String  @default("agreement") @db.VarChar(100)
+  status Status  @default(pending)
+  amount Decimal
+  user   user?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model deed_of_assignment {
@@ -44,13 +65,13 @@ model deed_of_assignment {
 
 model lease {
   id                   Int      @id @default(autoincrement())
-  leasor_name          String?  @db.VarChar(100)
-  leasor_address       String?  @db.VarChar(100)
-  leasee_name          String?  @db.VarChar(100)
-  leasee_address       String?  @db.VarChar(100)
-  property_description String?
-  amount               Decimal?  @db.Decimal(10, 2)
-  duration             String?   @db.VarChar(100)
+  leasor_name          String   @db.VarChar(100)
+  leasor_address       String   @db.VarChar(100)
+  leasee_name          String   @db.VarChar(100)
+  leasee_address       String   @db.VarChar(100)
+  property_description String
+  amount               Decimal  @db.Decimal(10, 2)
+  duration             String   @db.VarChar(100)
   relevant_documents   String[]
   type                 String   @default("agreement") @db.VarChar(100)
   userId               Int
@@ -59,15 +80,15 @@ model lease {
 }
 
 model loan {
-  id            Int      @id @default(autoincrement())
-  borrower_name String   @db.VarChar(100)
-  lender_name   String   @db.VarChar(100)
-  type          String   @default("agreement") @db.VarChar(100)
-  interestRate  Int?
-  amount        Decimal?
+  id            Int     @id @default(autoincrement())
+  borrower_name String  @db.VarChar(100)
+  lender_name   String  @db.VarChar(100)
+  type          String  @default("agreement") @db.VarChar(100)
+  interestRate  Int
+  amount        Decimal
   userId        Int
-  status        Status   @default(pending)
-  user          user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status        Status  @default(pending)
+  user          user    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model power_of_attorney {
@@ -108,6 +129,7 @@ model tenancy {
   tenant_name          String   @db.VarChar(100)
   tenant_address       String   @db.VarChar(100)
   property_description String?
+  status               Status   @default(pending)
   type                 String   @default("agreement") @db.VarChar(100)
   amount               Decimal  @db.Decimal(10, 2)
   duration             String   @db.VarChar(100)
@@ -122,7 +144,7 @@ model tenancy {
 model user {
   id                 Int                  @id @default(autoincrement())
   email              String               @unique @db.VarChar(50)
-  hashedPassword     String?              @db.VarChar(200)
+  hashedPassword     String               @db.VarChar(200)
   firstName          String               @db.VarChar(200)
   lastName           String               @db.VarChar(200)
   role               Role                 @default(customer)
@@ -137,6 +159,7 @@ model user {
   sale               sale[]
   // tenancy            tenancy[]
   tenancy            tenancy[]
+  payment            payment[]
 }
 
 model account {

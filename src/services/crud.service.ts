@@ -51,6 +51,17 @@ export class CrudService {
                     mode: 'insensitive'
                 },
             }
+
+            if(key === 'amount'){
+
+                where = {
+                    ...where,
+                    amount: {
+                        gte: Number(value) || 0,
+                    },
+                }
+            
+            }
         }
 
 
@@ -61,10 +72,6 @@ export class CrudService {
                 take: _take,
                 where: {
                     ...where,
-
-                    amount: {
-                        gte: Number(value) || 0,
-                    },
 
                     created_at: {
                         gte: _from,
@@ -79,10 +86,6 @@ export class CrudService {
             const count = await _prisma.count({
                 where: {
                     ...where,
-
-                    amount: {
-                        gte: Number(value) || 0,
-                    },
 
                     created_at: {
                         gte: _from,
