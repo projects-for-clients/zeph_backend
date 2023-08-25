@@ -224,43 +224,57 @@ export class MockController {
 
         const transaction = async (model: string, data: any) => {
 
-            return await prisma.$transaction(async (tx) => {
+            const computed = []
+        
+            for (let i = 0; i < 100; i++) {
 
-                const create = await tx[model].create({
-                    data: {
-                        ...data
+
+
+                const res = await prisma.$transaction(async (tx) => {
+
+                    const create = await tx[model].create({
+                        data: {
+                            ...data
+                        }
+                    })
+
+                    const { id } = create
+
+
+                    const payment = await tx.payment.create({
+                        data: {
+                            ...paymentData,
+                            modelId: id,
+                            amount: data.amount,
+                            paymentRefId: Math.random() * 100
+                        }
+                    })
+
+                    console.log({ payment })
+
+                    const update = await tx[model].update({
+                        where: {
+                            id
+                        },
+                        data: {
+                            paymentRefId: payment.paymentRefId
+                        }
+
+                    })
+
+                    return {
+                        update
                     }
+
                 })
 
-                const { id } = create
+                computed.push(res)
+            
+            }
 
+            return computed;
 
-                const payment = await tx.payment.create({
-                    data: {
-                        ...paymentData,
-                        modelId: id,
-                        amount: data.amount,
-                        paymentRefId: Math.random() * 100
-                    }
-                })
-
-                console.log({ payment })
-
-                await tx[model].update({
-                    where: {
-                        id
-                    },
-                    data: {
-                        paymentRefId: payment.paymentRefId
-                    }
-
-                })
-
-                return {
-                    create
-                }
-
-            })
+        
         }
 
         if (id === 'tenancy') {
