@@ -53,10 +53,10 @@ model contract {
 
 model deed_of_assignment {
   id                   Int      @id @default(autoincrement())
-  donor_name           String   @db.VarChar(100)
-  donor_address        String   @db.VarChar(100)
-  donee_name           String   @db.VarChar(100)
-  donee_address        String   @db.VarChar(100)
+  assignor_name           String   @db.VarChar(100)
+  assignor_address        String   @db.VarChar(100)
+  assignee_name           String   @db.VarChar(100)
+  assignee_address        String   @db.VarChar(100)
   type                 String   @default("agreement") @db.VarChar(100)
   isPaid               Boolean?
   amount               Decimal?
@@ -109,10 +109,10 @@ model loan {
 
 model power_of_attorney {
   id                   Int      @id @default(autoincrement())
-  assignor_name        String   @db.VarChar(100)
-  assignor_address     String   @db.VarChar(100)
-  assignee_name        String   @db.VarChar(100)
-  assignee_address     String   @db.VarChar(100)
+  donor_name        String   @db.VarChar(100)
+  donor_address     String   @db.VarChar(100)
+  donee_name        String   @db.VarChar(100)
+  donee_address     String   @db.VarChar(100)
   property_description String?
   relevant_documents   String[]
   isPaid               Boolean?
