@@ -7,7 +7,6 @@ import {
 	Patch,
 	Post,
 	Query,
-	Req,
 	UploadedFiles,
 	UseInterceptors,
 	UsePipes,
@@ -18,7 +17,6 @@ import { FilesInterceptor } from "@nestjs/platform-express";
 import { CreateDto, UpdateTenancyTdo } from "./dto";
 import { TenancyService } from "./tenancy.service";
 
-import { Request } from "express";
 import { ConvertTypePipe } from "src/pipes/convertType.pipe";
 import { FileSizeValidationPipe } from "src/pipes/fileSize.pipe";
 
@@ -40,7 +38,9 @@ export class TenancyController {
 	create(
 		@Body() tenancyDto: CreateDto,
 		@UploadedFiles(new FileSizeValidationPipe()) files: Express.Multer.File[]) {
-		return this.tenancyService.create(tenancyDto, files);
+			console.log({files});
+			
+		// return this.tenancyService.create(tenancyDto, files);
 	}
 
 	@Get()

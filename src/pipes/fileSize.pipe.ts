@@ -4,6 +4,8 @@ import { PipeTransform, Injectable, ForbiddenException } from '@nestjs/common';
 export class FileSizeValidationPipe implements PipeTransform {
     transform(value: Express.Multer.File[]) {
 
+        console.log('files---', {value})
+
         let mbTotalFileSize = 0
 
         const limitFileSize = 5; // 5MB

@@ -88,10 +88,10 @@ export class MockController {
 
 
             return {
-                assignor_name: faker.person.fullName(),
-                assignor_address: faker.location.streetAddress(),
-                assignee_name: faker.person.fullName(),
-                assignee_address: faker.location.streetAddress(),
+                donor_name: faker.person.fullName(),
+                donor_address: faker.location.streetAddress(),
+                donee_name: faker.person.fullName(),
+                donee_address: faker.location.streetAddress(),
                 property_description: faker.word.sample({
                     length: 20
                 }),
@@ -141,10 +141,10 @@ export class MockController {
 
 
             return {
-                donor_name: faker.person.fullName(),
-                donor_address: faker.location.streetAddress(),
-                donee_name: faker.person.fullName(),
-                donee_address: faker.location.streetAddress(),
+                assignor_name: faker.person.fullName(),
+                assignor_address: faker.location.streetAddress(),
+                assignee_name: faker.person.fullName(),
+                assignee_address: faker.location.streetAddress(),
                 property_description: faker.word.sample({
                     length: 20
                 }),

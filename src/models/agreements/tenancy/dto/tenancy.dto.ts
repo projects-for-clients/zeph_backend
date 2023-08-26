@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, isNumber, IsNumber } from 'class-validator';
 
 export class CreateDto {
   @IsString()
@@ -28,7 +28,7 @@ export class CreateDto {
   // @IsArray()
   // relevant_documents: string[];
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
   amount: number;
 }
@@ -70,7 +70,7 @@ export class UpdateTenancyTdo {
   // relevant_documents: string[];
 
   @IsOptional()
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
   amount: number;
 }
