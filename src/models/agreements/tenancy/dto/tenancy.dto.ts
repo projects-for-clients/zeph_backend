@@ -28,7 +28,8 @@ export class CreateDto {
   // @IsArray()
   // relevant_documents: string[];
 
-  @IsNumber()
+  @IsString()
+  @IsOptional()
   @IsNotEmpty()
   amount: number;
 }

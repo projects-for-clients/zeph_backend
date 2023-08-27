@@ -20,6 +20,7 @@ import { TenancyService } from "./tenancy.service";
 import { ConvertTypePipe } from "src/pipes/convertType.pipe";
 import { FileSizeValidationPipe } from "src/pipes/fileSize.pipe";
 
+
 @UsePipes(
 	new ConvertTypePipe([
 		{
@@ -34,17 +35,17 @@ export class TenancyController {
 	constructor(private readonly tenancyService: TenancyService) { }
 
 	@Post()
-	@UseInterceptors(FilesInterceptor("relevant_documents"))
-	create(
-		@Body() tenancyDto: CreateDto,
+	@UseInterceptors(FilesInterceptor("relevant_documents[]"))
+	create( 
+		@Body() tenancyDto: any,
 		@UploadedFiles(new FileSizeValidationPipe()) files: Express.Multer.File[]) {
-			console.log({files});
 			
-		// return this.tenancyService.create(tenancyDto, files);
+		return this.tenancyService.create(tenancyDto, files);
 	}
 
 	@Get()
 	findAll(@Query() query: any) {
+		
 		return this.tenancyService.findAll(query);
 	}
 
