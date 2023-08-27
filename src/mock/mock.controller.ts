@@ -224,97 +224,172 @@ export class MockController {
 
         const transaction = async (model: string, data: any) => {
 
-            const computed = []
-        
-            for (let i = 0; i < 100; i++) {
 
 
 
-                const res = await prisma.$transaction(async (tx) => {
-
-                    const create = await tx[model].create({
-                        data: {
-                            ...data
-                        }
-                    })
-
-                    const { id } = create
 
 
-                    const payment = await tx.payment.create({
-                        data: {
-                            ...paymentData,
-                            modelId: id,
-                            amount: data.amount,
-                            paymentRefId: Math.random() * 100
-                        }
-                    })
+            const res = await prisma.$transaction(async (tx) => {
 
-                    console.log({ payment })
+                const create = await tx[model].create({
+                    data: {
+                        ...data
+                    }
+                })
 
-                    const update = await tx[model].update({
-                        where: {
-                            id
-                        },
-                        data: {
-                            paymentRefId: payment.paymentRefId
-                        }
+                const { id } = create
 
-                    })
 
-                    return {
-                        update
+                const payment = await tx.payment.create({
+                    data: {
+                        ...paymentData,
+                        modelId: id,
+                        amount: data.amount,
+                        paymentRefId: Math.random() * 100
+                    }
+                })
+
+                console.log({ payment })
+
+                const update = await tx[model].update({
+                    where: {
+                        id
+                    },
+                    data: {
+                        paymentRefId: payment.paymentRefId
                     }
 
                 })
 
-                computed.push(res)
-            
-            }
+                return {
+                    update
+                }
 
-            return computed;
+            })
 
-        
+            return res
+
         }
 
         if (id === 'tenancy') {
-            const data = tenancy()
 
-            return await transaction('tenancy', data)
+            const computed = []
+
+
+            for (let i = 0; i < 100; i++) {
+
+                const data = tenancy()
+
+                const res = await transaction('tenancy', data)
+
+                computed.push(res)
+
+            }
+
+            return computed
 
         }
 
         if (id === 'lease') {
-            const data = lease()
+            const computed = []
 
-            return await transaction('lease', data)
+
+            for (let i = 0; i < 100; i++) {
+
+                const data = lease()
+
+                const res = await transaction('lease', data)
+
+                computed.push(res)
+
+            }
+
+            return computed
+
 
         }
 
         if (id === 'power_of_attorney') {
-            const data = power_of_attorney()
+            const computed = []
 
-            return await transaction('power_of_attorney', data)
+
+            for (let i = 0; i < 100; i++) {
+
+
+                const data = power_of_attorney()
+
+
+                const res = await transaction('power_of_attorney', data)
+
+                computed.push(res)
+
+            }
+
+            return computed
+
+
 
         }
 
         if (id === 'deed_of_assignment') {
-            const data = deed_of_assignment()
 
-            return await transaction('deed_of_assignment', data)
+            const computed = []
+
+
+            for (let i = 0; i < 100; i++) {
+                const data = deed_of_assignment()
+
+
+                const res = await transaction('deed_of_assignment', data)
+
+                computed.push(res)
+
+            }
+
+            return computed
+
 
         }
 
         if (id === 'loan') {
-            const data = loan()
+            const computed = []
 
-            return await transaction('loan', data)
+
+            for (let i = 0; i < 100; i++) {
+
+
+
+
+                const data = loan()
+
+                const res = await transaction('loan', data)
+
+                computed.push(res)
+
+            }
+
+            return computed
+
         }
 
         if (id === 'sale') {
-            const data = sale()
+            const computed = []
 
-            return await transaction('sale', data)
+
+            for (let i = 0; i < 100; i++) {
+
+
+
+                const data = sale()
+
+                const res = await transaction('sale', data)
+
+                computed.push(res)
+
+            }
+
+            return computed
+
         }
 
         // if(id === 'contract'){

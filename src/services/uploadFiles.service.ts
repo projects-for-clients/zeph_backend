@@ -15,7 +15,6 @@ export class UploadedFilesService {
 
 
         const execute = async () => {
-            console.log('inside execute', { file, filePath })
 
             const upload = await v2.uploader.upload(file,
                 {
