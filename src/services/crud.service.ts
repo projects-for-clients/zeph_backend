@@ -25,8 +25,8 @@ export class CrudService {
     async findMany(modelName: string, query: IQuery) {
 
 
-        const _prisma = this.prisma[modelName as any] as any
-        // const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
+        // const _prisma = this.prisma[modelName as any] as any
+        const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
 
 
         const { from, to, key, value, page, take, perPage } = query
@@ -71,9 +71,12 @@ export class CrudService {
             const found = await _prisma.findMany({
                 skip: (_page - 1) * _perPage,
                 take: _take,
+                orderBy: {
+                    id: 'desc',
+                },
                 where: {
                     ...where,
-
+                    
                     created_at: {
                         gte: _from,
                         lte: _to
@@ -115,15 +118,9 @@ export class CrudService {
 
         }
 
-
-
-
-
     }
 
     async create(modelName: string, createData: CreateDto, files: Express.Multer.File[]) {
-
-        console.log({ path })
 
         const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
 
@@ -177,7 +174,6 @@ export class CrudService {
 
 
             const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
-
 
 
             const found = await _prisma.create({
