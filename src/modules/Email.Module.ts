@@ -3,7 +3,7 @@ import { EmailController } from "./Email.Controller";
 import { EmailService } from "./Email.Service";
 
 @Module({
-    imports: [EmailController],
+    controllers: [EmailController],
     providers: [EmailService]
 })
 

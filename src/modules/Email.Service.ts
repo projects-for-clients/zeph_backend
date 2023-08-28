@@ -1,3 +1,4 @@
+import { UserRequestService } from './../services/userRequest.service';
 import { Injectable } from '@nestjs/common';
 import { Resend } from 'resend'; 
 import { OTP_TIME } from 'src/constants';
@@ -6,6 +7,8 @@ import { OTP_TIME } from 'src/constants';
 export class EmailService {
     private resend = new Resend(process.env.EMAIL_API_KEY);
     private from = 'support@zephschambers.com'
+
+    constructor(private readonly UserRequestService: UserRequestService){}
 
     async welcome(email: string) {
 
@@ -40,4 +43,26 @@ export class EmailService {
             console.log({ err })
         }
     }
+    async sendAnyEmail( subject: string, content: string) {
+
+        const { email } = this.UserRequestService.getUser()
+
+        try {
+            const initSend = await this.resend.emails.send({
+                from: this.from,
+                to: email,
+                subject: subject,
+                html: `<p>${content}</p>`,
+            });
+
+
+
+            return initSend
+        } catch (err) {
+
+            console.log({ err })
+        }
+    }
+
+
 }

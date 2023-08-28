@@ -34,7 +34,7 @@ import { EmailModule } from 'src/modules/Email.Module';
     LoanModule,
     SaleModule,
     PowerOfAttorneyModule,
-    EmailModule
+    EmailModule,
   ],
   controllers: [AppController, MockController],
   providers: [
