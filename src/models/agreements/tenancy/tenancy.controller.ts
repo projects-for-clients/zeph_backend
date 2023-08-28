@@ -56,7 +56,10 @@ export class TenancyController {
 
 	@Patch(":id")
 	update(@Param('id') id: number, @Body() updatetenancyDto: UpdateTenancyTdo) {
-		return this.tenancyService.update(+id, updatetenancyDto);
+
+		console.log(updatetenancyDto, id);
+
+		// return this.tenancyService.update(+id, updatetenancyDto);
 	}
 
 	@Delete(":id")
