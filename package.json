@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "migrate": "prisma migrate dev --name init",
+    "migratedbn": "prisma migrate dev --name init",
     "generate": "prisma generate",
     "db:rm": "docker compose rm dev-db -s -f -v",
     "db:up": "docker compose up dev-db -d",
