@@ -1,8 +1,8 @@
-import { EmailService } from 'src/services/email.service';
 import { Injectable } from '@nestjs/common';
 import { RedisService } from 'src/redis/redis.service';
 import { CreateEmailResponse } from 'resend/build/src/emails/interfaces';
 import { OTP_TIME } from 'src/constants';
+import { EmailService } from 'src/modules/Email.Service';
 
 @Injectable()
 export class OtpService {

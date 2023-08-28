@@ -16,6 +16,8 @@ import { SharedModule } from 'src/shared/shared.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MockController } from 'src/mock/mock.controller';
+import { EmailModule } from 'src/modules/Email.Module';
+
 
 @Module({
   imports: [
@@ -31,7 +33,8 @@ import { MockController } from 'src/mock/mock.controller';
     DeedOfAssignmentModule,
     LoanModule,
     SaleModule,
-    PowerOfAttorneyModule
+    PowerOfAttorneyModule,
+    EmailModule
   ],
   controllers: [AppController, MockController],
   providers: [
