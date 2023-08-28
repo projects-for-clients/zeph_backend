@@ -7,7 +7,6 @@ import {
 	Patch,
 	Post,
 	Query,
-	Req,
 	UploadedFiles,
 	UseInterceptors,
 	UsePipes,
@@ -18,9 +17,9 @@ import { FilesInterceptor } from "@nestjs/platform-express";
 import { CreateDto, UpdateTenancyTdo } from "./dto";
 import { TenancyService } from "./tenancy.service";
 
-import { Request } from "express";
 import { ConvertTypePipe } from "src/pipes/convertType.pipe";
 import { FileSizeValidationPipe } from "src/pipes/fileSize.pipe";
+
 
 @UsePipes(
 	new ConvertTypePipe([
@@ -36,15 +35,17 @@ export class TenancyController {
 	constructor(private readonly tenancyService: TenancyService) { }
 
 	@Post()
-	@UseInterceptors(FilesInterceptor("relevant_documents"))
-	create(
-		@Body() tenancyDto: CreateDto,
+	@UseInterceptors(FilesInterceptor("relevant_documents[]"))
+	create( 
+		@Body() tenancyDto: any,
 		@UploadedFiles(new FileSizeValidationPipe()) files: Express.Multer.File[]) {
+			
 		return this.tenancyService.create(tenancyDto, files);
 	}
 
 	@Get()
 	findAll(@Query() query: any) {
+		
 		return this.tenancyService.findAll(query);
 	}
 
@@ -55,6 +56,9 @@ export class TenancyController {
 
 	@Patch(":id")
 	update(@Param('id') id: number, @Body() updatetenancyDto: UpdateTenancyTdo) {
+
+		console.log(updatetenancyDto, id);
+
 		return this.tenancyService.update(+id, updatetenancyDto);
 	}
 

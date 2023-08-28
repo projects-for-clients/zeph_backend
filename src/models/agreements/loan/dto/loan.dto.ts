@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, isNumber, IsNumber, IsDecimal } from 'class-validator';
 
 export class createDto {
   @IsString()
@@ -8,6 +8,14 @@ export class createDto {
   @IsString()
   @IsNotEmpty()
   lender_name: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  interestRate: number;
+
+  @IsDecimal()
+  @IsNotEmpty()
+  amount: number;
 }
 
 export class updateDto {
@@ -20,4 +28,12 @@ export class updateDto {
   @IsString()
   @IsNotEmpty()
   lender_name: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  interestRate: number;
+
+  @IsDecimal()
+  @IsNotEmpty()
+  amount: number;
 }

@@ -1,7 +1,6 @@
 
 
 import { Injectable } from "@nestjs/common";
-import * as fs from "fs/promises";
 import { CrudService } from 'src/services/crud.service';
 import { IQuery } from "types/types";
 import { CreateDto, UpdateTdo } from "./dto";

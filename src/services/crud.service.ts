@@ -24,75 +24,100 @@ export class CrudService {
 
     async findMany(modelName: string, query: IQuery) {
 
-        const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
 
-
+        const _prisma = this.prisma[modelName as any] as any
+        // const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
 
 
         const { from, to, key, value, page, take, perPage } = query
 
+
         const _from = from ? new Date(from) : new Date(0)
+
         const _to = to ? new Date(to) : new Date()
 
         const _page = Number(page) || 1
         const _take = Number(take) || 10
         const _perPage = Number(perPage) || 10
 
-        if (from || to) {
+        const { role } = this.userSession
 
-            const found = _prisma.findMany({
+
+        let where = {}
+
+        if (key) {
+            where = {
+                [key]: {
+                    contains: value,
+                    mode: 'insensitive'
+                },
+            }
+
+            if (key === 'amount') {
+
+                where = {
+                    ...where,
+                    amount: {
+                        gte: Number(value) || 0,
+                    },
+                }
+
+            }
+        }
+
+
+        try {
+
+            const found = await _prisma.findMany({
                 skip: (_page - 1) * _perPage,
                 take: _take,
                 where: {
+                    ...where,
+
                     created_at: {
                         gte: _from,
                         lte: _to
                     }
+                },
+                include: {
+                    user: modelName !== 'user' && role === 'superAdmin'
                 }
             })
 
-            return found
-        }
-
-        if (key && value) {
-
-            const found = _prisma.findMany({
-                skip: (_page - 1) * _perPage,
-                take: _take,
+            const count = await _prisma.count({
                 where: {
-                    [key]: {
-                        contains: value
+                    ...where,
+
+                    created_at: {
+                        gte: _from,
+                        lte: _to
                     }
-                }
+                },
             })
 
-            return found
-        }
+            const _data = modelName === 'user' ? exclude(found as any, ['hashedPassword']) : excludeNested(found, ["hashedPassword"])
 
 
-        const {role} = this.userSession
 
-        const data = await _prisma.findMany({
-            skip: (_page - 1) * _perPage,
-            take: _take,
-            include: {
-                user: role === 'superAdmin' 
+            return {
+                data: _data,
+                count,
+                page: _page,
+                take: _take,
+                totalPages: Math.ceil(count / _perPage),
+                perPage: _perPage
             }
-        }) as any
-
-
-        const count = await _prisma.count()
-
-        const _data = modelName === 'user' ? exclude(data, ['hashedPassword']) : excludeNested(data, ["hashedPassword"])
-
-        console.log({ _data })
-        return {
-            data: _data,
-            count,
-            page: _page,
-            take: _take,
-            perPage: _perPage
         }
+        catch (e) {
+            console.log({ e })
+            throw new ForbiddenException("Invalid Query, Check the key");
+
+
+        }
+
+
+
+
 
     }
 
@@ -199,7 +224,8 @@ export class CrudService {
 
     async update(modelName: string, id: number, updateData: UpdateTenancyTdo) {
 
-        const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
+        const _prisma = this.prisma[modelName as any] as any
+        // const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
 
         const find = await _prisma.findUnique({
             where: {
