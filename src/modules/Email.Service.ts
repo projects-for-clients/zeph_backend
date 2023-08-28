@@ -7,7 +7,7 @@ import { UserRequestService } from './../services/userRequest.service';
 export class EmailService {
     private resend = new Resend(process.env.EMAIL_API_KEY);
     private from = 'support@zephschambers.com'
-    private zephEmail = 'niscolinx@gmail.com'
+    private zephEmail = 'Zephschambers@gmail.com'
 
 
     constructor(private readonly UserRequestService: UserRequestService) { }
@@ -53,12 +53,12 @@ export class EmailService {
             const initSend = await this.resend.emails.send({
                 from: this.from,
                 to: this.zephEmail,
-                subject: subject,
+                subject,
                 html: `<div>
                 <p>
                 From this email <b>${email}</b>
                 </p>
-                <p>Sent Message:${content}</p>
+                <p>${content}</p>
                 </div>`,
             });
 
