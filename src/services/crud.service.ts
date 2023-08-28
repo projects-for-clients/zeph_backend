@@ -72,7 +72,7 @@ export class CrudService {
                 skip: (_page - 1) * _perPage,
                 take: _take,
                 orderBy: {
-                    id: 'desc',
+                    updated_at: 'desc'
                 },
                 where: {
                     ...where,
