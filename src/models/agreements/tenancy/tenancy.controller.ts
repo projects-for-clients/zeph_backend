@@ -59,7 +59,7 @@ export class TenancyController {
 
 		console.log(updatetenancyDto, id);
 
-		// return this.tenancyService.update(+id, updatetenancyDto);
+		return this.tenancyService.update(+id, updatetenancyDto);
 	}
 
 	@Delete(":id")
