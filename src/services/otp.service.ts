@@ -1,8 +1,8 @@
-import { EmailService } from 'src/services/email.service';
 import { Injectable } from '@nestjs/common';
-import { RedisService } from 'src/redis/redis.service';
 import { CreateEmailResponse } from 'resend/build/src/emails/interfaces';
 import { OTP_TIME } from 'src/constants';
+import { EmailService } from 'src/modules/Email.Service';
+import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class OtpService {
@@ -13,7 +13,7 @@ export class OtpService {
   async generateOtp(email: string): Promise<CreateEmailResponse> {
     const scan = await this.redis.scan(`otp-${email}-*`)
 
-    if(scan.length > 0){
+    if (scan.length > 0) {
       const value = scan[0]
 
       const regexPattern = /\d{6}$/
