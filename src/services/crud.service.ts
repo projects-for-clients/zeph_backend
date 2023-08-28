@@ -25,7 +25,8 @@ export class CrudService {
     async findMany(modelName: string, query: IQuery) {
 
 
-        const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
+        const _prisma = this.prisma[modelName as any] as any
+        // const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
 
 
         const { from, to, key, value, page, take, perPage } = query
@@ -52,7 +53,7 @@ export class CrudService {
                 },
             }
 
-            if(key === 'amount'){
+            if (key === 'amount') {
 
                 where = {
                     ...where,
@@ -60,7 +61,7 @@ export class CrudService {
                         gte: Number(value) || 0,
                     },
                 }
-            
+
             }
         }
 
@@ -223,7 +224,8 @@ export class CrudService {
 
     async update(modelName: string, id: number, updateData: UpdateTenancyTdo) {
 
-        const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
+        const _prisma = this.prisma[modelName as any] as any
+        // const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
 
         const find = await _prisma.findUnique({
             where: {

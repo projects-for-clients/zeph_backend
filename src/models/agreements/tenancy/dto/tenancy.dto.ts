@@ -25,10 +25,6 @@ export class CreateDto {
   @IsNotEmpty()
   property_description: string;
 
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  paymentRefId: string;
 
   // @IsArray()
   // relevant_documents: string[];
