@@ -76,6 +76,11 @@ export class CrudService {
                 },
                 where: {
                     ...where,
+
+                    userId: {
+                        equals: this.userId
+                    
+                    },
                     
                     created_at: {
                         gte: _from,
@@ -90,6 +95,11 @@ export class CrudService {
             const count = await _prisma.count({
                 where: {
                     ...where,
+
+                    userId: {
+                        equals: this.userId
+
+                    },
 
                     created_at: {
                         gte: _from,

@@ -144,11 +144,11 @@ model sale {
 }
 
 model tenancy {
-  id                   Int     @id @default(autoincrement())
-  landlord_name        String  @db.VarChar(100)
-  landlord_address     String  @db.VarChar(100)
-  tenant_name          String  @db.VarChar(100)
-  tenant_address       String  @db.VarChar(100)
+  id                   Int      @id @default(autoincrement())
+  landlord_name        String   @db.VarChar(100)
+  landlord_address     String   @db.VarChar(100)
+  tenant_name          String   @db.VarChar(100)
+  tenant_address       String   @db.VarChar(100)
   property_description String?
   status               Status   @default(pending)
   type                 String   @default("agreement") @db.VarChar(100)
