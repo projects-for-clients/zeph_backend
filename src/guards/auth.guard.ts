@@ -27,37 +27,41 @@ export class AuthGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
 
     // this.logger.log('AuthGuard', AuthGuard.name);
-    context.switchToHttp().getRequest();
+    const _context = context.switchToHttp().getRequest();
 
-    // const cookies = _context.res.req.cookies
-
-
-
-    // const roles: string[] = this.reflector.get<string[]>('roles', context.getHandler());
-
-    // if (!roles) {
-    //   return true
-    // }
-
-
-    // const apiAuthCookie = cookies['api-auth'];
-
-    // //decrypt jwt
-    // const jwt: JwtPayload = this.jwt.verify(apiAuthCookie, {
-    //   secret: process.env.JWT_SECRET,
-    // });
+    const cookies = _context.res.req.cookies
 
 
 
+    const roles: string[] = this.reflector.get<string[]>('roles', context.getHandler());
 
-    // const { role } = jwt
+    if (!roles) {
+      return true
+    }
 
-    // this.userRequest.setUser(jwt.id, jwt.email, jwt.role);
+
+    const apiAuthCookie = cookies['api-auth'];
+
+    //decrypt jwt
+    const jwt: JwtPayload = this.jwt.verify(apiAuthCookie, {
+      secret: process.env.JWT_SECRET,
+    });
 
 
-    // if (roles.indexOf(role) === -1) {
-    //   return false
-    // }
+
+
+    const { role } = jwt
+
+    this.userRequest.setUser({
+      email: jwt.email,
+      userId: jwt.userId,
+      role: jwt.role,
+    });
+
+
+    if (roles.indexOf(role) === -1) {
+      return false
+    }
 
 
 
