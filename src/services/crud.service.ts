@@ -215,6 +215,7 @@ export class CrudService {
         const one = await _prisma.findUnique({
             where: {
                 id,
+                userId: this.userId
             }
         });
 
@@ -236,6 +237,7 @@ export class CrudService {
         const find = await _prisma.findUnique({
             where: {
                 id,
+                userId: this.userId
             },
         });
 
@@ -247,6 +249,8 @@ export class CrudService {
         const update = await _prisma.update({
             where: {
                 id,
+                userId: this.userId
+
             },
             data: {
                 ...find,
@@ -268,6 +272,8 @@ export class CrudService {
         const find = await _prisma.findUnique({
             where: {
                 id,
+                userId: this.userId
+
             },
         });
 
