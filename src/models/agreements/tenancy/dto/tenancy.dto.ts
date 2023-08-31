@@ -30,7 +30,6 @@ export class CreateDto {
   // relevant_documents: string[];
 
   @IsString()
-  @IsOptional()
   @IsNotEmpty()
   amount: number;
 }
