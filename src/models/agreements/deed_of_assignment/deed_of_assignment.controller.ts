@@ -24,7 +24,7 @@ export class DeedOfAssignmentController {
   constructor(private readonly deedOfAssignment: DeedOfAssignmentService) { }
 
   @Post()
-  @UseInterceptors(FilesInterceptor("relevant_documents"))
+  @UseInterceptors(FilesInterceptor("relevant_documents[]"))
   create(
     @Body() create: CreateDto,
     @UploadedFiles(new FileSizeValidationPipe()) files: Express.Multer.File[],

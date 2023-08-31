@@ -7,9 +7,22 @@ import {
   Patch,
   Post,
   Query,
+  UsePipes,
 } from '@nestjs/common';
 import { createDto, updateDto } from './dto';
 import { LoanService } from './loan.service';
+import { ConvertTypePipe } from 'src/pipes/convertType.pipe';
+
+
+@UsePipes(
+  new ConvertTypePipe([
+    {
+      key: "amount",
+      toType: "number",
+    },
+  ]),
+
+)
 
 @Controller('loan')
 export class LoanController {
