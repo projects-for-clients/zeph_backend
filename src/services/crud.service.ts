@@ -229,7 +229,7 @@ export class CrudService {
         return one;
     }
 
-    async update(modelName: string, id: number, updateData: UpdateTenancyTdo) {
+    async update(modelName: string, id: number, updateData: any) {
 
         const _prisma = this.prisma[modelName as any] as any
         // const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
@@ -257,6 +257,8 @@ export class CrudService {
                 ...updateData,
             },
         });
+
+        console.log({ update })
 
         if (!update) {
             throw new ForbiddenException("Unable to update")
