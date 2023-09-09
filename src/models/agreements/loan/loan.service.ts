@@ -9,17 +9,8 @@ import { createDto, updateDto } from './dto';
 export class LoanService {
     constructor(private prisma: PrismaService, private userRequest: UserRequestService, private CrudService: CrudService) { }
 
-    async create(createLoanDto: createDto) {
-        const userId = this.userRequest.getUserId();
-
-        const loan = await this.prisma.loan.create({
-            data: {
-                ...createLoanDto,
-                userId,
-            },
-        });
-
-        return loan;
+    async create(createLoanDto: createDto, files: Express.Multer.File[]) {
+        return this.CrudService.create('loan', createLoanDto as any, files)
     }
 
     async findAll(query: IQuery) {

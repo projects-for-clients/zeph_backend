@@ -7,11 +7,15 @@ import {
   Patch,
   Post,
   Query,
+  UploadedFiles,
+  UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { ConvertTypePipe } from 'src/pipes/convertType.pipe';
+import { FileSizeValidationPipe } from 'src/pipes/fileSize.pipe';
 import { createDto, updateDto } from './dto';
 import { LoanService } from './loan.service';
-import { ConvertTypePipe } from 'src/pipes/convertType.pipe';
 
 
 @UsePipes(
@@ -29,8 +33,11 @@ export class LoanController {
   constructor(private readonly loanService: LoanService) { }
 
   @Post()
-  create(@Body() createLeaseDto: createDto) {
-    return this.loanService.create(createLeaseDto);
+  @UseInterceptors(FilesInterceptor("relevant_documents[]"))
+  create(@Body() createLeaseDto: createDto,
+    @UploadedFiles(new FileSizeValidationPipe()) files: Express.Multer.File[]) {
+
+    return this.loanService.create(createLeaseDto, files);
   }
 
   @Get()
