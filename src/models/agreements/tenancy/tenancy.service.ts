@@ -16,8 +16,11 @@ export class TenancyService {
 
 	async create(createTenancyDto: CreateDto, files: Express.Multer.File[]) {
 
+		console.log("hello")
 
 		return this.CrudService.create('tenancy', createTenancyDto as any, files)
+
+	
 
 
 	}
