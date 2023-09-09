@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional, isNumber, IsNumber, IsDecimal } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, isNumber, IsNumber, IsDecimal, IsBoolean } from 'class-validator';
 
 export class createDto {
   @IsString()
@@ -33,7 +33,18 @@ export class updateDto {
   @IsNotEmpty()
   interestRate: number;
 
+
+  @IsOptional()
+  @IsBoolean()
+  isPaid: boolean;
+
+  @IsOptional()
   @IsDecimal()
   @IsNotEmpty()
-  amount: number;
+  amount: string;
+
+  @IsOptional()
+  @IsNumber()
+  @IsNotEmpty()
+  paymentRefId: number;
 }

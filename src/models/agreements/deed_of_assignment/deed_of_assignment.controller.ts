@@ -44,7 +44,6 @@ export class DeedOfAssignmentController {
 
   @Patch(":id")
   update(@Param('id') id: number, @Body() update: UpdateTdo) {
-    console.log({update})
     return this.deedOfAssignment.update(+id, update);
   }
 

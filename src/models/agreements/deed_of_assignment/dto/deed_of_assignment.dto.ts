@@ -18,7 +18,6 @@ export class CreateDto {
     assignee_address: string;
 
 
-
     @IsString()
     @IsNotEmpty()
     property_description: string;
