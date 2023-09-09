@@ -258,7 +258,6 @@ export class CrudService {
             },
         });
 
-        console.log({ update })
 
         if (!update) {
             throw new ForbiddenException("Unable to update")

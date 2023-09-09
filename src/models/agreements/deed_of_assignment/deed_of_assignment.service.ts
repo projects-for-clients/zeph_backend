@@ -33,7 +33,7 @@ export class DeedOfAssignmentService {
 
   async update(id: number, updateData: UpdateTdo) {
 
-    console.log({updateData, id})
+
     return this.CrudService.update('deed_of_assignment', id, updateData as any)
   }
 
