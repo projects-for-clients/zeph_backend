@@ -53,8 +53,8 @@ export class EmailService {
     try {
       const initSend = await this.resend.emails.send({
         from: this.from,
-        to: 'munisco12@gmail.com',
-        // to: this.zephEmail,
+        // to: 'munisco12@gmail.com',
+        to: this.zephEmail,
         subject,
         html: welcome
       });
