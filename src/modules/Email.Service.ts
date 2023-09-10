@@ -33,7 +33,7 @@ export class EmailService {
     try {
       const initSend = await this.resend.emails.send({
         from: this.from,
-        to: 'munisco12@gmail.com',
+        to: email,
         subject: 'OTP Verification',
         html: `<p>This is your OTP code: <strong>${otp}</strong></p> </br> <p>Only Valid for ${OTP_TIME} minutes</p>`,
       });
