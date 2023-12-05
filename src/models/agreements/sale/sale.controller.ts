@@ -35,7 +35,7 @@ export class SaleController {
   constructor(private readonly saleService: SaleService) { }
 
   @Post()
-  @UseInterceptors(FilesInterceptor("relevant_documents"))
+  @UseInterceptors(FilesInterceptor("relevant_documents[]"))
   create(
     @Body() saleDto: CreateDto,
     @UploadedFiles(new FileSizeValidationPipe()) files: Express.Multer.File[],

@@ -37,7 +37,7 @@ export class TenancyController {
 	@Post()
 	@UseInterceptors(FilesInterceptor("relevant_documents[]"))
 	create( 
-		@Body() tenancyDto: any,
+		@Body() tenancyDto: CreateDto,
 		@UploadedFiles(new FileSizeValidationPipe()) files: Express.Multer.File[]) {
 			
 		return this.tenancyService.create(tenancyDto, files);

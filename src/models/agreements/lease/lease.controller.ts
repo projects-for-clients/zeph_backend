@@ -9,18 +9,30 @@ import {
   Query,
   UploadedFiles,
   UseInterceptors,
+  UsePipes,
 } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { ConvertTypePipe } from 'src/pipes/convertType.pipe';
+import { FileSizeValidationPipe } from 'src/pipes/fileSize.pipe';
 import { createDto, updateDto } from './dto';
 import { LeaseService } from './lease.service';
-import { FilesInterceptor } from '@nestjs/platform-express';
-import { FileSizeValidationPipe } from 'src/pipes/fileSize.pipe';
+
+@UsePipes(
+  new ConvertTypePipe([
+    {
+      key: "amount",
+      toType: "number",
+    },
+  ]),
+
+)
 
 @Controller('lease')
 export class LeaseController {
   constructor(private readonly leaseService: LeaseService) { }
 
   @Post()
-  @UseInterceptors(FilesInterceptor("relevant_documents"))
+  @UseInterceptors(FilesInterceptor("relevant_documents[]"))
   create(
     @Body() create: createDto,
     @UploadedFiles(new FileSizeValidationPipe()) files: Express.Multer.File[],

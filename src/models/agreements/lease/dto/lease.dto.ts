@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class createDto {
   @IsString()
@@ -20,4 +20,19 @@ export class updateDto {
   @IsString()
   @IsNotEmpty()
   leasee_name: string;
+
+
+  @IsOptional()
+  @IsBoolean()
+  isPaid: boolean;
+
+  @IsOptional()
+  @IsNumber()
+  @IsNotEmpty()
+  amount: string;
+
+  @IsOptional()
+  @IsNumber()
+  @IsNotEmpty()
+  paymentRefId: number;
 }

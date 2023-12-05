@@ -1,21 +1,24 @@
+
+
+
 import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateDto {
     @IsString()
     @IsNotEmpty()
-    assignor_name: string;
+    donor_name: string;
 
     @IsString()
     @IsNotEmpty()
-    assignor_address: string;
+    donor_address: string;
 
     @IsString()
     @IsNotEmpty()
-    assignee_name: string;
+    donee_name: string;
 
     @IsString()
     @IsNotEmpty()
-    assignee_address: string;
+    donee_address: string;
 
 
 
@@ -32,22 +35,22 @@ export class UpdateTdo {
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    assignor_name: string;
+    donor_name: string;
 
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    assignor_address: string;
+    donor_address: string;
 
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    assignee_name: string;
+    donee_name: string;
 
     @IsOptional()
     @IsString()
     @IsNotEmpty()
-    assignee_address: string;
+    donee_address: string;
 
 
     @IsOptional()
@@ -60,3 +63,4 @@ export class UpdateTdo {
 
 
 }
+

@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateDto {
   @IsString()
@@ -41,7 +41,16 @@ export class UpdateTdo {
   // relevant_documents: string[];
 
   @IsOptional()
-  @IsString()
+  @IsBoolean()
+  isPaid: boolean;
+
+  @IsOptional()
+  @IsNumber()
   @IsNotEmpty()
-  amount: number;
+  amount: string;
+
+  @IsOptional()
+  @IsNumber()
+  @IsNotEmpty()
+  paymentRefId: number;
 }

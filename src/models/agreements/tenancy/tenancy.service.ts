@@ -19,7 +19,7 @@ export class TenancyService {
 
 		return this.CrudService.create('tenancy', createTenancyDto as any, files)
 
-
+	
 	}
 
 	async findAll(query: IQuery) {
