@@ -63,6 +63,14 @@ export class CrudService {
                 }
             }
 
+
+        }
+
+
+        try {
+
+            console.log('The id-----> ', this.userId)
+
             if (role === 'customer') {
                 where = {
                     ...where,
@@ -73,14 +81,6 @@ export class CrudService {
 
             }
 
-
-        }
-
-
-        try {
-
-            console.log('The id-----> ', this.userId)
-
             const found = await _prisma.findMany({
                 skip: (_page - 1) * _perPage,
                 take: _take,
@@ -89,6 +89,9 @@ export class CrudService {
                 },
                 where: {
                     ...where,
+                    // userId: {
+                    //     equals: this.userId,
+                    // },
 
                     created_at: {
                         gte: _from,
@@ -103,6 +106,9 @@ export class CrudService {
             const count = await _prisma.count({
                 where: {
                     ...where,
+                    // userId: {
+                    //     equals: this.userId,
+                    // },
 
                     created_at: {
                         gte: _from,
