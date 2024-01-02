@@ -70,15 +70,15 @@ export class CrudService {
         try {
 
 
-            // if (role === 'customer') {
-            //     where = {
-            //         ...where,
-            //         userId: {
-            //             equals: this.userId,
-            //         },
-            //     }
+            if (role === 'customer') {
+                where = {
+                    ...where,
+                    userId: {
+                        equals: this.userId,
+                    },
+                }
 
-            // }
+            }
 
             const found = await _prisma.findMany({
                 skip: (_page - 1) * _perPage,
