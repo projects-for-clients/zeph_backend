@@ -35,8 +35,6 @@ export function excludeNested<
 
         const { user, ...rest } = item;
 
-
-
         const newUser = { ...user };
         keys.forEach(key => delete newUser[key]);
 

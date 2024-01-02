@@ -112,9 +112,9 @@ export class CrudService {
                 },
             })
 
-            // const _data = modelName === 'user' ? exclude(found as any, ['hashedPassword']) : excludeNested(found, ["hashedPassword"])
+            const _data = modelName === 'user' ? exclude(found as any, ['hashedPassword']) : excludeNested(found, ["hashedPassword"])
 
-            const _data = excludeNested(found, ['hashedPassword'])
+
 
 
 
