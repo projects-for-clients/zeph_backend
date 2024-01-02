@@ -69,17 +69,16 @@ export class CrudService {
 
         try {
 
-            console.log('The id-----> ', this.userId)
 
-            if (role === 'customer') {
-                where = {
-                    ...where,
-                    userId: {
-                        equals: this.userId,
-                    },
-                }
+            // if (role === 'customer') {
+            //     where = {
+            //         ...where,
+            //         userId: {
+            //             equals: this.userId,
+            //         },
+            //     }
 
-            }
+            // }
 
             const found = await _prisma.findMany({
                 skip: (_page - 1) * _perPage,
@@ -89,9 +88,6 @@ export class CrudService {
                 },
                 where: {
                     ...where,
-                    // userId: {
-                    //     equals: this.userId,
-                    // },
 
                     created_at: {
                         gte: _from,
@@ -103,12 +99,11 @@ export class CrudService {
                 }
             })
 
+
+
             const count = await _prisma.count({
                 where: {
                     ...where,
-                    // userId: {
-                    //     equals: this.userId,
-                    // },
 
                     created_at: {
                         gte: _from,
@@ -117,7 +112,9 @@ export class CrudService {
                 },
             })
 
-            const _data = modelName === 'user' ? exclude(found as any, ['hashedPassword']) : excludeNested(found, ["hashedPassword"])
+            // const _data = modelName === 'user' ? exclude(found as any, ['hashedPassword']) : excludeNested(found, ["hashedPassword"])
+
+            const _data = excludeNested(found, ['hashedPassword'])
 
 
 
@@ -221,10 +218,24 @@ export class CrudService {
 
         const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
 
+
+        const { role } = this.userSession
+
+        let where = {}
+
+        if (role === 'customer') {
+            where = {
+                userId: {
+                    equals: this.userId,
+                },
+            }
+
+        }
+
         const one = await _prisma.findUnique({
             where: {
-                id,
-                userId: this.userId
+                ...where,
+                id
             }
         });
 
@@ -241,12 +252,24 @@ export class CrudService {
     async update(modelName: string, id: number, updateData: any) {
 
         const _prisma = this.prisma[modelName as any] as any
-        // const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
+
+        const { role } = this.userSession
+
+        let where = {}
+
+        if (role === 'customer') {
+            where = {
+                userId: {
+                    equals: this.userId,
+                },
+            }
+
+        }
 
         const find = await _prisma.findUnique({
             where: {
+                ...where,
                 id,
-                userId: this.userId
             },
         });
 
@@ -258,7 +281,6 @@ export class CrudService {
         const update = await _prisma.update({
             where: {
                 id,
-                userId: this.userId
 
             },
             data: {
@@ -279,10 +301,23 @@ export class CrudService {
     async delete(modelName: string, id: number) {
         const _prisma: Prisma.tenancyDelegate<DefaultArgs> = this.prisma[modelName as any] as any
 
+        const { role } = this.userSession
+
+        let where = {}
+
+        if (role === 'customer') {
+            where = {
+                userId: {
+                    equals: this.userId,
+                },
+            }
+
+        }
+
         const find = await _prisma.findUnique({
             where: {
+                ...where,
                 id,
-                userId: this.userId
 
             },
         });
@@ -294,6 +329,7 @@ export class CrudService {
 
         const deleteOne = await _prisma.delete({
             where: {
+
                 id,
             },
         });

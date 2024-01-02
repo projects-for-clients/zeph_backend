@@ -32,15 +32,21 @@ export function excludeNested<
 ): any {
 
     return items.map(item => {
+
         const { user, ...rest } = item;
+
+
 
         const newUser = { ...user };
         keys.forEach(key => delete newUser[key]);
 
-        return {
+        const data = {
             ...rest,
-            ...newUser
-        };
+            user: newUser,
+        }
+
+
+        return data
 
     });
 
