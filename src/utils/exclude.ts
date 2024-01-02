@@ -1,4 +1,5 @@
 import { user } from "@prisma/client";
+import { Role } from "types/types";
 
 
 
@@ -25,11 +26,12 @@ export function exclude<T extends user, K extends keyof user>(
 
 export function excludeNested<
     T extends UserObj,
-    K extends keyof user
+    K extends keyof user,
 >(
     items: T[],
-    keys: K[]
-): any {
+    keys: K[],
+    role: Role
+) {
 
     return items.map(item => {
 
@@ -40,7 +42,7 @@ export function excludeNested<
 
         const data = {
             ...rest,
-            user: newUser,
+            user: role === 'superAdmin' ? newUser : undefined
         }
 
 
