@@ -224,11 +224,6 @@ export class MockController {
 
         const transaction = async (model: string, data: any) => {
 
-
-
-
-
-
             const res = await prisma.$transaction(async (tx) => {
 
                 const create = await tx[model].create({
@@ -245,7 +240,7 @@ export class MockController {
                         ...paymentData,
                         modelId: id,
                         amount: data.amount,
-                        paymentRefId: Math.random() * 100
+                        paymentRefId: `${Math.random() * 100}`
                     }
                 })
 
