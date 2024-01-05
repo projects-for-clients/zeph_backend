@@ -191,8 +191,6 @@ export class CrudService {
 
             const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
 
-            console.log({relevant_documents})
-
 
             const found = await _prisma.create({
                 data: {
