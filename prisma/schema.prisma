@@ -35,7 +35,7 @@ model payment {
   id           String    @id @default(cuid())
   model        modelType
   modelId      Int
-  paymentRefId Int
+  paymentRefId String
   amount       Decimal
   userId       Int
   user         user      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -50,7 +50,7 @@ model contract {
   status       Status   @default(PENDING_PAYMENT)
   isPaid       Boolean?
   amount       Decimal?
-  paymentRefId Int?
+  paymentRefId String?
   user         user?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -63,7 +63,7 @@ model deed_of_assignment {
   type                 String   @default("agreement") @db.VarChar(100)
   isPaid               Boolean?
   amount               Decimal?
-  paymentRefId         Int?
+  paymentRefId         String?
   property_description String?
   relevant_documents   String[]
   created_at           DateTime @default(now())
@@ -82,7 +82,7 @@ model lease {
   property_description String
   isPaid               Boolean?
   amount               Decimal?
-  paymentRefId         Int?
+  paymentRefId         String?
   duration             String   @db.VarChar(100)
   relevant_documents   String[]
   type                 String   @default("agreement") @db.VarChar(100)
@@ -99,7 +99,7 @@ model loan {
   lender_name        String   @db.VarChar(100)
   isPaid             Boolean?
   amount             Decimal?
-  paymentRefId       Int?
+  paymentRefId       String?
   type               String   @default("agreement") @db.VarChar(100)
   interestRate       Int
   duration           String?
@@ -121,7 +121,7 @@ model power_of_attorney {
   relevant_documents   String[]
   isPaid               Boolean?
   amount               Decimal?
-  paymentRefId         Int?
+  paymentRefId         String?
   created_at           DateTime @default(now())
   updated_at           DateTime @updatedAt
   type                 String   @default("agreement") @db.VarChar(100)
@@ -137,7 +137,7 @@ model sale {
   property_description String?
   isPaid               Boolean?
   amount               Decimal? @default(0)
-  paymentRefId         Int?
+  paymentRefId         String?
   type                 String   @default("agreement") @db.VarChar(100)
   relevant_documents   String[]
   created_at           DateTime @default(now())
@@ -158,7 +158,7 @@ model tenancy {
   type                 String   @default("agreement") @db.VarChar(100)
   isPaid               Boolean?
   amount               Decimal? @default(0)
-  paymentRefId         Int?
+  paymentRefId         String?
   duration             String   @db.VarChar(100)
   relevant_documents   String[]
   created_at           DateTime @default(now())
