@@ -112,7 +112,7 @@ export class CrudService {
                 },
             })
 
-            const _data = modelName === 'user'  ? exclude(found as any, ['hashedPassword']) : excludeNested(found, ["hashedPassword"], role)
+            const _data = modelName === 'user' ? exclude(found as any, ['hashedPassword']) : excludeNested(found, ["hashedPassword"], role)
 
 
 
@@ -190,6 +190,8 @@ export class CrudService {
 
 
             const relevant_documents: string[] = executed.map((fileData) => fileData.secure_url)
+
+            console.log({relevant_documents})
 
 
             const found = await _prisma.create({

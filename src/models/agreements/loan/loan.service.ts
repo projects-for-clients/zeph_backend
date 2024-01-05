@@ -7,7 +7,7 @@ import { createDto, updateDto } from './dto';
 
 @Injectable()
 export class LoanService {
-    constructor(private prisma: PrismaService, private userRequest: UserRequestService, private CrudService: CrudService) { }
+    constructor(private CrudService: CrudService) { }
 
     async create(createLoanDto: createDto, files: Express.Multer.File[]) {
         return this.CrudService.create('loan', createLoanDto as any, files)

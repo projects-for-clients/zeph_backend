@@ -24,6 +24,10 @@ import { LoanService } from './loan.service';
       key: "amount",
       toType: "number",
     },
+    {
+      key: "interestRate",
+      toType: "number",
+    },
   ]),
 
 )

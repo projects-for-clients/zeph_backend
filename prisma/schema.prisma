@@ -5,7 +5,7 @@ generator client {
 datasource db {
   provider          = "postgresql"
   url               = env("PROD_DATABASE_URL")
-  directUrl = env("PROD_DATABASE_URL")
+  directUrl         = env("PROD_DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -92,20 +92,21 @@ model lease {
 }
 
 model loan {
-  id            Int      @id @default(autoincrement())
-  borrower_name String   @db.VarChar(100)
-  lender_name   String   @db.VarChar(100)
-  isPaid        Boolean?
-  amount        Decimal?
-  paymentRefId  Int?
-  type          String   @default("agreement") @db.VarChar(100)
-  interestRate  Int
-  duration      String?
-  userId        Int
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
-  status        Status   @default(pending)
-  user          user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                 Int      @id @default(autoincrement())
+  borrower_name      String   @db.VarChar(100)
+  lender_name        String   @db.VarChar(100)
+  isPaid             Boolean?
+  amount             Decimal?
+  paymentRefId       Int?
+  type               String   @default("agreement") @db.VarChar(100)
+  interestRate       Int
+  duration           String?
+  userId             Int
+  relevant_documents String[]
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  status             Status   @default(pending)
+  user               user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model power_of_attorney {
@@ -145,11 +146,11 @@ model sale {
 }
 
 model tenancy {
-  id                   Int     @id @default(autoincrement())
-  landlord_name        String  @db.VarChar(100)
-  landlord_address     String  @db.VarChar(100)
-  tenant_name          String  @db.VarChar(100)
-  tenant_address       String  @db.VarChar(100)
+  id                   Int      @id @default(autoincrement())
+  landlord_name        String   @db.VarChar(100)
+  landlord_address     String   @db.VarChar(100)
+  tenant_name          String   @db.VarChar(100)
+  tenant_address       String   @db.VarChar(100)
   property_description String?
   status               Status   @default(pending)
   type                 String   @default("agreement") @db.VarChar(100)

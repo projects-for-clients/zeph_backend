@@ -76,7 +76,7 @@ export class UpdateTenancyTdo {
   // relevant_documents: string[];
 
   @IsOptional()
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   amount: number;
 

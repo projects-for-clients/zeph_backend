@@ -9,11 +9,11 @@ export class createDto {
   @IsNotEmpty()
   lender_name: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   interestRate: number;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   amount: number;
 }
@@ -29,7 +29,7 @@ export class updateDto {
   @IsNotEmpty()
   lender_name: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   interestRate: number;
 
@@ -39,7 +39,7 @@ export class updateDto {
   isPaid: boolean;
 
   @IsOptional()
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   amount: string;
 
