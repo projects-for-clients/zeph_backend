@@ -278,16 +278,27 @@ export class CrudService {
 
         }
 
-        const update = await _prisma.update({
-            where: {
-                id,
 
-            },
-            data: {
-                ...find,
-                ...updateData,
-            },
-        });
+        let update = {}
+
+        if (updateData.isPaid) {
+
+
+            update = _prisma.update({
+                where: {
+                    id,
+
+                },
+                data: {
+                    ...find,
+                    ...updateData,
+                    status: "PAID"
+                },
+            });
+        }
+
+
+
 
 
         if (!update) {
