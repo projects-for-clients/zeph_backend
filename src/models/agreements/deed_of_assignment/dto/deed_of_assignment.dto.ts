@@ -65,9 +65,9 @@ export class UpdateTdo {
     amount: string;
 
     @IsOptional()
-    @IsNumber()
+    @IsString()
     @IsNotEmpty()
-    paymentRefId: number;
+    paymentRefId: string;
 
 
     // @IsArray()

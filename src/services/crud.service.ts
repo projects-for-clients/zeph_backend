@@ -5,7 +5,7 @@ import * as fs from "fs/promises";
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import { Prisma } from "@prisma/client";
 import { DefaultArgs } from "@prisma/client/runtime/library";
-import { CreateDto, UpdateTenancyTdo } from "src/models/agreements/tenancy/dto";
+import { CreateDto } from "src/models/agreements/tenancy/dto";
 import { PrismaService } from "src/prisma/prisma.service";
 import { exclude, excludeNested } from "src/utils/exclude";
 import { IQuery } from "types/types";

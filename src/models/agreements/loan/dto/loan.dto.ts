@@ -44,7 +44,7 @@ export class updateDto {
   amount: string;
 
   @IsOptional()
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  paymentRefId: number;
+  paymentRefId: string;
 }
