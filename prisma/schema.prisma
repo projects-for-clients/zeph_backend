@@ -10,8 +10,10 @@ datasource db {
 }
 
 enum Status {
-  pending
-  approved
+  PENDING_APPROVAL
+  PENDING_PAYMENT
+  PAID
+  DECLINED
 }
 
 enum Role {
@@ -45,7 +47,7 @@ model contract {
   id           Int      @id
   userId       Int
   type         String   @default("agreement") @db.VarChar(100)
-  status       Status   @default(pending)
+  status       Status   @default(PENDING_PAYMENT)
   isPaid       Boolean?
   amount       Decimal?
   paymentRefId Int?
@@ -67,7 +69,7 @@ model deed_of_assignment {
   created_at           DateTime @default(now())
   updated_at           DateTime @updatedAt
   userId               Int
-  status               Status   @default(pending)
+  status               Status   @default(PENDING_PAYMENT)
   user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -87,7 +89,7 @@ model lease {
   userId               Int
   created_at           DateTime @default(now())
   updated_at           DateTime @updatedAt
-  status               Status   @default(pending)
+  status               Status   @default(PENDING_PAYMENT)
   user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -105,7 +107,7 @@ model loan {
   relevant_documents String[]
   created_at         DateTime @default(now())
   updated_at         DateTime @updatedAt
-  status             Status   @default(pending)
+  status             Status   @default(PENDING_PAYMENT)
   user               user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -124,7 +126,7 @@ model power_of_attorney {
   updated_at           DateTime @updatedAt
   type                 String   @default("agreement") @db.VarChar(100)
   userId               Int
-  status               Status   @default(pending)
+  status               Status   @default(PENDING_PAYMENT)
   user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -141,7 +143,7 @@ model sale {
   created_at           DateTime @default(now())
   updated_at           DateTime @updatedAt
   userId               Int
-  status               Status   @default(pending)
+  status               Status   @default(PENDING_PAYMENT)
   user                 user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -152,7 +154,7 @@ model tenancy {
   tenant_name          String   @db.VarChar(100)
   tenant_address       String   @db.VarChar(100)
   property_description String?
-  status               Status   @default(pending)
+  status               Status   @default(PENDING_PAYMENT)
   type                 String   @default("agreement") @db.VarChar(100)
   isPaid               Boolean?
   amount               Decimal? @default(0)
