@@ -1,42 +1,45 @@
-# # Use official Node.js image 
-# FROM node:16-alpine
+FROM node:alpine
 
-# # Set working directory
-# WORKDIR /usr/src/app
-
-# COPY package.json pnpm-lock.yaml ./
-
-# # Install dependencies  
-# RUN npm install -g pnpm  
-# RUN pnpm install
-
-# # Copy source files
-# COPY . .
-
-# # Expose port
-# EXPOSE 4000  
-
-# # Start app
-# CMD ["pnpm", "start"]
-
-# Install dependencies 
-FROM node:lts-alpine AS build
+ARG NODE_ENV=development
+ENV NODE_ENV=$NODE_ENV
 
 WORKDIR /usr/src/app
+
+# Debugging: Print current working directory and list files
+RUN pwd
+RUN ls -la
+
 COPY package.json pnpm-lock.yaml ./
 
-RUN npm i -g pnpm && pnpm install --prod
+RUN npm install -g pnpm
+
+RUN pnpm install
+
+# Debugging: Print contents of the copied files
+RUN ls -la
+
+RUN pnpm run build
+
+# Debugging: Print contents of the build directory
+RUN pwd
+RUN ls -la
 
 COPY . .
-RUN pnpm build
 
-# Copy node_modules from deps stage
-FROM node:lts-alpine AS production  
+# Debugging: Print contents after the second copy
+RUN ls -la
 
-WORKDIR /usr/src/app
-COPY --from=build /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/dist ./dist
-
+# Expose port
 EXPOSE 4000
 
+# Add PostgreSQL client
+# RUN apk add --no-cache postgresql-client
+
+# # Add Redis client
+# RUN apk add --no-cache redis
+
+# Debugging: Print final contents before starting the application
+RUN ls -la
+
+# Debugging lines for production stage
 CMD ["pnpm", "start"]

@@ -30,6 +30,7 @@
 		"@nestjs/common": "^9.4.0",
 		"@nestjs/config": "^2.3.2",
 		"@nestjs/core": "^9.4.0",
+		"@nestjs/cli": "^9.4.0",
 		"@nestjs/jwt": "^10.0.3",
 		"@nestjs/mapped-types": "^2.0.0",
 		"@nestjs/passport": "^9.0.3",
@@ -62,7 +63,6 @@
 	},
 	"devDependencies": {
 		"@faker-js/faker": "^8.0.2",
-		"@nestjs/cli": "^9.4.0",
 		"@nestjs/schematics": "^9.0.0",
 		"@nestjs/testing": "^9.0.0",
 		"@types/cache-manager": "^4.0.2",

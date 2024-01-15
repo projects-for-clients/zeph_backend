@@ -10,6 +10,20 @@ services:
        POSTGRES_DB: main
     networks:
       - zephChambers
+  db:
+  volumes:
+    - dbdata:/var/lib/postgresql/data
+  cache:
+    volumes: 
+     - cachedata:/data
 networks:
   zephChambers:
+
+#   volumes:
+#   dbdata:
+#   cachedata:
+
+# services:
+
+
 
