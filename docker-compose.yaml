@@ -1,29 +1,47 @@
 version: '3.8'
+
 services:
-  dev-db:
-    image: postgres:15
-    ports:
-      - 5432:5432
+  backend:
+    build:
+      context: .
+      target: production
     environment:
-       POSTGRES_USER: postgres
-       POSTGRES_PASSWORD: 84KF2Oxo3J
-       POSTGRES_DB: main
+      NODE_ENV: production
+    ports:
+      - "4000:4000"
+    depends_on:
+      - database
+      - redis
     networks:
-      - zephChambers
-  db:
-  volumes:
-    - dbdata:/var/lib/postgresql/data
-  cache:
-    volumes: 
-     - cachedata:/data
+      - app-network
+    
+
+  database:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: prod
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: E62ffcc5Bc3fCaDB4feB4bEG2CG31bge
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    volumes:
+      - database-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+    volumes:
+      - redis-data:/data
+
 networks:
-  zephChambers:
+  app-network:
+    driver: bridge
 
-#   volumes:
-#   dbdata:
-#   cachedata:
-
-# services:
-
-
-
+volumes:
+  database-data:
+  redis-data:

@@ -1,40 +1,85 @@
-FROM node:alpine
+# FROM node:alpine AS production
 
-ARG NODE_ENV=development
+# ARG NODE_ENV=development
+# ENV NODE_ENV=$NODE_ENV
+
+# WORKDIR /usr/src/app
+
+# COPY .env .env
+
+# COPY package.json pnpm-lock.yaml ./
+
+# RUN npm install -g pnpm
+
+# RUN pnpm install
+
+# COPY . .
+
+# RUN pnpm run build
+
+# # Expose port
+# EXPOSE 4000
+
+# CMD ["pnpm", "start"]
+
+
+# Development Stage
+FROM node:alpine AS development
+
+WORKDIR /usr/src/app
+
+# Copy only necessary files for npm install to leverage Docker layer caching
+COPY package.json pnpm-lock.yaml ./
+
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Install dependencies for development
+RUN pnpm install
+
+# Copy the entire project for development
+COPY . .
+
+# Build your application for development
+RUN pnpm run build
+
+# Production Stage
+FROM node:alpine as production
+
+ARG NODE_ENV=production
 ENV NODE_ENV=$NODE_ENV
 
 WORKDIR /usr/src/app
 
-# Debugging: Print current working directory and list files
-RUN pwd
-RUN ls -la
-
+# Copy only necessary files for npm install to leverage Docker layer caching
 COPY package.json pnpm-lock.yaml ./
 
 RUN npm install -g pnpm
 
-RUN pnpm install
+# Install only production dependencies
+RUN pnpm install --prod
 
-# Debugging: Print contents of the copied files
+# Copy the .env file for both development and production
+COPY .env .env
+
+# Copy the application files
+
+# Copy the built files from the development stage
+COPY --from=development /usr/src/app/dist ./dist
+
 COPY . .
-RUN ls -la
 
-RUN pnpm run build
-
-# Debugging: Print contents of the build directory
-RUN pwd
-RUN ls -la
-
-# Expose port
+# Expose the application port
 EXPOSE 4000
 
-# Add PostgreSQL client
-# RUN apk add --no-cache postgresql-client
+# Set a default command for production
+CMD ["node", "dist/src/main"]
 
-# # Add Redis client
-# RUN apk add --no-cache redis
 
-# Debugging: Print final contents before starting the application
 
-# Debugging lines for production stage
-CMD ["pnpm", "start"]
+
+
+
+
+
+
