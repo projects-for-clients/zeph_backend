@@ -16,17 +16,13 @@ RUN npm install -g pnpm
 RUN pnpm install
 
 # Debugging: Print contents of the copied files
+COPY . .
 RUN ls -la
 
 RUN pnpm run build
 
 # Debugging: Print contents of the build directory
 RUN pwd
-RUN ls -la
-
-COPY . .
-
-# Debugging: Print contents after the second copy
 RUN ls -la
 
 # Expose port
@@ -39,7 +35,6 @@ EXPOSE 4000
 # RUN apk add --no-cache redis
 
 # Debugging: Print final contents before starting the application
-RUN ls -la
 
 # Debugging lines for production stage
 CMD ["pnpm", "start"]
