@@ -117,53 +117,88 @@
 
 
 # Development Stage
-FROM node:alpine AS development
+# FROM node:alpine AS development
 
-WORKDIR /usr/src/app
+# ARG NODE_ENV=development
+# ENV NODE_ENV=$NODE_ENV
 
-# Copy only necessary files for npm install to leverage Docker layer caching
-COPY package.json pnpm-lock.yaml ./
+# WORKDIR /usr/src/app
 
-# Install pnpm globally
-RUN npm install -g pnpm
+# # Copy only necessary files for npm install to leverage Docker layer caching
+# COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies for development
-RUN pnpm install
+# # Install pnpm globally
+# RUN npm install -g pnpm
 
-# Copy the entire project for development
-COPY . .
+# # Install dependencies for development
+# RUN pnpm install
 
-# Build your application for development
-RUN pnpm run build
+# # Copy the entire project for development
+# COPY . .
 
-# Production Stage
-FROM node:alpine as production
+# # Build your application for development
+# RUN pnpm run build
 
-ARG NODE_ENV=production
+# # Production Stage
+# FROM node:alpine as production
+
+# ARG NODE_ENV=production
+# ENV NODE_ENV=$NODE_ENV
+
+# WORKDIR /usr/src/app
+
+# # Copy only necessary files for npm install to leverage Docker layer caching
+# COPY package.json pnpm-lock.yaml ./
+
+# RUN npm install -g pnpm
+
+# # Install only production dependencies
+# RUN pnpm install --prod
+
+# # Copy the .env file for both development and production
+# COPY .env .env
+
+# # Copy the application files
+
+# # Copy the built files from the development stage
+# COPY --from=development /usr/src/app/dist ./dist
+
+# COPY . .
+
+# # Expose the application port
+# EXPOSE 4000
+
+# # Set a default command for production
+# CMD ["node", "dist/main"]
+
+
+
+
+
+
+
+
+
+FROM node:alpine AS production
+
+ARG NODE_ENV=development
 ENV NODE_ENV=$NODE_ENV
 
 WORKDIR /usr/src/app
 
-# Copy only necessary files for npm install to leverage Docker layer caching
+COPY .env .env
+
 COPY package.json pnpm-lock.yaml ./
 
 RUN npm install -g pnpm
 
-# Install only production dependencies
-RUN pnpm install --prod
-
-# Copy the .env file for both development and production
-COPY .env .env
-
-# Copy the application files
-
-# Copy the built files from the development stage
-COPY --from=development /usr/src/app/dist ./dist
+RUN pnpm install
 
 COPY . .
 
-# Expose the application port
+RUN pnpm run build
+
+# Expose port
 EXPOSE 4000
 
-# Set a default command for production
-CMD ["node", "dist/main"]
+CMD ["pnpm", "start"]
