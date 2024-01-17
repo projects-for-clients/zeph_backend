@@ -21,7 +21,7 @@ services:
     environment:
       POSTGRES_DB: prod
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_PASSWORD: E62ffcc5Bc3fCaDB4feB4bEG2CG31bge
     ports:
       - "5432:5432"
     networks:
