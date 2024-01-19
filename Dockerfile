@@ -11,6 +11,7 @@ RUN pnpm run build
 
 FROM base AS production
 COPY --from=build /app/node_modules /app/node_modules
+RUN apt-get update -y && apt-get install -y openssl
 COPY --from=build /app/dist /app/dist
 
 EXPOSE 4000
