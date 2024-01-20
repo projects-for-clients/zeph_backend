@@ -8,8 +8,7 @@ WORKDIR /app
 
 FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-# RUN apt-get update -y && apt-get install -y openssl
-# RUN pnpm prisma migrate dev --name init
+RUN apt-get update -y && apt-get install -y openssl
 RUN pnpm run build
 
 
