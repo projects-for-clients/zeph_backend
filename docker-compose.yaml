@@ -10,8 +10,6 @@ services:
       DATABASE_URL: postgresql://postgres:E62ffcc5Bc3fCaDB4feB4bEG2CG31bge@database:5432/postgres
     ports:
       - "4000:4000"
-      # - "80:4000"
-      # - "443:4000"
     depends_on:
       - database
       - redis
