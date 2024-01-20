@@ -1,4 +1,4 @@
-FROM node:20-slim AS base
+FROM node:lts AS base
 # FROM pionl/node-with-openssl:10-alpine
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -8,8 +8,8 @@ WORKDIR /app
 
 
 FROM base AS build
+# RUN apt-get update -y && apt-get install -y openssl
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN apt-get update -y && apt-get install -y openssl
 RUN pnpm run build
 
 
