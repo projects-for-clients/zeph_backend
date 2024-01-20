@@ -1,4 +1,5 @@
 FROM node:20-slim AS base
+# FROM pionl/node-with-openssl:10-alpine
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
