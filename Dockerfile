@@ -8,7 +8,6 @@ WORKDIR /app
 
 
 FROM base AS build
-# RUN apt-get update -y && apt-get install -y openssl
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 

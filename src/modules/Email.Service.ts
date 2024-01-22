@@ -8,7 +8,7 @@ import { UserRequestService } from './../services/userRequest.service';
 export class EmailService {
   private resend = new Resend(process.env.EMAIL_API_KEY);
   private from = 'support@zephschambers.com'
-  private zephEmail = 'Zephschambers@gmail.com'
+  private zephEmail = 'zephschambers@gmail.com'
 
 
   constructor(private readonly UserRequestService: UserRequestService) { }
