@@ -1,65 +1,62 @@
-import { Injectable, Logger, NestMiddleware, Scope } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { Request, Response } from 'express';
-import { UserRequestService } from 'src/services/userRequest.service';
-import { JwtPayload } from 'types/types';
+import { Injectable, Logger, NestMiddleware, Scope } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { Request, Response } from "express";
+import { UserRequestService } from "src/services/userRequest.service";
+import { JwtPayload } from "types/types";
 
 @Injectable({ scope: Scope.REQUEST })
 export class AuthMiddleware implements NestMiddleware {
+	private logger = new Logger(AuthMiddleware.name);
 
-  private logger = new Logger(AuthMiddleware.name);
+	constructor(
+		private jwt: JwtService,
+		private userRequest: UserRequestService,
+	) {}
 
-  constructor(private jwt: JwtService, private userRequest: UserRequestService) { }
+	use(req: Request, res: Response, next: () => void) {
+		this.logger.log(AuthMiddleware.name);
 
-  use(req: Request, res: Response, next: () => void) {
+		const { baseUrl } = req;
 
+		const urlWithoutVersion = baseUrl.replace(/\/v\d+/, "");
 
-    this.logger.log(AuthMiddleware.name);
+		if (
+			urlWithoutVersion.startsWith("/auth") ||
+			urlWithoutVersion.includes("swagger")
+		) {
+			return next();
+		}
 
-    const { baseUrl } = req;
+		//authorized
+		const cookie = req.cookies["api-auth"];
 
-    const urlWithoutVersion = baseUrl.replace(/\/v\d+/, '');
+		if (!cookie) {
+			return res.status(401).json({ message: "Forbidden Cookie Exception" });
+		}
 
-    if (urlWithoutVersion.startsWith("/auth")) {
-      return next();
-    }
+		//decrypt jwt
+		const jwt: JwtPayload = this.jwt.verify(cookie, {
+			secret: process.env.JWT_SECRET,
+		});
 
-    //authorized
-    const cookie = req.cookies['api-auth'];
+		if (!jwt) {
+			return res.status(401).json({ message: "Unauthorized" });
+		}
 
-    if (!cookie) {
-      return res.status(401).json({ message: 'Forbidden Cookie Exception' });
-    }
+		const { userId, email, role } = jwt;
 
-    //decrypt jwt
-    const jwt: JwtPayload = this.jwt.verify(cookie, {
-      secret: process.env.JWT_SECRET,
-    })
+		this.userRequest.setUser({
+			userId,
+			email,
+			role,
+		});
 
+		req.user = {
+			id: jwt.userId,
+			email: jwt.email,
+			role: jwt.role,
+		};
 
-
-    if (!jwt) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-
-
-    const { userId, email, role } = jwt;
-
-
-    this.userRequest.setUser({
-      userId,
-      email,
-      role
-    });
-
-    req.user = {
-      id: jwt.userId,
-      email: jwt.email,
-      role: jwt.role
-    }
-
-
-    next();
-
-  }
+		next();
+	}
 }

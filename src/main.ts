@@ -1,32 +1,38 @@
-import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import * as cookieParser from 'cookie-parser';
-import { AppModule } from './app/app.module';
+import { ValidationPipe } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
+import * as cookieParser from "cookie-parser";
+import { AppModule } from "./app/app.module";
 
 async function bootstrap() {
+	const app = await NestFactory.create(AppModule, {
+		cors: {
+			origin: [process.env.CLIENT_URL, "http://localhost:3000"],
 
-  const app = await NestFactory.create(AppModule, {
+			credentials: true,
+		},
+	});
 
-    cors: {
+	app.setGlobalPrefix(process.env.API_PREFIX || "v1");
+	app.use(cookieParser());
 
-      // origin: process.env.NODE_ENV === 'production' ? process.env.CLIENT_URL : 'http://localhost:3000',
+	const config = new DocumentBuilder()
+		.setTitle("Zeph Chambers")
+		.setDescription("Zeph Chambers API")
+		.setVersion("1.0")
+		.addTag("Zeph Chambers")
+		.build();
+	const document = SwaggerModule.createDocument(app, config);
+	SwaggerModule.setup("swagger", app, document);
 
-      origin: [process.env.CLIENT_URL, 'http://localhost:3000'],
+	app.useGlobalPipes(
+		new ValidationPipe({
+			whitelist: true,
+		}),
+	);
 
-      credentials: true,
-    },
-  });
-  app.setGlobalPrefix(process.env.API_PREFIX || 'v1');
-  app.use(cookieParser());
+	const PORT = process.env.PORT || 4000;
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-    }),
-  );
-
-  const PORT = process.env.PORT || 4000;
-
-  await app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+	await app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 }
 bootstrap();
